@@ -32,6 +32,8 @@ namespace DetectCodeAndCurrent
         List<sProductInfo> gProductInfosList;
         public DectectMainForm() {
             InitializeComponent();
+        }
+        private void DectectMainForm_Load(object sender, EventArgs e) {
             WorkProcess instance = WorkProcess.GetInstance();
             instance.Event_EndCurrentDetect += CurrentDetectEnd;
             instance.Event_NewProduct += NewProduct_Start;
@@ -43,7 +45,6 @@ namespace DetectCodeAndCurrent
             sqlInstance.threadExceptionEventHandler = SqlError_Happend;
             InitControls();
             instance.InitialWork();
-
         }
         private void SqlError_Happend(Exception ex) {
             ShowMessage(sMessageType.ERROR, ex.Message);
@@ -75,7 +76,10 @@ namespace DetectCodeAndCurrent
 
         }
         private void InitalTSSBtn() {
-            if (labPostion.Text == "1") panelCurrent.Visible = false;
+            if (labPostion.Text == "1") {
+                panelCurrent.Visible = false;
+                tabControl1.TabPages.Remove(tabPage3);
+            }
             if (this.InvokeRequired) {
                 Invoke(new MethodInvoker(delegate () {
                     pbxMick1.Image = Properties.Resources.Notification;
@@ -290,10 +294,26 @@ namespace DetectCodeAndCurrent
         private void btnConfig_Click(object sender, EventArgs e) {
             FromConfiguration configForm = new FromConfiguration();
             UserConfrimFrom userFrom = new UserConfrimFrom();
-            
             userFrom.ShowDialog();
-            if (userFrom.checkResult == true)
+            if (userFrom.checkResult == true) {
                 configForm.ShowDialog();
+                ChangePermission(true);
+            }
+            else {
+                ChangePermission(false);
+            }
+        }
+
+        private void ChangePermission(bool value) {
+            if (value == true) {
+                tsbDelete.Enabled = true;
+                tsbComfrim.Enabled = true;
+            }
+            else {
+                tsbDelete.Enabled = false;
+                tsbComfrim.Enabled = false;
+            }
+
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e) {
@@ -407,5 +427,7 @@ namespace DetectCodeAndCurrent
             WorkProcess instance = WorkProcess.GetInstance();
             instance.ClosePinDevice();
         }
+
+
     }
 }

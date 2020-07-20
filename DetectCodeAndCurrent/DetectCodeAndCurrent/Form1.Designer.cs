@@ -74,10 +74,10 @@
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.tsbDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.tscmb = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.tsbComfrim = new System.Windows.Forms.ToolStripButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -90,6 +90,14 @@
             this.txtAssembleCode = new System.Windows.Forms.TextBox();
             this.dgvRecords = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -111,14 +119,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -349,7 +349,7 @@
             this.labPostion.Name = "labPostion";
             this.labPostion.Size = new System.Drawing.Size(15, 15);
             this.labPostion.TabIndex = 9;
-            this.labPostion.Text = "2";
+            this.labPostion.Text = "1";
             // 
             // flowLayoutPanel1
             // 
@@ -477,10 +477,10 @@
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2,
-            this.toolStripButton1,
+            this.tsbDelete,
             this.toolStripLabel2,
             this.tscmb,
-            this.toolStripButton2});
+            this.tsbComfrim});
             this.bdgSearch.Location = new System.Drawing.Point(3, 3);
             this.bdgSearch.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bdgSearch.MoveLastItem = this.bindingNavigatorMoveLastItem;
@@ -566,14 +566,15 @@
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 30);
             // 
-            // toolStripButton1
+            // tsbDelete
             // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(63, 27);
-            this.toolStripButton1.Text = "删除";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.tsbDelete.Enabled = false;
+            this.tsbDelete.Image = ((System.Drawing.Image)(resources.GetObject("tsbDelete.Image")));
+            this.tsbDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDelete.Name = "tsbDelete";
+            this.tsbDelete.Size = new System.Drawing.Size(63, 27);
+            this.tsbDelete.Text = "删除";
+            this.tsbDelete.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // toolStripLabel2
             // 
@@ -592,15 +593,16 @@
             this.tscmb.Name = "tscmb";
             this.tscmb.Size = new System.Drawing.Size(121, 30);
             // 
-            // toolStripButton2
+            // tsbComfrim
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(43, 27);
-            this.toolStripButton2.Text = "确定";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.tsbComfrim.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbComfrim.Enabled = false;
+            this.tsbComfrim.Image = ((System.Drawing.Image)(resources.GetObject("tsbComfrim.Image")));
+            this.tsbComfrim.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbComfrim.Name = "tsbComfrim";
+            this.tsbComfrim.Size = new System.Drawing.Size(43, 27);
+            this.tsbComfrim.Text = "确定";
+            this.tsbComfrim.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // groupBox1
             // 
@@ -748,6 +750,78 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "手动IO";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(925, 173);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(15, 15);
+            this.label28.TabIndex = 6;
+            this.label28.Text = "V";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(925, 122);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(15, 15);
+            this.label27.TabIndex = 6;
+            this.label27.Text = "V";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(925, 75);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(15, 15);
+            this.label26.TabIndex = 6;
+            this.label26.Text = "V";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(925, 36);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(15, 15);
+            this.label25.TabIndex = 6;
+            this.label25.Text = "V";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(583, 180);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(23, 15);
+            this.label24.TabIndex = 6;
+            this.label24.Text = "mA";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(583, 129);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(23, 15);
+            this.label23.TabIndex = 6;
+            this.label23.Text = "mA";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(583, 75);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(23, 15);
+            this.label22.TabIndex = 6;
+            this.label22.Text = "mA";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(583, 36);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(23, 15);
+            this.label21.TabIndex = 6;
+            this.label21.Text = "mA";
             // 
             // label16
             // 
@@ -933,78 +1007,6 @@
             this.pictureBox1.TabIndex = 13;
             this.pictureBox1.TabStop = false;
             // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(583, 36);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(23, 15);
-            this.label21.TabIndex = 6;
-            this.label21.Text = "mA";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(583, 75);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(23, 15);
-            this.label22.TabIndex = 6;
-            this.label22.Text = "mA";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(583, 129);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(23, 15);
-            this.label23.TabIndex = 6;
-            this.label23.Text = "mA";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(583, 180);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(23, 15);
-            this.label24.TabIndex = 6;
-            this.label24.Text = "mA";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(925, 36);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(15, 15);
-            this.label25.TabIndex = 6;
-            this.label25.Text = "V";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(925, 75);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(15, 15);
-            this.label26.TabIndex = 6;
-            this.label26.Text = "V";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(925, 122);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(15, 15);
-            this.label27.TabIndex = 6;
-            this.label27.Text = "V";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(925, 173);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(15, 15);
-            this.label28.TabIndex = 6;
-            this.label28.Text = "V";
-            // 
             // DectectMainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -1019,6 +1021,7 @@
             this.Text = "扫码电检测";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DectectMainForm_FormClosing);
+            this.Load += new System.EventHandler(this.DectectMainForm_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -1098,11 +1101,11 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripStatusLabel tsslCurrentUpper;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton tsbDelete;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel tsslUpperCurrent;
         private System.Windows.Forms.ToolStripComboBox tscmb;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton tsbComfrim;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button btnPartsSwitch;

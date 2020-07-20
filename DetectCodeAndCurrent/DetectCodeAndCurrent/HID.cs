@@ -170,7 +170,7 @@ namespace DetectCodeAndCurrent {
                 catch {
                     EventArgs ex = new EventArgs();
                     OnDeviceRemoved(ex);//发出设备移除消息
-                    CloseDevice();
+                     CloseDevice();
                     return HID_RETURN.NO_DEVICE_CONECTED;
                 }
             }

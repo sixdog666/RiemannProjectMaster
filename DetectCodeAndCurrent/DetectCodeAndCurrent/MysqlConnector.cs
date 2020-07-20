@@ -13,9 +13,9 @@ namespace DetectCodeAndCurrent {
  //  }
     public class MysqlConnector {
         private static MysqlConnector mInstance = null;
-        private static string gConnStr = "data source = 127.0.0.1;database=jixing_db;user id=root;password=riemann;pooling=false;charset=utf8";//"data source = 192.168.19.90; database=jixing_db;user id = root; password=rieman;pooling=false;charset=utf8";
+       // private static string gConnStr = "data source = 127.0.0.1;database=jixing_db;user id=root;password=riemann;pooling=false;charset=utf8";//"data source = 192.168.19.90; database=jixing_db;user id = root; password=rieman;pooling=false;charset=utf8";
        // private static string gConnStr = "data source = 192.168.19.100;database=jixing_db;user id=newuser1;password=riemann;pooling=false;charset=utf8;SslMode = None;";//"data source = 192.168.19.90; database=jixing_db;user id = root; password=rieman;pooling=false;charset=utf8";
-        //private static string gConnStr = "data source = 192.168.19.90; database=jixing_db;user id = root; password=riemann;pooling=false;charset=utf8;SslMode = None;";
+        private static string gConnStr = "data source = 192.168.19.90; database=jixing_db;user id = root; password=riemann;pooling=false;charset=utf8;SslMode = None;";
         public EventHandler Event_SQLError;
         public delegate void ThreadExceptionEventHandler(Exception ex);
         public ThreadExceptionEventHandler threadExceptionEventHandler;
