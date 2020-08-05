@@ -13,9 +13,6 @@ namespace DetectCodeAndCurrent {
  //  }
     public class MysqlConnector {
         private static MysqlConnector mInstance = null;
-       // private static string gConnStr = "data source = 127.0.0.1;database=jixing_db;user id=root;password=riemann;pooling=false;charset=utf8";//"data source = 192.168.19.90; database=jixing_db;user id = root; password=rieman;pooling=false;charset=utf8";
-       // private static string gConnStr = "data source = 192.168.19.100;database=jixing_db;user id=newuser1;password=riemann;pooling=false;charset=utf8;SslMode = None;";//"data source = 192.168.19.90; database=jixing_db;user id = root; password=rieman;pooling=false;charset=utf8";
-        private static string gConnStr = "data source = 192.168.19.90; database=jixing_db;user id = root; password=riemann;pooling=false;charset=utf8;SslMode = None;";
         public EventHandler Event_SQLError;
         public delegate void ThreadExceptionEventHandler(Exception ex);
         public ThreadExceptionEventHandler threadExceptionEventHandler;
@@ -33,8 +30,8 @@ namespace DetectCodeAndCurrent {
 
         }
         public int ExecuteNonMySQL(string sqlstr, params MySqlParameter[] parameters) {
-
-            MySqlConnection mysqlcon = new MySqlConnection(gConnStr);
+            var strConn = System.Configuration.ConfigurationManager.AppSettings["SQLConnection"];
+            MySqlConnection mysqlcon = new MySqlConnection(strConn);
             try {
                 mysqlcon.Open();
                 MySqlCommand mysqlcom = new MySqlCommand(sqlstr, mysqlcon);
@@ -43,7 +40,6 @@ namespace DetectCodeAndCurrent {
                 mysqlcom.Dispose();
                 return count;
             }
-
             catch (MySqlException ex) {
 
                 Console.WriteLine(ex.Message);
@@ -56,8 +52,8 @@ namespace DetectCodeAndCurrent {
         }
 
         public DataTable GetMySqlRead(string sqlstr, params MySqlParameter[] parameters) {
-
-            MySqlConnection mysqlcon = new MySqlConnection(gConnStr);
+            var strConn = System.Configuration.ConfigurationManager.AppSettings["SQLConnection"];
+            MySqlConnection mysqlcon = new MySqlConnection(strConn);
             try {
                 mysqlcon.Open();//打开通道，建立连接，可能出现异常,使用try catch语句
                 MySqlCommand mysqlcom = new MySqlCommand(sqlstr, mysqlcon);
