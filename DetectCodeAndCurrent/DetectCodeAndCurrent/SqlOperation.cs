@@ -9,6 +9,7 @@ using System.Data;
 
 namespace DetectCodeAndCurrent {
     public static class SqlOperation {
+
         /// <summary>
         /// 获取工位信息，
         /// </summary>
@@ -53,6 +54,60 @@ namespace DetectCodeAndCurrent {
             }
             return instance.GetMySqlRead(sql, parameters);
         }
+
+        public static void UpdateButtonState(string currentProductCode,string buttonName,bool Value) {
+
+        }
+
+        public static string GetButtonState(string buttonColName,string currentProductCode) {
+            MySqlParameter[] parameters;
+
+            parameters = new MySqlParameter[] { new MySqlParameter() { ParameterName = "buttonColName" , Value = buttonColName },
+                                                new MySqlParameter() {  ParameterName = "currentProductCode" , Value = currentProductCode } };
+            string dbString = "select "+ buttonColName + " from tbl_resultrecord where productCode = @currentProductCode";
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            DataTable dt= instance.GetMySqlRead(dbString, parameters);
+            if (dt != null && dt.Rows.Count > 0 && dt.Rows[0][0].ToString()!=string.Empty) {
+                return dt.Rows[0][0].ToString();
+            }
+            return string.Empty;
+        }
+
+        public static DataTable GetButtonConfigInfo() {
+            string dbString = "SELECT tbl_ButtonName as 检测项,tbl_MaxValue as 最大值, tbl_MinValue as 最小值, tbl_TestValue as 测量值, tbl_State as 当前状态 ,tbl_ColumnName as ID FROM jixing_db.tbl_infoteg ORDER BY idx";
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            return instance.GetMySqlRead(dbString);
+        }
+
+        public static DataRow GetButtonInfo(string strName,out string nextTestName) {
+            MySqlParameter[] parameters;
+
+            parameters = new MySqlParameter[] {
+                new MySqlParameter { ParameterName ="strName",Value = strName}};
+            string dbString = "select * from tbl_infoteg where tbl_ButtonName = @strName";
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            DataTable dt = instance.GetMySqlRead(dbString, parameters);
+            if (dt != null && dt.Rows.Count > 0) {
+                DataRow dr = dt.Rows[0];
+                parameters = new MySqlParameter[] {
+                    new MySqlParameter {ParameterName ="index",Value = (int)dr["idx"]+1 }
+                };
+                dbString = "select tbl_ButtonName from tbl_infoteg where idx = @index";
+                DataTable next = instance.GetMySqlRead(dbString, parameters);
+                if (next != null && next.Rows.Count > 0)
+                    nextTestName = next.Rows[0][0].ToString();
+                else nextTestName = string.Empty;
+                return dr;
+            }
+            else {
+                nextTestName = string.Empty;
+                return null;
+            }
+        }
+
+
+
+
         /// <summary>
         /// 获取产品条码对应的零件记录
         /// </summary>

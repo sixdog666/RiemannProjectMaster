@@ -7,10 +7,10 @@ using System.IO;
 
 namespace DetectCodeAndCurrent {
     public enum eCommType {
-
         Master,
         Slave
     }
+
     public enum INFO_PACKET_PORTOCOL {
         HEAD1,
         HEAD2,
@@ -61,8 +61,8 @@ namespace DetectCodeAndCurrent {
         byte[] baudRate=new byte[4];
         byte heartbeatTime = 0;
     }
-    class PINLine {
-        Hid hid;
+    class PINLine : Hid {
+       // Hid hid;
         eCommType gCommType ;
         int gBaudRate ;
         byte gCheckMode;
@@ -70,8 +70,10 @@ namespace DetectCodeAndCurrent {
         internal const ushort VENDOR_ID = 0x1993;
         internal const ushort PRODUCT_ID = 0x2021;
         internal const string SERIAL_NUMBER = "SN.730014009075147533039302";
-        public PINLine(eCommType commType = eCommType.Master, int baudRate = 14400, byte checkMode = (byte)CHECKMODE.ENHANCE, byte idNumber = 0) {
-            hid = new Hid();
+        public PINLine(eCommType commType = eCommType.Master, int baudRate = 14400, byte checkMode = (byte)CHECKMODE.ENHANCE, byte idNumber = 0) { 
+            // hid = new Hid();
+            
+            //  hid.DataReceived += Hid_ReceivedData;
             gCommType = commType;
             gBaudRate = baudRate;
             gCheckMode = checkMode;
@@ -79,16 +81,17 @@ namespace DetectCodeAndCurrent {
 
         }
 
+
         public void ClosePINDevice() {
-            hid.CloseDevice();
+            this.CloseDevice();
         }
         public bool PINLineIniltial() {
-            if (hid.OpenDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER) != Hid.HID_RETURN.SUCCESS) {
+            if (this.OpenDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER) != Hid.HID_RETURN.SUCCESS) {
                 return false;
             }
             byte[] infoPacketBytes = GetInfoPacket();
             report rp = new report(0x00, infoPacketBytes);
-            if (hid.Write(rp) != Hid.HID_RETURN.SUCCESS) {
+            if (this.Write(rp) != Hid.HID_RETURN.SUCCESS) {
                 return false;
             }
            // hid.Write(rp);
@@ -97,10 +100,10 @@ namespace DetectCodeAndCurrent {
         public void SetDataPacket() {
 
             // byte[] testByte = { 0x64, 0x80, 0xE4, 0x00, 0x64, 0xD0, 0xC0 };
-            byte[] testByte = { 0x64, 0x80, 0xE4, 0xE4, 0xE4, 0xD0, 0xC0 };
-            byte[] dateBytes = GetDataPacket(testByte);
+            byte[] SET_ALL_LIGHT = { 0x64, 0x80, 0xE4, 0xE4, 0xE4, 0xD0, 0xC0 };
+            byte[] dateBytes = GetDataPacket(SET_ALL_LIGHT);
             report test = new report(0x00, dateBytes);
-            Hid.HID_RETURN res = hid.Write(test);
+            Hid.HID_RETURN res = this.Write(test);
         }
         public byte[] GetDataPacket(byte[]message) {
             byte[] dataBytes = new byte[32];
@@ -136,6 +139,8 @@ namespace DetectCodeAndCurrent {
             infoBytes[(int)INFO_PACKET_PORTOCOL.END] = 0x88;
             return infoBytes;
         }
+
+
         private byte[] ConvertBaudRateToByte(Int32 baudRate) {
             byte[] result = BitConverter.GetBytes(baudRate);
             if (!BitConverter.IsLittleEndian) {

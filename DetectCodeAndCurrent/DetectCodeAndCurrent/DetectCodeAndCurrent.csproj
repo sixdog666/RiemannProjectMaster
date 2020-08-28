@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>myIcon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\a3h2r-rjr7h-001.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="HslCommunication, Version=9.2.2.0, Culture=neutral, PublicKeyToken=cdb2261fa039ed67, processorArchitecture=MSIL">
@@ -109,6 +109,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UCDetectItem.resx">
+      <DependentUpon>UCDetectItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserConfrimFrom.resx">
       <DependentUpon>UserConfrimFrom.cs</DependentUpon>
     </EmbeddedResource>
@@ -180,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="myIcon.ico" />
+    <Content Include="Resources\a3h2r-rjr7h-001.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

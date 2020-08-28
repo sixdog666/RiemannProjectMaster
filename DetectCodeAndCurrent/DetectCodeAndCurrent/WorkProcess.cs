@@ -18,7 +18,17 @@ namespace DetectCodeAndCurrent {
         Finish2,
         Err
     }
-
+    public delegate void DelegatePassBackButtonInfo(string waitingTestButtonName, EventArgs e);
+    public class TegAtgs : EventArgs {
+        public readonly string buttonName;
+        public readonly string resultValue;
+        public readonly bool resultFlag;
+        public TegAtgs(string name, string value,bool flag) {
+            buttonName = name;
+            resultFlag = flag;
+            resultValue = value;
+        }
+    }
     public struct sCurrentResultImage {
         public Image mick1;
         public Image mick2;
@@ -26,6 +36,12 @@ namespace DetectCodeAndCurrent {
         public Image mick4;
 
     }
+    public struct sButtonPinInfo{
+        public string colName;
+        public byte[] byteInfo;
+
+    }
+
     public enum eStation1_WorkProcess {
         Waiting = -1,
         StartAssembly = 1,
@@ -127,6 +143,8 @@ namespace DetectCodeAndCurrent {
         public const string CurrentStart = "CurrentStart";
         public const string CurrentEnd = "CurrentEnd";
     }
+
+
     public class WorkProcess {
         public EventHandler Event_NewProduct;
         public EventHandler Event_NewPart;
@@ -138,6 +156,7 @@ namespace DetectCodeAndCurrent {
         private MyModbusTCP DeviceAD_1;
         //private MyModbusTCP DeviceDIO_2;
         //private MyModbusTCP DeviceAD_2;
+        private string gCurrentButtonName;
         private bool gIsPINConnected = false;
         private PINLine pin;
         private string gCurrentProdNum = "";
@@ -147,6 +166,8 @@ namespace DetectCodeAndCurrent {
         private DataTable gDTStationInfo;
         private ScanerHook barCode;
         private bool gSwitchPin = false;
+        private bool gSwitchListen = false;
+        public DelegatePassBackButtonInfo ButtonInfoPassBack;
         public string strCurrentProd {
             get { return gCurrentProdNum; }
             set { gCurrentProdNum = value; }
@@ -220,6 +241,7 @@ namespace DetectCodeAndCurrent {
                 Event_Message?.Invoke("车顶PIN信号连接失败", null);
             }
             gIsPINConnected = true;
+            pin.DataReceived += Hid_ReceivedData;
             if (!DeviceDIO_1.Connect()) {
                 Event_Message?.Invoke("数字量模块未成功连接", null);
             }
@@ -227,6 +249,105 @@ namespace DetectCodeAndCurrent {
                 Event_Message?.Invoke("模拟量模块未成功连接", null);
             }
         }
+
+        public void ListeningButtonDown() {   
+            if (gSwitchListen == false) {
+                gSwitchListen = true;
+                Thread listenButtonDown = new Thread(ListenOnstartButtonDown);
+                if (listenButtonDown.ThreadState != ThreadState.Running) {
+                    listenButtonDown.Start();
+                }
+            }
+
+        }
+        public void CloseListening() {
+            gSwitchListen = false;
+        }
+        public void ListenOnstartButtonDown() {
+            while (gSwitchListen) {
+                pin.DataReceived += Hid_ReceivedData;
+                double testValue;
+                string testButtonName= gCurrentButtonName;
+                object result= TestVolt(testButtonName, out testValue);
+                if (result != null) {
+                    if ((bool)result) {
+                        string nextButtonName;
+                        SqlOperation.GetButtonInfo(testButtonName, out nextButtonName);
+                        TegAtgs arg = new TegAtgs(testButtonName, result.ToString(),true);
+                        ButtonInfoPassBack?.Invoke(nextButtonName, arg);
+                        gCurrentButtonName = nextButtonName;
+                    }
+                    else {
+                        TegAtgs arg = new TegAtgs(testButtonName, result.ToString(),false);
+                        ButtonInfoPassBack?.Invoke(testButtonName, arg);
+                    }
+
+                }
+                Thread.Sleep(200);
+            }
+            pin.DataReceived -= Hid_ReceivedData;
+        }
+        private object TestVolt(string itemName,out double testValue) {         
+            string nextButtonName;
+            testValue = 0;
+            DataRow row = SqlOperation.GetButtonInfo(itemName, out nextButtonName);
+            if ((bool)row["tbl_VCFlag"]) {
+                double maxValue = (double)row["tbl_MaxValue"];
+                double minValue = (double)row["tbl_MinValue"];
+                testValue = 0;////////
+                if (testValue <= maxValue && testValue >= minValue) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+                 
+            }
+            return null;
+
+        }
+
+
+        public void InitTEG(string currentCode) {
+            DataTable dt = SqlOperation.GetButtonConfigInfo();
+            gCurrentButtonName = string.Empty;
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                DataRow dr = dt.Rows[i];
+                string buttonColName = dr["ID"].ToString();
+                string buttonName = dr["检测项"].ToString();
+                string result = SqlOperation.GetButtonState(buttonColName, currentCode);
+                if (result != string.Empty) {
+                    if (i < dt.Rows.Count - 1) {
+                        gCurrentButtonName = buttonName;
+                    }             
+                    TegAtgs arg = new TegAtgs(buttonName, result,true);
+                    ButtonInfoPassBack?.Invoke(null, arg);
+                }
+                else {
+                    if (gCurrentButtonName == string.Empty)
+                        gCurrentButtonName = buttonName;
+                    TegAtgs arg = new TegAtgs(buttonName, result, false);
+                    ButtonInfoPassBack?.Invoke(gCurrentButtonName, arg);
+                }
+            }
+           
+        }
+
+        private void Hid_ReceivedData(object sender, report e) {
+            if (gSwitchListen == true) {
+                string nextButtonName;
+                DataRow button = SqlOperation.GetButtonInfo(gCurrentButtonName,out nextButtonName);
+                if (button != null ) {
+                    if (e.reportBuff == button["tbl_ByteString"]) {
+                        TegAtgs arg = new TegAtgs(gCurrentButtonName, true.ToString(),true);
+                        ButtonInfoPassBack?.Invoke(nextButtonName, arg);
+                        gCurrentButtonName = nextButtonName;
+                    }
+                }
+            }
+        }
+
+
         public void OpenPIN() {
             if (!gIsPINConnected) return;
             Thread pinThread = new Thread(Thread_PIN);
@@ -280,6 +401,7 @@ namespace DetectCodeAndCurrent {
                 if (dt.Rows.Count > 0) {
                     SqlOperation.GetProductConfigCodeFromSQL((string)dt.Rows[0]["product"], out gCurrentProdNum);
                     gCurrentCode = (string)dt.Rows[0]["productCode"];
+                    InitTEG(gCurrentCode);
                     Event_InitLastInfo?.Invoke(dt, null);
                     gRunningStatu = (int)dt.Rows[0]["statu"];
                     return true;
@@ -381,6 +503,7 @@ namespace DetectCodeAndCurrent {
                 case eCodeType.Assembly:
                     if (ProductCodeScan(strCode) == true)
                     {
+                        InitTEG(gCurrentCode);
                         gRunningStatu = (int)eStation2_WorkProcess.StartAssembly;
                         resultFlag = true;
                         //SqlOperation.UpdateProductCodeStatuRecord(gCurrentCode, gRunningStatu);
@@ -433,8 +556,6 @@ namespace DetectCodeAndCurrent {
             {
                 case eCodeType.StartCurrent:
                     CurrentDectectStart(strCode);
-                    //gRunningStatu = (int)eStation2_WorkProcess.Detecting;
-                    //SqlOperation.UpdateProductCodeStatuRecord(gCurrentCode, gRunningStatu);
                     resultFlag = true;
                     break;
                 case eCodeType.Part:
@@ -627,14 +748,6 @@ namespace DetectCodeAndCurrent {
                             break;
                     }
                 }
-                //if (!SqlOperation.IsPartCodeRecordExist(gCurrentCode, fieldName, partSerialCode)) {
-                //    PlayVoice(fieldName);
-                //    SqlOperation.UpdateProductCodeRecord(gCurrentProdNum, fieldName, partSerialCode);
-                //    Event_NewPart?.Invoke(fieldName, null);
-                //}
-                //else {
-                //    OutAlarm("当前附件已经装配，如需修改请先删除记录", sPlayVoiceAdress.Fail_ScanCode);
-                //}
                 PlayVoice(fieldName);
                 if (SqlOperation.UpdateProductCodeRecord(gCurrentCode, fieldName, partSerialCode)) {
                     Event_NewPart?.Invoke(fieldName, null);
@@ -665,7 +778,6 @@ namespace DetectCodeAndCurrent {
             try {
                 //启动电源开关
                 OpenPartSwitch();
-                //DeviceDIO_1.WriteCoil(sOutputDigitalSignal.on_off, true);
                 OpenPIN();
                 Thread.Sleep(2500);
                 double mick1_currentValue, mick1_voltValue;
@@ -678,7 +790,6 @@ namespace DetectCodeAndCurrent {
                 bool mick4Result = CurrentAndVoltValue(sInputRegistSignal.mick4_current, sInputRegistSignal.mick4_volt, out mick4_currentValue, out mick4_voltValue);
 
                 //关闭电源开关
-               // DeviceDIO_1.WriteCoil(sOutputDigitalSignal.on_off, false);
                 //保存值
                 string currentResult = "电流值 1:" + string.Format("{0:0.000}", mick1_currentValue) + ",2:" + string.Format("{0:0.000}", mick2_currentValue) + ",3:" + string.Format("{0:0.000}", mick3_currentValue) + ",4:" + string.Format("{0:0.000}", mick4_currentValue);
                 string voltResut = "电压值 1:" + string.Format("{0:0.000}", mick1_voltValue) + ",2:" + string.Format("{0:0.000}", mick2_voltValue) + ",3:" + string.Format("{0:0.000}", mick3_voltValue) + ",4:" + string.Format("{0:0.000}", mick4_voltValue);
@@ -880,11 +991,6 @@ namespace DetectCodeAndCurrent {
             }
             if (strCode.Length == 8) partNum = strCode;
             partSerialNum = strCode;
-        }
-        public void OpenLightByLIN() {
-
-
-
         }
     }
 

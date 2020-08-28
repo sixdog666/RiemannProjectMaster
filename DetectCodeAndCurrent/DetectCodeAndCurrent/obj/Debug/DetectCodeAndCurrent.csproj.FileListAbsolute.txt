@@ -94,3 +94,4 @@ E:\MyCode\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\obj\Deb
 E:\MyCode\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\obj\Debug\DetectCodeAndCurrent.Properties.Resources.resources
 E:\MyCode\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\obj\Debug\DetectCodeAndCurrent.UserConfrimFrom.resources
 E:\MyCode\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\obj\Debug\DetectCodeAndCurrent.csproj.GenerateResource.Cache
+E:\MyCode\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\obj\Debug\DetectCodeAndCurrent.UCDetectItem.resources

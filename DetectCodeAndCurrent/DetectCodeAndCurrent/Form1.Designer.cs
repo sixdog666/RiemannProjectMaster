@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DectectMainForm));
             this.lstMessage = new System.Windows.Forms.ListView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -42,6 +43,24 @@
             this.tsslUpperCurrent = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabGroup = new System.Windows.Forms.TabControl();
+            this.tabScanCodePage = new System.Windows.Forms.TabPage();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.tabDetect = new System.Windows.Forms.TabPage();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.ucDome = new DetectCodeAndCurrent.UCDetectItem();
+            this.ucDomeOn = new DetectCodeAndCurrent.UCDetectItem();
+            this.ucIntrusionSensor = new DetectCodeAndCurrent.UCDetectItem();
+            this.ucSROpen = new DetectCodeAndCurrent.UCDetectItem();
+            this.ucSRClose = new DetectCodeAndCurrent.UCDetectItem();
+            this.ucSRVent = new DetectCodeAndCurrent.UCDetectItem();
+            this.ucVentClose = new DetectCodeAndCurrent.UCDetectItem();
+            this.ucSunshadeOpen = new DetectCodeAndCurrent.UCDetectItem();
+            this.ucSunshadeClose = new DetectCodeAndCurrent.UCDetectItem();
+            this.ucOnStar = new DetectCodeAndCurrent.UCDetectItem();
+            this.ucSoS = new DetectCodeAndCurrent.UCDetectItem();
+            this.ucPhone = new DetectCodeAndCurrent.UCDetectItem();
+            this.tabTEGResult = new System.Windows.Forms.TabPage();
             this.panelCurrent = new System.Windows.Forms.Panel();
             this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
@@ -51,8 +70,10 @@
             this.pbxMick3 = new System.Windows.Forms.PictureBox();
             this.pbxMick2 = new System.Windows.Forms.PictureBox();
             this.pbxMick1 = new System.Windows.Forms.PictureBox();
+            this.labTipTestButton = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.dgvTEGShow = new System.Windows.Forms.DataGridView();
             this.labPostion = new System.Windows.Forms.Label();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -122,11 +143,17 @@
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabGroup.SuspendLayout();
+            this.tabScanCodePage.SuspendLayout();
+            this.tabDetect.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
+            this.tabTEGResult.SuspendLayout();
             this.panelCurrent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTEGShow)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bdgSearch)).BeginInit();
             this.bdgSearch.SuspendLayout();
@@ -145,7 +172,7 @@
             this.lstMessage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstMessage.Location = new System.Drawing.Point(0, 0);
             this.lstMessage.Name = "lstMessage";
-            this.lstMessage.Size = new System.Drawing.Size(1165, 87);
+            this.lstMessage.Size = new System.Drawing.Size(1449, 168);
             this.lstMessage.TabIndex = 5;
             this.lstMessage.UseCompatibleStateImageBehavior = false;
             // 
@@ -161,9 +188,9 @@
             this.tsslCurrentUpper,
             this.toolStripStatusLabel3,
             this.tsslUpperCurrent});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 520);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 893);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1177, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(1461, 25);
             this.statusStrip1.TabIndex = 9;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -224,15 +251,14 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1165, 329);
+            this.tabControl1.Size = new System.Drawing.Size(1449, 621);
             this.tabControl1.TabIndex = 10;
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage1.Controls.Add(this.panelCurrent);
+            this.tabPage1.Controls.Add(this.tabGroup);
             this.tabPage1.Controls.Add(this.labPostion);
-            this.tabPage1.Controls.Add(this.flowLayoutPanel1);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.label3);
@@ -244,13 +270,206 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1157, 300);
+            this.tabPage1.Size = new System.Drawing.Size(1441, 592);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "当前生产产品信息";
             // 
+            // tabGroup
+            // 
+            this.tabGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabGroup.Controls.Add(this.tabScanCodePage);
+            this.tabGroup.Controls.Add(this.tabDetect);
+            this.tabGroup.Controls.Add(this.tabTEGResult);
+            this.tabGroup.ItemSize = new System.Drawing.Size(15, 50);
+            this.tabGroup.Location = new System.Drawing.Point(269, 6);
+            this.tabGroup.Name = "tabGroup";
+            this.tabGroup.SelectedIndex = 0;
+            this.tabGroup.Size = new System.Drawing.Size(1166, 586);
+            this.tabGroup.TabIndex = 14;
+            // 
+            // tabScanCodePage
+            // 
+            this.tabScanCodePage.Controls.Add(this.flowLayoutPanel1);
+            this.tabScanCodePage.Location = new System.Drawing.Point(4, 54);
+            this.tabScanCodePage.Name = "tabScanCodePage";
+            this.tabScanCodePage.Padding = new System.Windows.Forms.Padding(3);
+            this.tabScanCodePage.Size = new System.Drawing.Size(1158, 528);
+            this.tabScanCodePage.TabIndex = 0;
+            this.tabScanCodePage.Text = "扫码界面";
+            this.tabScanCodePage.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1152, 522);
+            this.flowLayoutPanel1.TabIndex = 8;
+            // 
+            // tabDetect
+            // 
+            this.tabDetect.Controls.Add(this.flowLayoutPanel2);
+            this.tabDetect.Location = new System.Drawing.Point(4, 54);
+            this.tabDetect.Name = "tabDetect";
+            this.tabDetect.Padding = new System.Windows.Forms.Padding(3);
+            this.tabDetect.Size = new System.Drawing.Size(1158, 528);
+            this.tabDetect.TabIndex = 1;
+            this.tabDetect.Text = "电检界面";
+            this.tabDetect.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel2.AutoScroll = true;
+            this.flowLayoutPanel2.Controls.Add(this.ucDome);
+            this.flowLayoutPanel2.Controls.Add(this.ucDomeOn);
+            this.flowLayoutPanel2.Controls.Add(this.ucIntrusionSensor);
+            this.flowLayoutPanel2.Controls.Add(this.ucSROpen);
+            this.flowLayoutPanel2.Controls.Add(this.ucSRClose);
+            this.flowLayoutPanel2.Controls.Add(this.ucSRVent);
+            this.flowLayoutPanel2.Controls.Add(this.ucVentClose);
+            this.flowLayoutPanel2.Controls.Add(this.ucSunshadeOpen);
+            this.flowLayoutPanel2.Controls.Add(this.ucSunshadeClose);
+            this.flowLayoutPanel2.Controls.Add(this.ucOnStar);
+            this.flowLayoutPanel2.Controls.Add(this.ucSoS);
+            this.flowLayoutPanel2.Controls.Add(this.ucPhone);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(9, 6);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(1146, 450);
+            this.flowLayoutPanel2.TabIndex = 14;
+            // 
+            // ucDome
+            // 
+            this.ucDome.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucDome.detectItemName = "车顶灯开门感应关";
+            this.ucDome.Location = new System.Drawing.Point(3, 3);
+            this.ucDome.Name = "ucDome";
+            this.ucDome.Size = new System.Drawing.Size(369, 106);
+            this.ucDome.TabIndex = 0;
+            // 
+            // ucDomeOn
+            // 
+            this.ucDomeOn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucDomeOn.detectItemName = "车顶灯开门感应开";
+            this.ucDomeOn.Location = new System.Drawing.Point(378, 3);
+            this.ucDomeOn.Name = "ucDomeOn";
+            this.ucDomeOn.Size = new System.Drawing.Size(369, 106);
+            this.ucDomeOn.TabIndex = 0;
+            // 
+            // ucIntrusionSensor
+            // 
+            this.ucIntrusionSensor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucIntrusionSensor.detectItemName = "车辆报警器";
+            this.ucIntrusionSensor.Location = new System.Drawing.Point(753, 3);
+            this.ucIntrusionSensor.Name = "ucIntrusionSensor";
+            this.ucIntrusionSensor.Size = new System.Drawing.Size(369, 106);
+            this.ucIntrusionSensor.TabIndex = 0;
+            // 
+            // ucSROpen
+            // 
+            this.ucSROpen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucSROpen.detectItemName = "天窗开";
+            this.ucSROpen.Location = new System.Drawing.Point(3, 115);
+            this.ucSROpen.Name = "ucSROpen";
+            this.ucSROpen.Size = new System.Drawing.Size(369, 106);
+            this.ucSROpen.TabIndex = 0;
+            // 
+            // ucSRClose
+            // 
+            this.ucSRClose.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucSRClose.detectItemName = "天窗关";
+            this.ucSRClose.Location = new System.Drawing.Point(378, 115);
+            this.ucSRClose.Name = "ucSRClose";
+            this.ucSRClose.Size = new System.Drawing.Size(369, 106);
+            this.ucSRClose.TabIndex = 0;
+            // 
+            // ucSRVent
+            // 
+            this.ucSRVent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucSRVent.detectItemName = "天窗通风开";
+            this.ucSRVent.Location = new System.Drawing.Point(753, 115);
+            this.ucSRVent.Name = "ucSRVent";
+            this.ucSRVent.Size = new System.Drawing.Size(369, 106);
+            this.ucSRVent.TabIndex = 0;
+            // 
+            // ucVentClose
+            // 
+            this.ucVentClose.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucVentClose.detectItemName = "天窗通风关";
+            this.ucVentClose.Location = new System.Drawing.Point(3, 227);
+            this.ucVentClose.Name = "ucVentClose";
+            this.ucVentClose.Size = new System.Drawing.Size(369, 106);
+            this.ucVentClose.TabIndex = 0;
+            // 
+            // ucSunshadeOpen
+            // 
+            this.ucSunshadeOpen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucSunshadeOpen.detectItemName = "遮阳帘开";
+            this.ucSunshadeOpen.Location = new System.Drawing.Point(378, 227);
+            this.ucSunshadeOpen.Name = "ucSunshadeOpen";
+            this.ucSunshadeOpen.Size = new System.Drawing.Size(369, 106);
+            this.ucSunshadeOpen.TabIndex = 0;
+            // 
+            // ucSunshadeClose
+            // 
+            this.ucSunshadeClose.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucSunshadeClose.detectItemName = "遮阳帘关";
+            this.ucSunshadeClose.Location = new System.Drawing.Point(753, 227);
+            this.ucSunshadeClose.Name = "ucSunshadeClose";
+            this.ucSunshadeClose.Size = new System.Drawing.Size(369, 106);
+            this.ucSunshadeClose.TabIndex = 0;
+            // 
+            // ucOnStar
+            // 
+            this.ucOnStar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucOnStar.detectItemName = "安吉星按钮";
+            this.ucOnStar.Location = new System.Drawing.Point(3, 339);
+            this.ucOnStar.Name = "ucOnStar";
+            this.ucOnStar.Size = new System.Drawing.Size(369, 106);
+            this.ucOnStar.TabIndex = 0;
+            // 
+            // ucSoS
+            // 
+            this.ucSoS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucSoS.detectItemName = "紧急呼叫按钮";
+            this.ucSoS.Location = new System.Drawing.Point(378, 339);
+            this.ucSoS.Name = "ucSoS";
+            this.ucSoS.Size = new System.Drawing.Size(369, 106);
+            this.ucSoS.TabIndex = 0;
+            // 
+            // ucPhone
+            // 
+            this.ucPhone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucPhone.detectItemName = "车载电话按钮";
+            this.ucPhone.Location = new System.Drawing.Point(753, 339);
+            this.ucPhone.Name = "ucPhone";
+            this.ucPhone.Size = new System.Drawing.Size(369, 106);
+            this.ucPhone.TabIndex = 0;
+            // 
+            // tabTEGResult
+            // 
+            this.tabTEGResult.Controls.Add(this.panelCurrent);
+            this.tabTEGResult.Controls.Add(this.labTipTestButton);
+            this.tabTEGResult.Controls.Add(this.label29);
+            this.tabTEGResult.Controls.Add(this.dgvTEGShow);
+            this.tabTEGResult.Location = new System.Drawing.Point(4, 54);
+            this.tabTEGResult.Name = "tabTEGResult";
+            this.tabTEGResult.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTEGResult.Size = new System.Drawing.Size(1158, 528);
+            this.tabTEGResult.TabIndex = 2;
+            this.tabTEGResult.Text = "电检结果";
+            this.tabTEGResult.UseVisualStyleBackColor = true;
+            // 
             // panelCurrent
             // 
-            this.panelCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.panelCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelCurrent.Controls.Add(this.label20);
             this.panelCurrent.Controls.Add(this.label19);
@@ -260,16 +479,16 @@
             this.panelCurrent.Controls.Add(this.pbxMick3);
             this.panelCurrent.Controls.Add(this.pbxMick2);
             this.panelCurrent.Controls.Add(this.pbxMick1);
-            this.panelCurrent.Location = new System.Drawing.Point(270, 235);
+            this.panelCurrent.Location = new System.Drawing.Point(919, 28);
             this.panelCurrent.Name = "panelCurrent";
-            this.panelCurrent.Size = new System.Drawing.Size(862, 66);
-            this.panelCurrent.TabIndex = 12;
+            this.panelCurrent.Size = new System.Drawing.Size(219, 480);
+            this.panelCurrent.TabIndex = 16;
             // 
             // label20
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label20.Location = new System.Drawing.Point(656, 21);
+            this.label20.Location = new System.Drawing.Point(3, 336);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(119, 20);
             this.label20.TabIndex = 11;
@@ -279,7 +498,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label19.Location = new System.Drawing.Point(441, 21);
+            this.label19.Location = new System.Drawing.Point(3, 244);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(119, 20);
             this.label19.TabIndex = 11;
@@ -289,7 +508,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label18.Location = new System.Drawing.Point(217, 21);
+            this.label18.Location = new System.Drawing.Point(3, 158);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(119, 20);
             this.label18.TabIndex = 11;
@@ -299,7 +518,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(5, 21);
+            this.label17.Location = new System.Drawing.Point(3, 64);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(119, 20);
             this.label17.TabIndex = 11;
@@ -307,7 +526,7 @@
             // 
             // pbxMick4
             // 
-            this.pbxMick4.Location = new System.Drawing.Point(791, 4);
+            this.pbxMick4.Location = new System.Drawing.Point(148, 319);
             this.pbxMick4.Name = "pbxMick4";
             this.pbxMick4.Size = new System.Drawing.Size(63, 55);
             this.pbxMick4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -316,7 +535,7 @@
             // 
             // pbxMick3
             // 
-            this.pbxMick3.Location = new System.Drawing.Point(566, 4);
+            this.pbxMick3.Location = new System.Drawing.Point(148, 232);
             this.pbxMick3.Name = "pbxMick3";
             this.pbxMick3.Size = new System.Drawing.Size(63, 55);
             this.pbxMick3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -325,7 +544,7 @@
             // 
             // pbxMick2
             // 
-            this.pbxMick2.Location = new System.Drawing.Point(342, 4);
+            this.pbxMick2.Location = new System.Drawing.Point(148, 138);
             this.pbxMick2.Name = "pbxMick2";
             this.pbxMick2.Size = new System.Drawing.Size(63, 55);
             this.pbxMick2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -334,13 +553,54 @@
             // 
             // pbxMick1
             // 
-            this.pbxMick1.Location = new System.Drawing.Point(127, 6);
+            this.pbxMick1.Location = new System.Drawing.Point(148, 47);
             this.pbxMick1.Name = "pbxMick1";
             this.pbxMick1.Size = new System.Drawing.Size(63, 55);
             this.pbxMick1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbxMick1.TabIndex = 10;
             this.pbxMick1.TabStop = false;
-            this.pbxMick1.Click += new System.EventHandler(this.pictureBox2_Click);
+            // 
+            // labTipTestButton
+            // 
+            this.labTipTestButton.AutoSize = true;
+            this.labTipTestButton.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labTipTestButton.Location = new System.Drawing.Point(216, 21);
+            this.labTipTestButton.Name = "labTipTestButton";
+            this.labTipTestButton.Size = new System.Drawing.Size(253, 30);
+            this.labTipTestButton.TabIndex = 1;
+            this.labTipTestButton.Text = "当前需要测试按键";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label29.Location = new System.Drawing.Point(17, 21);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(193, 30);
+            this.label29.TabIndex = 1;
+            this.label29.Text = "请按下按键：";
+            // 
+            // dgvTEGShow
+            // 
+            this.dgvTEGShow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvTEGShow.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvTEGShow.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvTEGShow.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvTEGShow.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvTEGShow.Location = new System.Drawing.Point(6, 76);
+            this.dgvTEGShow.Name = "dgvTEGShow";
+            this.dgvTEGShow.RowTemplate.Height = 27;
+            this.dgvTEGShow.Size = new System.Drawing.Size(864, 446);
+            this.dgvTEGShow.TabIndex = 0;
             // 
             // labPostion
             // 
@@ -349,20 +609,7 @@
             this.labPostion.Name = "labPostion";
             this.labPostion.Size = new System.Drawing.Size(15, 15);
             this.labPostion.TabIndex = 9;
-            this.labPostion.Text = "1";
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(270, 21);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(862, 213);
-            this.flowLayoutPanel1.TabIndex = 8;
+            this.labPostion.Text = "2";
             // 
             // button1
             // 
@@ -445,7 +692,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1157, 300);
+            this.tabPage2.Size = new System.Drawing.Size(1441, 592);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "记录信息";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -488,7 +735,7 @@
             this.bdgSearch.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bdgSearch.Name = "bdgSearch";
             this.bdgSearch.PositionItem = this.bindingNavigatorPositionItem;
-            this.bdgSearch.Size = new System.Drawing.Size(1151, 30);
+            this.bdgSearch.Size = new System.Drawing.Size(1435, 30);
             this.bdgSearch.TabIndex = 13;
             // 
             // bindingNavigatorCountItem
@@ -712,7 +959,7 @@
             this.dgvRecords.Location = new System.Drawing.Point(394, 39);
             this.dgvRecords.Name = "dgvRecords";
             this.dgvRecords.RowTemplate.Height = 27;
-            this.dgvRecords.Size = new System.Drawing.Size(757, 236);
+            this.dgvRecords.Size = new System.Drawing.Size(1041, 528);
             this.dgvRecords.TabIndex = 0;
             this.dgvRecords.CurrentCellChanged += new System.EventHandler(this.dgvRecords_CurrentCellChanged);
             // 
@@ -746,7 +993,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1157, 300);
+            this.tabPage3.Size = new System.Drawing.Size(1441, 592);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "手动IO";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -977,8 +1224,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.lstMessage);
-            this.splitContainer1.Size = new System.Drawing.Size(1165, 420);
-            this.splitContainer1.SplitterDistance = 329;
+            this.splitContainer1.Size = new System.Drawing.Size(1449, 793);
+            this.splitContainer1.SplitterDistance = 621;
             this.splitContainer1.TabIndex = 11;
             // 
             // label8
@@ -986,7 +1233,7 @@
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("微软雅黑", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(434, 25);
+            this.label8.Location = new System.Drawing.Point(576, 25);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(326, 57);
             this.label8.TabIndex = 12;
@@ -1011,11 +1258,12 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(1177, 545);
+            this.ClientSize = new System.Drawing.Size(1461, 918);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DectectMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "扫码电检测";
@@ -1027,12 +1275,19 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabGroup.ResumeLayout(false);
+            this.tabScanCodePage.ResumeLayout(false);
+            this.tabDetect.ResumeLayout(false);
+            this.flowLayoutPanel2.ResumeLayout(false);
+            this.tabTEGResult.ResumeLayout(false);
+            this.tabTEGResult.PerformLayout();
             this.panelCurrent.ResumeLayout(false);
             this.panelCurrent.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTEGShow)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bdgSearch)).EndInit();
@@ -1126,15 +1381,6 @@
         private System.Windows.Forms.TextBox tbxMick3Volt;
         private System.Windows.Forms.TextBox tbxMick2Volt;
         private System.Windows.Forms.TextBox tbxMick1Volt;
-        private System.Windows.Forms.PictureBox pbxMick1;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.PictureBox pbxMick4;
-        private System.Windows.Forms.PictureBox pbxMick3;
-        private System.Windows.Forms.PictureBox pbxMick2;
-        private System.Windows.Forms.Panel panelCurrent;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label26;
@@ -1143,6 +1389,35 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label21;
+        private UCDetectItem ucDome;
+        private System.Windows.Forms.TabControl tabGroup;
+        private System.Windows.Forms.TabPage tabScanCodePage;
+        private System.Windows.Forms.TabPage tabDetect;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private UCDetectItem ucDomeOn;
+        private UCDetectItem ucIntrusionSensor;
+        private UCDetectItem ucSROpen;
+        private UCDetectItem ucSRClose;
+        private UCDetectItem ucSRVent;
+        private UCDetectItem ucVentClose;
+        private UCDetectItem ucSunshadeOpen;
+        private UCDetectItem ucSunshadeClose;
+        private UCDetectItem ucOnStar;
+        private UCDetectItem ucSoS;
+        private UCDetectItem ucPhone;
+        private System.Windows.Forms.TabPage tabTEGResult;
+        private System.Windows.Forms.Label labTipTestButton;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.DataGridView dgvTEGShow;
+        private System.Windows.Forms.Panel panelCurrent;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.PictureBox pbxMick4;
+        private System.Windows.Forms.PictureBox pbxMick3;
+        private System.Windows.Forms.PictureBox pbxMick2;
+        private System.Windows.Forms.PictureBox pbxMick1;
     }
 }
 

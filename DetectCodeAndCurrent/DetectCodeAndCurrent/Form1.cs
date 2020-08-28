@@ -10,8 +10,12 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Threading;
 
-namespace DetectCodeAndCurrent
-{
+namespace DetectCodeAndCurrent {
+    public enum eUCStatuType {
+        Init,
+        Fail,
+        Sucess
+    }
 
     public struct sProductInfo{
         public string name;
@@ -22,6 +26,14 @@ namespace DetectCodeAndCurrent
         public int station;
     }
 
+    public struct sButtonInfo {
+        public string dbColumnName;
+        public UCDetectItem ucItem;
+        public eStateType statuType;
+        public int station;
+        public string dataByte;
+    }
+
     public struct sMessageType {
         public const string TIP = "提示";
         public const string ERROR = "错误";
@@ -30,6 +42,7 @@ namespace DetectCodeAndCurrent
     public partial class DectectMainForm : Form {
         //const string gConnStr = "data source=127.0.0.1;database=jixing_db;user id=root;password=riemann;pooling=false;charset=utf8";
         List<sProductInfo> gProductInfosList;
+        List<sButtonInfo> gButtonInfosList;
         public DectectMainForm() {
             InitializeComponent();
         }
@@ -41,11 +54,70 @@ namespace DetectCodeAndCurrent
             instance.Event_InitLastInfo += LastRecord_Init;
             instance.Event_Message += NewWorkMessage_Come;
             instance.Event_EndProduct += Product_End;
+            instance.ButtonInfoPassBack += TEGResult_Show;
             MysqlConnector sqlInstance = MysqlConnector.GetInstance();
             sqlInstance.threadExceptionEventHandler = SqlError_Happend;
             InitControls();
             instance.InitialWork();
         }
+
+        private void TEGResult_Show(string tipTestName, EventArgs e) {
+            if (InvokeRequired) {
+                Invoke(new MethodInvoker(delegate () {
+                    ShowTEGResult(tipTestName,e);
+                }));
+            }
+            else {
+                ShowTEGResult(tipTestName, e);
+            }
+
+
+        }
+        private void ShowTEGResult(string tipTestName, EventArgs e) {
+            if (tipTestName != string.Empty) labTipTestButton.Text = tipTestName;
+            if (e != null) {
+                TegAtgs teginfo = (TegAtgs)e;
+                int index = FindCell(teginfo.buttonName);
+                if (index != -1) {
+                    dgvTEGShow.Rows[index].Cells["测量值"].Value = teginfo.resultValue;
+                    DataGridViewCell cell = dgvTEGShow.Rows[index].Cells["当前状态"];
+                    if (teginfo.resultFlag == true) {
+                        cell.Style.BackColor = Color.Green;
+                        cell.Value = "已完成";
+                        
+                    }
+                    else {
+                        cell.Style.BackColor = Color.Red;
+                        cell.Value = "未通过";
+                        
+                    }
+                     
+                }
+                //teginfo.buttonName
+
+            }
+        }
+
+        private int FindCell(string buttonName) {
+            for (int i = 0; i < dgvTEGShow.Rows.Count; i++) {
+                DataGridViewCell cell = dgvTEGShow.Rows[i].Cells["检测项"];
+                if (cell.Value!=null && cell.Value.ToString() == buttonName) {
+                    return cell.RowIndex;
+                }
+            }
+            return -1;
+        }
+        private void InitTEGShow() {
+            DataTable dt = SqlOperation.GetButtonConfigInfo();
+
+            dgvTEGShow.DataSource = dt;
+            //DataGridViewCellStyle dgvCellStyle = new DataGridViewCellStyle();
+            //dgvCellStyle.BackColor = Color.Red;
+            dgvTEGShow.Columns["ID"].Visible = false;
+            // dgvTEGShow.DataSource
+
+        }
+
         private void SqlError_Happend(Exception ex) {
             ShowMessage(sMessageType.ERROR, ex.Message);
         }
@@ -77,8 +149,13 @@ namespace DetectCodeAndCurrent
         }
         private void InitalTSSBtn() {
             if (labPostion.Text == "1") {
-                panelCurrent.Visible = false;
+                //tabGroup.TabPages.Remove(tabDetect);
+                tabGroup.SelectedTab = tabScanCodePage;
                 tabControl1.TabPages.Remove(tabPage3);
+            }
+            else {
+                tabGroup.SelectedTab = tabTEGResult;
+                InitTEGShow();
             }
             if (this.InvokeRequired) {
                 Invoke(new MethodInvoker(delegate () {
@@ -130,6 +207,45 @@ namespace DetectCodeAndCurrent
             }
 
         }
+        private void InitButtonControls() {
+            sButtonInfo info;
+            info = new sButtonInfo() { dbColumnName = "domeOff", ucItem = ucDome, statuType = eStateType.Waiting, station = 2, dataByte = "0x00,0x00,0x02,0x00" } ;
+            gButtonInfosList.Add(info);
+            info = new sButtonInfo() { dbColumnName = "intrusionSensor", ucItem = ucIntrusionSensor, statuType = eStateType.Waiting, station = 2 };
+            gButtonInfosList.Add(info);
+            info = new sButtonInfo() { dbColumnName = "domeOn", ucItem = ucDomeOn, statuType = eStateType.Waiting, station = 2 };
+            gButtonInfosList.Add(info);
+            info = new sButtonInfo() { dbColumnName = "SROpen", ucItem = ucSROpen, statuType = eStateType.Waiting, station = 2 };
+            gButtonInfosList.Add(info);
+            info = new sButtonInfo() { dbColumnName = "SRClose", ucItem = ucSRClose, statuType = eStateType.Waiting, station = 2 };
+            gButtonInfosList.Add(info);
+            info = new sButtonInfo() { dbColumnName = "SRVent", ucItem = ucSRVent, statuType = eStateType.Waiting, station = 2 };
+            gButtonInfosList.Add(info);
+            info = new sButtonInfo() { dbColumnName = "ventClose", ucItem = ucVentClose, statuType = eStateType.Waiting, station = 2 };
+            gButtonInfosList.Add(info);
+            info = new sButtonInfo() { dbColumnName = "sunshadeOpen", ucItem = ucSunshadeOpen, statuType = eStateType.Waiting, station = 2 };
+            gButtonInfosList.Add(info);
+            info = new sButtonInfo() { dbColumnName = "sunshadeClose", ucItem = ucSunshadeClose, statuType = eStateType.Waiting, station = 2 };
+            gButtonInfosList.Add(info);
+            info = new sButtonInfo() { dbColumnName = "onStarButton", ucItem = ucOnStar, statuType = eStateType.Waiting, station = 2 };
+            gButtonInfosList.Add(info);
+            info = new sButtonInfo() { dbColumnName = "sosButton", ucItem = ucSoS, statuType = eStateType.Waiting, station = 2 };
+            gButtonInfosList.Add(info);
+            info = new sButtonInfo() { dbColumnName = "phoneButton", ucItem = ucPhone, statuType = eStateType.Waiting, station = 2 };
+            gButtonInfosList.Add(info);
+        }
+
+        private void ButtonControlsState_Show() {
+            foreach (sButtonInfo info in gButtonInfosList) {
+                info.ucItem.UpdateItemShowState((int)info.statuType); 
+            }
+        }
+
+        private void ButtonControlsState_Show(string name) {
+         sButtonInfo info =  gButtonInfosList.Find(s => s.dbColumnName.Equals((string)name));
+            info.ucItem.UpdateItemShowState((int)info.statuType);
+        }
+
         private void InitControls() {
             InitalTSSBtn();
             lstMessage.View = View.Details;
