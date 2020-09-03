@@ -17,7 +17,7 @@ namespace DetectCodeAndCurrent {
     public class Hid : object {
         private IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
         private const int MAX_USB_DEVICES = 64;
-        private bool deviceOpened = false;
+        protected bool deviceOpened = false;
         private FileStream hidDevice = null;
         private IntPtr hHubDevice;
 

@@ -64,6 +64,8 @@ namespace DetectCodeAndCurrent {
         private void UpdateDataControl(string ProductType) {
             float upper = 0;
             float lower = 0;
+            float lightUpper = 0;
+            float lightLower = 0;
             float upperCurrent = 0;
             string productCodeId = "";
             BindingSource bs = new BindingSource();
@@ -72,8 +74,11 @@ namespace DetectCodeAndCurrent {
             bdnAssembleConfig.BindingSource = bs;
             SqlOperation.GetProductConfigCodeFromSQL(ProductType, out productCodeId);
             SqlOperation.GetProductCurrentRange(productCodeId, out upper, out lower ,out upperCurrent);
+            SqlOperation.GetProductLightCurrentRange(productCodeId, out lightUpper, out lightLower);
             txtLower.Text = lower.ToString();
             txtUpper.Text = upper.ToString();
+            txtLightCurrentLow.Text = lightLower.ToString();
+            txtLightCurrentUp.Text = lightUpper.ToString();
             txtUpperCurrent.Text = upperCurrent.ToString();
             
         }
@@ -123,14 +128,17 @@ namespace DetectCodeAndCurrent {
             try {
                 float lower = Convert.ToSingle(txtLower.Text);
                 float upper = Convert.ToSingle(txtUpper.Text);
+                float lightLower = Convert.ToSingle(txtLightCurrentLow.Text);
+                float lightUpper = Convert.ToSingle(txtLightCurrentUp.Text);
                 float upperCurrent = Convert.ToSingle(txtUpperCurrent.Text);
+                if (lower > upper || lightLower > lightUpper) throw new Exception("参数输入范围错误，请检查后重试！");
                 if (cmbProductType.SelectedItem != null) {
                     SqlOperation.GetProductConfigCodeFromSQL(cmbProductType.SelectedItem.ToString(), out productCodeId);
-                    SqlOperation.SetCurrentValue(productCodeId, upper, lower, upperCurrent);
+                    SqlOperation.SetCurrentValue(productCodeId, upper, lower, upperCurrent, lightUpper, lightLower);
                 }
             }
             catch (Exception ex) {
-                MessageBox.Show("修改失败！");
+                MessageBox.Show("修改失败！"+ex.Message);
             }
           
         }

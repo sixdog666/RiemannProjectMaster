@@ -68,8 +68,18 @@
             this.txtProductCode = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.txtUpperCurrent = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txtLightCurrentUp = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txtLightCurrentLow = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -82,9 +92,7 @@
             this.txtPartCode = new System.Windows.Forms.TextBox();
             this.btnPartRevert = new System.Windows.Forms.Button();
             this.txtPartName = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             label9 = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
             label11 = new System.Windows.Forms.Label();
@@ -103,13 +111,14 @@
             this.splitContainer1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // label9
             // 
             label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             label9.AutoSize = true;
-            label9.Location = new System.Drawing.Point(236, 41);
+            label9.Location = new System.Drawing.Point(224, 41);
             label9.Name = "label9";
             label9.Size = new System.Drawing.Size(52, 15);
             label9.TabIndex = 15;
@@ -119,7 +128,7 @@
             // 
             label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             label10.AutoSize = true;
-            label10.Location = new System.Drawing.Point(236, 78);
+            label10.Location = new System.Drawing.Point(224, 78);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(67, 15);
             label10.TabIndex = 15;
@@ -129,7 +138,7 @@
             // 
             label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             label11.AutoSize = true;
-            label11.Location = new System.Drawing.Point(308, 78);
+            label11.Location = new System.Drawing.Point(296, 78);
             label11.Name = "label11";
             label11.Size = new System.Drawing.Size(67, 15);
             label11.TabIndex = 15;
@@ -139,7 +148,7 @@
             // 
             label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             label12.AutoSize = true;
-            label12.Location = new System.Drawing.Point(308, 41);
+            label12.Location = new System.Drawing.Point(296, 41);
             label12.Name = "label12";
             label12.Size = new System.Drawing.Size(52, 15);
             label12.TabIndex = 15;
@@ -172,7 +181,7 @@
             // btnProductAdd
             // 
             this.btnProductAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnProductAdd.Location = new System.Drawing.Point(264, 118);
+            this.btnProductAdd.Location = new System.Drawing.Point(252, 118);
             this.btnProductAdd.Name = "btnProductAdd";
             this.btnProductAdd.Size = new System.Drawing.Size(67, 28);
             this.btnProductAdd.TabIndex = 5;
@@ -183,7 +192,7 @@
             // btnProductDelete
             // 
             this.btnProductDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnProductDelete.Location = new System.Drawing.Point(434, 118);
+            this.btnProductDelete.Location = new System.Drawing.Point(422, 118);
             this.btnProductDelete.Name = "btnProductDelete";
             this.btnProductDelete.Size = new System.Drawing.Size(67, 28);
             this.btnProductDelete.TabIndex = 5;
@@ -431,7 +440,7 @@
             // 
             // txtUpper
             // 
-            this.txtUpper.Location = new System.Drawing.Point(463, 468);
+            this.txtUpper.Location = new System.Drawing.Point(443, 18);
             this.txtUpper.Name = "txtUpper";
             this.txtUpper.Size = new System.Drawing.Size(119, 25);
             this.txtUpper.TabIndex = 11;
@@ -439,15 +448,15 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(36, 478);
+            this.label6.Location = new System.Drawing.Point(16, 28);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(97, 15);
+            this.label6.Size = new System.Drawing.Size(112, 15);
             this.label6.TabIndex = 12;
-            this.label6.Text = "电流电压范围";
+            this.label6.Text = "麦克风电压范围";
             // 
             // txtLower
             // 
-            this.txtLower.Location = new System.Drawing.Point(229, 468);
+            this.txtLower.Location = new System.Drawing.Point(209, 18);
             this.txtLower.Name = "txtLower";
             this.txtLower.Size = new System.Drawing.Size(119, 25);
             this.txtLower.TabIndex = 11;
@@ -455,7 +464,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(410, 478);
+            this.label7.Location = new System.Drawing.Point(390, 28);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(37, 15);
             this.label7.TabIndex = 12;
@@ -464,7 +473,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(187, 478);
+            this.label8.Location = new System.Drawing.Point(167, 28);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(37, 15);
             this.label8.TabIndex = 12;
@@ -472,7 +481,7 @@
             // 
             // btnRevert
             // 
-            this.btnRevert.Location = new System.Drawing.Point(334, 519);
+            this.btnRevert.Location = new System.Drawing.Point(635, 99);
             this.btnRevert.Name = "btnRevert";
             this.btnRevert.Size = new System.Drawing.Size(75, 23);
             this.btnRevert.TabIndex = 13;
@@ -483,7 +492,7 @@
             // btnProductRevert
             // 
             this.btnProductRevert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnProductRevert.Location = new System.Drawing.Point(348, 118);
+            this.btnProductRevert.Location = new System.Drawing.Point(336, 118);
             this.btnProductRevert.Name = "btnProductRevert";
             this.btnProductRevert.Size = new System.Drawing.Size(67, 28);
             this.btnProductRevert.TabIndex = 5;
@@ -494,7 +503,7 @@
             // txtProductName
             // 
             this.txtProductName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtProductName.Location = new System.Drawing.Point(309, 38);
+            this.txtProductName.Location = new System.Drawing.Point(297, 38);
             this.txtProductName.Name = "txtProductName";
             this.txtProductName.Size = new System.Drawing.Size(190, 25);
             this.txtProductName.TabIndex = 14;
@@ -502,7 +511,7 @@
             // txtProductCode
             // 
             this.txtProductCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtProductCode.Location = new System.Drawing.Point(309, 68);
+            this.txtProductCode.Location = new System.Drawing.Point(297, 68);
             this.txtProductCode.Name = "txtProductCode";
             this.txtProductCode.Size = new System.Drawing.Size(190, 25);
             this.txtProductCode.TabIndex = 14;
@@ -515,37 +524,72 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1149, 619);
+            this.tabControl1.Size = new System.Drawing.Size(1125, 633);
             this.tabControl1.TabIndex = 16;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.label15);
-            this.tabPage1.Controls.Add(this.label16);
-            this.tabPage1.Controls.Add(this.label14);
-            this.tabPage1.Controls.Add(this.txtUpperCurrent);
-            this.tabPage1.Controls.Add(this.label13);
+            this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.panel2);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.btnRevert);
             this.tabPage1.Controls.Add(this.cmbProductType);
             this.tabPage1.Controls.Add(this.panel1);
-            this.tabPage1.Controls.Add(this.label8);
-            this.tabPage1.Controls.Add(this.txtUpper);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.txtLower);
-            this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1141, 590);
+            this.tabPage1.Size = new System.Drawing.Size(1117, 604);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "产品信息配置";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(577, 106);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(15, 15);
+            this.label21.TabIndex = 16;
+            this.label21.Text = "A";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(577, 28);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(15, 15);
+            this.label15.TabIndex = 16;
+            this.label15.Text = "V";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(315, 61);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(23, 15);
+            this.label16.TabIndex = 16;
+            this.label16.Text = "mA";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(335, 106);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(15, 15);
+            this.label20.TabIndex = 16;
+            this.label20.Text = "A";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(335, 27);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(15, 15);
+            this.label14.TabIndex = 16;
+            this.label14.Text = "V";
+            // 
             // txtUpperCurrent
             // 
-            this.txtUpperCurrent.Location = new System.Drawing.Point(192, 517);
+            this.txtUpperCurrent.Location = new System.Drawing.Point(209, 55);
             this.txtUpperCurrent.Name = "txtUpperCurrent";
             this.txtUpperCurrent.Size = new System.Drawing.Size(100, 25);
             this.txtUpperCurrent.TabIndex = 15;
@@ -553,11 +597,52 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(36, 524);
+            this.label13.Location = new System.Drawing.Point(16, 65);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(97, 15);
+            this.label13.Size = new System.Drawing.Size(142, 15);
             this.label13.TabIndex = 14;
-            this.label13.Text = "最大工作电流";
+            this.label13.Text = "麦克风最大工作电流";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(167, 107);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(37, 15);
+            this.label19.TabIndex = 12;
+            this.label19.Text = "下限";
+            // 
+            // txtLightCurrentUp
+            // 
+            this.txtLightCurrentUp.Location = new System.Drawing.Point(443, 97);
+            this.txtLightCurrentUp.Name = "txtLightCurrentUp";
+            this.txtLightCurrentUp.Size = new System.Drawing.Size(119, 25);
+            this.txtLightCurrentUp.TabIndex = 11;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(390, 107);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(37, 15);
+            this.label18.TabIndex = 12;
+            this.label18.Text = "上限";
+            // 
+            // txtLightCurrentLow
+            // 
+            this.txtLightCurrentLow.Location = new System.Drawing.Point(209, 97);
+            this.txtLightCurrentLow.Name = "txtLightCurrentLow";
+            this.txtLightCurrentLow.Size = new System.Drawing.Size(119, 25);
+            this.txtLightCurrentLow.TabIndex = 11;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(16, 107);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(82, 15);
+            this.label17.TabIndex = 12;
+            this.label17.Text = "灯电流范围";
             // 
             // tabPage2
             // 
@@ -565,7 +650,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1141, 590);
+            this.tabPage2.Size = new System.Drawing.Size(1117, 604);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "零件信息配置";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -583,8 +668,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
-            this.splitContainer1.Size = new System.Drawing.Size(1135, 584);
-            this.splitContainer1.SplitterDistance = 524;
+            this.splitContainer1.Size = new System.Drawing.Size(1111, 598);
+            this.splitContainer1.SplitterDistance = 512;
             this.splitContainer1.TabIndex = 20;
             // 
             // groupBox1
@@ -600,7 +685,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(524, 584);
+            this.groupBox1.Size = new System.Drawing.Size(512, 598);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "产品";
@@ -614,7 +699,7 @@
             this.lstProducts.ItemHeight = 15;
             this.lstProducts.Location = new System.Drawing.Point(10, 30);
             this.lstProducts.Name = "lstProducts";
-            this.lstProducts.Size = new System.Drawing.Size(190, 544);
+            this.lstProducts.Size = new System.Drawing.Size(178, 544);
             this.lstProducts.TabIndex = 16;
             this.lstProducts.SelectedValueChanged += new System.EventHandler(this.lstProducts_SelectedValueChanged);
             // 
@@ -632,7 +717,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(607, 584);
+            this.groupBox2.Size = new System.Drawing.Size(595, 598);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "零件";
@@ -656,14 +741,14 @@
             this.lstParts.ItemHeight = 15;
             this.lstParts.Location = new System.Drawing.Point(6, 53);
             this.lstParts.Name = "lstParts";
-            this.lstParts.Size = new System.Drawing.Size(280, 514);
+            this.lstParts.Size = new System.Drawing.Size(268, 514);
             this.lstParts.TabIndex = 16;
             this.lstParts.SelectedValueChanged += new System.EventHandler(this.lstParts_SelectedValueChanged);
             // 
             // btnPartsAdd
             // 
             this.btnPartsAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPartsAdd.Location = new System.Drawing.Point(325, 119);
+            this.btnPartsAdd.Location = new System.Drawing.Point(313, 119);
             this.btnPartsAdd.Name = "btnPartsAdd";
             this.btnPartsAdd.Size = new System.Drawing.Size(67, 27);
             this.btnPartsAdd.TabIndex = 5;
@@ -674,7 +759,7 @@
             // btnPartDelete
             // 
             this.btnPartDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPartDelete.Location = new System.Drawing.Point(495, 119);
+            this.btnPartDelete.Location = new System.Drawing.Point(483, 119);
             this.btnPartDelete.Name = "btnPartDelete";
             this.btnPartDelete.Size = new System.Drawing.Size(67, 27);
             this.btnPartDelete.TabIndex = 5;
@@ -685,7 +770,7 @@
             // txtPartCode
             // 
             this.txtPartCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPartCode.Location = new System.Drawing.Point(381, 68);
+            this.txtPartCode.Location = new System.Drawing.Point(369, 68);
             this.txtPartCode.Name = "txtPartCode";
             this.txtPartCode.Size = new System.Drawing.Size(190, 25);
             this.txtPartCode.TabIndex = 14;
@@ -693,7 +778,7 @@
             // btnPartRevert
             // 
             this.btnPartRevert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPartRevert.Location = new System.Drawing.Point(409, 119);
+            this.btnPartRevert.Location = new System.Drawing.Point(397, 119);
             this.btnPartRevert.Name = "btnPartRevert";
             this.btnPartRevert.Size = new System.Drawing.Size(67, 27);
             this.btnPartRevert.TabIndex = 5;
@@ -704,42 +789,42 @@
             // txtPartName
             // 
             this.txtPartName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPartName.Location = new System.Drawing.Point(381, 38);
+            this.txtPartName.Location = new System.Drawing.Point(369, 38);
             this.txtPartName.Name = "txtPartName";
             this.txtPartName.Size = new System.Drawing.Size(190, 25);
             this.txtPartName.TabIndex = 14;
             // 
-            // label14
+            // groupBox3
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(355, 477);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(15, 15);
-            this.label14.TabIndex = 16;
-            this.label14.Text = "V";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(597, 478);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(15, 15);
-            this.label15.TabIndex = 16;
-            this.label15.Text = "V";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(298, 523);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(23, 15);
-            this.label16.TabIndex = 16;
-            this.label16.Text = "mA";
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.label21);
+            this.groupBox3.Controls.Add(this.label16);
+            this.groupBox3.Controls.Add(this.label20);
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Controls.Add(this.txtUpperCurrent);
+            this.groupBox3.Controls.Add(this.label13);
+            this.groupBox3.Controls.Add(this.btnRevert);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.label19);
+            this.groupBox3.Controls.Add(this.txtUpper);
+            this.groupBox3.Controls.Add(this.txtLightCurrentUp);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.label18);
+            this.groupBox3.Controls.Add(this.txtLightCurrentLow);
+            this.groupBox3.Controls.Add(this.txtLower);
+            this.groupBox3.Controls.Add(this.label17);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Location = new System.Drawing.Point(20, 450);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(731, 132);
+            this.groupBox3.TabIndex = 17;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "电流电压范围";
             // 
             // FromConfiguration
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1149, 619);
+            this.ClientSize = new System.Drawing.Size(1125, 633);
             this.Controls.Add(this.tabControl1);
             this.Name = "FromConfiguration";
             this.Text = "配置";
@@ -764,6 +849,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -826,5 +913,13 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox txtLightCurrentUp;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txtLightCurrentLow;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.GroupBox groupBox3;
     }
 }

@@ -13,6 +13,7 @@ namespace DetectCodeAndCurrent {
         Assembly,
         Part,
         StartCurrent,
+        DetectLightCurrent,
         EndCurrent,
         Finish1,
         Finish2,
@@ -87,6 +88,8 @@ namespace DetectCodeAndCurrent {
         public const string CurrentFail_Mick4 = "CurrentFail_Mick4";
         public const string CurrentFinished = "CurrentFinished";
         public const string _3CLabel = "3CLabel";
+        public const string LightCurrentError = "LightCurrentError";
+        public const string LightCurrentSucceed = "LightCurrentSucceed";
     }
 
     struct sInputDigitalSignal {
@@ -114,6 +117,19 @@ namespace DetectCodeAndCurrent {
     {
         public const string averge = "257";
         public const string mick1_volt = "257";
+        public const string mick2_volt = "258";
+        public const string mick3_volt = "259";
+        public const string mick4_volt = "260";
+        public const string mick1_current = "261";
+        public const string mick2_current = "262";
+        public const string mick3_current = "263";
+        public const string mick4_current = "264";
+
+    }
+
+    struct sInputRegistSignal2 {
+        public const string lightCurrent = "257";
+        public const string buttonVolt = "257";
         public const string mick2_volt = "258";
         public const string mick3_volt = "259";
         public const string mick4_volt = "260";
@@ -152,10 +168,11 @@ namespace DetectCodeAndCurrent {
         public EventHandler Event_Message;
         public EventHandler Event_EndProduct;
         public EventHandler Event_EndCurrentDetect;
+        
         private MyModbusTCP DeviceDIO_1;
         private MyModbusTCP DeviceAD_1;
         //private MyModbusTCP DeviceDIO_2;
-        //private MyModbusTCP DeviceAD_2;
+        private MyModbusTCP DeviceAD_2;
         private string gCurrentButtonName;
         private bool gIsPINConnected = false;
         private PINLine pin;
@@ -167,7 +184,34 @@ namespace DetectCodeAndCurrent {
         private ScanerHook barCode;
         private bool gSwitchPin = false;
         private bool gSwitchListen = false;
+
+        private bool gSQLSeversFlag = false;
+
         public DelegatePassBackButtonInfo ButtonInfoPassBack;
+
+        public bool PINConnectFlag {
+            get {
+                return pin.ConnectState;
+            }
+        }
+        public bool SQLConnectFlag {
+            get {
+                return gSQLSeversFlag;
+            }
+        }
+        public bool DIConnectFlag {
+            get {
+                return DeviceDIO_1.IsConnect;
+            }
+
+        }
+        public bool AD1ConnectFlag {
+            get {
+                return DeviceAD_1.IsConnect;
+            }
+
+        }
+
         public string strCurrentProd {
             get { return gCurrentProdNum; }
             set { gCurrentProdNum = value; }
@@ -185,6 +229,7 @@ namespace DetectCodeAndCurrent {
             barCode = new ScanerHook();
             DeviceDIO_1 = new MyModbusTCP("192.168.19.80");
             DeviceAD_1 = new MyModbusTCP("192.168.19.81");
+            DeviceAD_2 = new MyModbusTCP("192.168.19.83");
             pin = new PINLine();
             //DeviceDIO_2 = new MyModbusTCP("192.168.19.82");
             //DeviceAD_2 = new MyModbusTCP("192.168.19.83");
@@ -219,6 +264,8 @@ namespace DetectCodeAndCurrent {
             }
             
         }
+
+
         public void GetMickVolt(out string mick1, out string mick2, out string mick3, out string mick4) {
             mick1 = "--";
             mick2 = "--";
@@ -234,82 +281,119 @@ namespace DetectCodeAndCurrent {
         }
 
         public void InitialWork() {
+           
             barCode.ScanerEvent += ReceivedNewCode_CallBack;
             barCode.Start();
             if (!pin.PINLineIniltial()) {
                 gIsPINConnected = false;
                 Event_Message?.Invoke("车顶PIN信号连接失败", null);
             }
-            gIsPINConnected = true;
-            pin.DataReceived += Hid_ReceivedData;
+            else gIsPINConnected = true;
+
+            //pin.DataReceived += Hid_ReceivedData;
             if (!DeviceDIO_1.Connect()) {
                 Event_Message?.Invoke("数字量模块未成功连接", null);
             }
             if (!DeviceAD_1.Connect()) {
-                Event_Message?.Invoke("模拟量模块未成功连接", null);
+                Event_Message?.Invoke("模拟量模块1未成功连接", null);
+            }
+            if (!DeviceAD_2.Connect()) {
+                Event_Message?.Invoke("模拟量模块2未成功连接", null);
             }
         }
 
-        public void ListeningButtonDown() {   
+        private void StartListeningButtonDown() {   
             if (gSwitchListen == false) {
                 gSwitchListen = true;
-                Thread listenButtonDown = new Thread(ListenOnstartButtonDown);
+                Thread listenButtonDown = new Thread(ListenButton);
                 if (listenButtonDown.ThreadState != ThreadState.Running) {
                     listenButtonDown.Start();
                 }
             }
 
         }
-        public void CloseListening() {
+        public void CloseListeningButtonDown() {
             gSwitchListen = false;
         }
-        public void ListenOnstartButtonDown() {
+        private void ListenButton() {
+            pin.DataReceived += Hid_ReceivedData;
+            bool isVoltTestEnd = false;
+            string nextButtonName="";
             while (gSwitchListen) {
-                pin.DataReceived += Hid_ReceivedData;
-                double testValue;
-                string testButtonName= gCurrentButtonName;
-                object result= TestVolt(testButtonName, out testValue);
-                if (result != null) {
-                    if ((bool)result) {
-                        string nextButtonName;
-                        SqlOperation.GetButtonInfo(testButtonName, out nextButtonName);
-                        TegAtgs arg = new TegAtgs(testButtonName, result.ToString(),true);
-                        ButtonInfoPassBack?.Invoke(nextButtonName, arg);
-                        gCurrentButtonName = nextButtonName;
+                try {
+                    double testValue;
+                    string testButtonName = gCurrentButtonName;
+                    if (!isVoltTestEnd) {
+                        if (WaitForButtonUp()) {
+                            isVoltTestEnd = true;
+                            ButtonInfoPassBack?.Invoke(gCurrentButtonName, null);
+                        }
+                        else {
+                            string strTip = "请松开按键";
+                            ButtonInfoPassBack?.Invoke(strTip, null);
+                        }
                     }
                     else {
-                        TegAtgs arg = new TegAtgs(testButtonName, result.ToString(),false);
-                        ButtonInfoPassBack?.Invoke(testButtonName, arg);
+                        object result = WaitForButtonDown(testButtonName, out testValue);
+                        // if (result == null) continue;
+                        if (result != null && (bool)result) {
+                            DataRow dr = SqlOperation.GetButtonInfo(testButtonName, out nextButtonName);
+                            SqlOperation.UpdateButtonState(gCurrentCode, dr["tbl_ColumnName"].ToString(), testValue.ToString());
+                            isVoltTestEnd = false;
+                            TegAtgs arg = new TegAtgs(testButtonName, testValue.ToString(), true);
+                            gCurrentButtonName = nextButtonName;
+                            //string strTip = "松开"+ testButtonName;
+                            ButtonInfoPassBack?.Invoke(gCurrentButtonName, arg);
+                        }
+                        else {
+                            if (result != null) {
+                                TegAtgs arg = new TegAtgs(testButtonName, testValue.ToString(), false);
+                                ButtonInfoPassBack?.Invoke(testButtonName, arg);
+                            }
+                        }
                     }
 
+                    Thread.Sleep(200);
+
                 }
-                Thread.Sleep(200);
+                catch (Exception ex) {
+                    Event_Message?.Invoke(ex.Message, null);
+                }
+
+
             }
+            ButtonInfoPassBack?.Invoke("已完成", null);
             pin.DataReceived -= Hid_ReceivedData;
         }
-        private object TestVolt(string itemName,out double testValue) {         
+
+        private object WaitForButtonDown(string itemName, out double testValue) {
             string nextButtonName;
             testValue = 0;
             DataRow row = SqlOperation.GetButtonInfo(itemName, out nextButtonName);
-            if ((bool)row["tbl_VCFlag"]) {
+            if (row!= null && Convert.ToBoolean(row["tbl_VCFlag"])) {
                 double maxValue = (double)row["tbl_MaxValue"];
                 double minValue = (double)row["tbl_MinValue"];
-                testValue = 0;////////
+                testValue = GetButtonVolt();////////
                 if (testValue <= maxValue && testValue >= minValue) {
                     return true;
                 }
                 else {
                     return false;
                 }
-                 
+
             }
             return null;
-
+        }
+        private bool WaitForButtonUp() {
+            double testValue = GetButtonVolt();/////
+            if (testValue == 0) return true;
+            return false;
         }
 
 
         public void InitTEG(string currentCode) {
             DataTable dt = SqlOperation.GetButtonConfigInfo();
+            bool needTestFlag = false;
             gCurrentButtonName = string.Empty;
             for (int i = 0; i < dt.Rows.Count; i++) {
                 DataRow dr = dt.Rows[i];
@@ -318,7 +402,7 @@ namespace DetectCodeAndCurrent {
                 string result = SqlOperation.GetButtonState(buttonColName, currentCode);
                 if (result != string.Empty) {
                     if (i < dt.Rows.Count - 1) {
-                        gCurrentButtonName = buttonName;
+                        //gCurrentButtonName = buttonName;
                     }             
                     TegAtgs arg = new TegAtgs(buttonName, result,true);
                     ButtonInfoPassBack?.Invoke(null, arg);
@@ -326,11 +410,14 @@ namespace DetectCodeAndCurrent {
                 else {
                     if (gCurrentButtonName == string.Empty)
                         gCurrentButtonName = buttonName;
+                    needTestFlag = true;
                     TegAtgs arg = new TegAtgs(buttonName, result, false);
                     ButtonInfoPassBack?.Invoke(gCurrentButtonName, arg);
                 }
             }
-           
+            if (needTestFlag) StartListeningButtonDown();
+            else CloseListeningButtonDown();
+
         }
 
         private void Hid_ReceivedData(object sender, report e) {
@@ -339,9 +426,11 @@ namespace DetectCodeAndCurrent {
                 DataRow button = SqlOperation.GetButtonInfo(gCurrentButtonName,out nextButtonName);
                 if (button != null ) {
                     if (e.reportBuff == button["tbl_ByteString"]) {
+                        SqlOperation.UpdateButtonState(gCurrentCode, button["tbl_ColumnName"].ToString(), "已检测完成");
                         TegAtgs arg = new TegAtgs(gCurrentButtonName, true.ToString(),true);
                         ButtonInfoPassBack?.Invoke(nextButtonName, arg);
                         gCurrentButtonName = nextButtonName;
+                  
                     }
                 }
             }
@@ -362,11 +451,8 @@ namespace DetectCodeAndCurrent {
         private void Thread_PIN() {
             try {
                 while (gSwitchPin) {
-
                     pin.SetDataPacket();
                     Thread.Sleep(500);
-
-
                 }
             }
             catch {
@@ -377,10 +463,7 @@ namespace DetectCodeAndCurrent {
                 DeviceDIO_1.WriteCoil(sOutputDigitalSignal.alarm, false);
                 DeviceDIO_1.WriteCoil(sOutputDigitalSignal.on_off, false);
             }
-            //if (DeviceDIO_2.IsConnect) {
-            //    DeviceDIO_2.WriteCoil(sOutputDigitalSignal.alarm, false);
-            //    DeviceDIO_2.WriteCoil(sOutputDigitalSignal.on_off, false);
-            //}
+
         }
 
 
@@ -562,6 +645,12 @@ namespace DetectCodeAndCurrent {
                     PartCodeScan(strCode);
                     resultFlag = true;
                     break;
+                case eCodeType.DetectLightCurrent:
+                    if (LightCurrentDetectStart()) {
+                        resultFlag = true;
+                    }
+                    else resultFlag = false;
+                    break;
                 case eCodeType.Finish2:
                     if (IsFinshScan())
                     {
@@ -582,6 +671,19 @@ namespace DetectCodeAndCurrent {
                     break;
             }
         }
+        private bool  LightCurrentDetectStart() {
+            double testvalue;
+            if (DetectLightCurrentValue(out testvalue)) {
+                SqlOperation.UpdateLightCurrentValue(gCurrentCode, testvalue);
+                PlayVoice(sPlayVoiceAdress.LightCurrentSucceed);
+                return true;
+            }
+            else {
+                OutAlarm("当前电流检测值异常"+ testvalue, sPlayVoiceAdress.LightCurrentError);
+                PlayVoice(sPlayVoiceAdress.LightCurrentError);
+                return false;
+            }
+        }  
         private void InCurrentDetectStatu_Station1(string strCode,out bool resultFlag) {
             switch (CheckInputCodeType(strCode)) {
                 case eCodeType.EndCurrent:
@@ -681,6 +783,9 @@ namespace DetectCodeAndCurrent {
             if (IsEndCode2(strCode)) {
                 return eCodeType.Finish2;
             }
+            if (IsDetectLightCurrentCode(strCode)) {
+                return eCodeType.DetectLightCurrent;
+            }
             if (IsCurrentDetectEndCode(strCode)) {
                 return eCodeType.EndCurrent;
             }
@@ -689,6 +794,8 @@ namespace DetectCodeAndCurrent {
             }
             return eCodeType.Err;
         }
+
+
         private void Task_Station2(eStation2_WorkProcess action, string strCode) {
             while (true) {
                 switch (action) {
@@ -729,6 +836,10 @@ namespace DetectCodeAndCurrent {
                 return false;
             }
         }
+        private bool IsDetectLightCurrentCode(string strCode) {
+            if (strCode == "") return true;
+            return false;
+        }
 
         private void PartCodeScan(string partCode) {
             string fieldName="";
@@ -759,17 +870,17 @@ namespace DetectCodeAndCurrent {
         }
         private void CurrentDectectEnd(string strCode)
         {
-            gRunningStatu = (int)eStation2_WorkProcess.EndDect;
+               gRunningStatu = (int)eStation2_WorkProcess.EndDect;
             SqlOperation.UpdateProductCodeStatuRecord(gCurrentCode, gRunningStatu);
 
         }
         private void ProductEnd(string strCode)
         {
             ClosePIN();
+            CloseListeningButtonDown();
             ClosePartSwitch();
             SqlOperation.UpdateProductCodeStatuRecord(gCurrentCode, gRunningStatu);
             Event_EndProduct?.Invoke(gCurrentCode, null);
-
         }
         private bool CurrentDectectStart(string strCode) {
             return MeasureValue();
@@ -870,7 +981,33 @@ namespace DetectCodeAndCurrent {
             if (currentValue > maxCurrent || voltValue > maxVolt || voltValue < minVolt) { return false; };
             return true;
         }
+        private bool DetectLightCurrentValue(out double value) {
+            float upper;
+            float lower;
+            double testValue;
+            SqlOperation.GetProductLightCurrentRange(gCurrentProdNum,out upper,out lower);
+            testValue = GetLightCurrent();
+            value = testValue;
+            if (testValue >= lower && testValue <= upper) return true;
+            return false;
 
+        }
+        public double GetLightCurrent() {
+            if (!DeviceAD_2.IsConnect) return 0;
+            double max = 20;
+            double min = 0;
+            ushort realValue = DeviceAD_2.Read(sInputRegistSignal2.lightCurrent);
+            double value = realValue * (max - min) / 65535 + min;
+            return value;
+        }
+        public double GetButtonVolt() {
+            if (!DeviceAD_2.IsConnect) return 0;
+            double max = 20;
+            double min = 0;
+            ushort realValue = DeviceAD_2.Read(sInputRegistSignal2.buttonVolt);
+            double value = realValue * (max - min) / 65535 + min;
+            return value;
+        }
         private double CalculateCurrentRealValue(float analogValue){
             double max = 20;
             double min = 0;

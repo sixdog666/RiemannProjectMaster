@@ -62,19 +62,31 @@ namespace DetectCodeAndCurrent {
         }
 
         private void TEGResult_Show(string tipTestName, EventArgs e) {
-            if (InvokeRequired) {
-                Invoke(new MethodInvoker(delegate () {
-                    ShowTEGResult(tipTestName,e);
-                }));
-            }
-            else {
-                ShowTEGResult(tipTestName, e);
-            }
+            try {
+                if (InvokeRequired) {
+                    Invoke(new MethodInvoker(delegate () {
+                        ShowTEGResult(tipTestName, e);
+                    }));
+                }
+                else {
+                    ShowTEGResult(tipTestName, e);
+                }
 
-
+            }
+            catch (Exception) {
+            }
         }
         private void ShowTEGResult(string tipTestName, EventArgs e) {
-            if (tipTestName != string.Empty) labTipTestButton.Text = tipTestName;
+            if (tipTestName != string.Empty) {
+                labTipTestButton.Text = tipTestName;
+                int i = FindCell(tipTestName);
+                if (i != -1) 
+                    dgvTEGShow.Rows[i].Selected = true;
+                }
+            else {
+                WorkProcess process =  WorkProcess.GetInstance();
+                process.CloseListeningButtonDown();
+            }
             if (e != null) {
                 TegAtgs teginfo = (TegAtgs)e;
                 int index = FindCell(teginfo.buttonName);
@@ -113,12 +125,14 @@ namespace DetectCodeAndCurrent {
             dgvTEGShow.DataSource = dt;
             //DataGridViewCellStyle dgvCellStyle = new DataGridViewCellStyle();
             //dgvCellStyle.BackColor = Color.Red;
+            if(dgvTEGShow.ColumnCount!=0)
             dgvTEGShow.Columns["ID"].Visible = false;
             // dgvTEGShow.DataSource
 
         }
 
         private void SqlError_Happend(Exception ex) {
+           
             ShowMessage(sMessageType.ERROR, ex.Message);
         }
         private void NewWorkMessage_Come(object sender, EventArgs e) {
@@ -207,33 +221,7 @@ namespace DetectCodeAndCurrent {
             }
 
         }
-        private void InitButtonControls() {
-            sButtonInfo info;
-            info = new sButtonInfo() { dbColumnName = "domeOff", ucItem = ucDome, statuType = eStateType.Waiting, station = 2, dataByte = "0x00,0x00,0x02,0x00" } ;
-            gButtonInfosList.Add(info);
-            info = new sButtonInfo() { dbColumnName = "intrusionSensor", ucItem = ucIntrusionSensor, statuType = eStateType.Waiting, station = 2 };
-            gButtonInfosList.Add(info);
-            info = new sButtonInfo() { dbColumnName = "domeOn", ucItem = ucDomeOn, statuType = eStateType.Waiting, station = 2 };
-            gButtonInfosList.Add(info);
-            info = new sButtonInfo() { dbColumnName = "SROpen", ucItem = ucSROpen, statuType = eStateType.Waiting, station = 2 };
-            gButtonInfosList.Add(info);
-            info = new sButtonInfo() { dbColumnName = "SRClose", ucItem = ucSRClose, statuType = eStateType.Waiting, station = 2 };
-            gButtonInfosList.Add(info);
-            info = new sButtonInfo() { dbColumnName = "SRVent", ucItem = ucSRVent, statuType = eStateType.Waiting, station = 2 };
-            gButtonInfosList.Add(info);
-            info = new sButtonInfo() { dbColumnName = "ventClose", ucItem = ucVentClose, statuType = eStateType.Waiting, station = 2 };
-            gButtonInfosList.Add(info);
-            info = new sButtonInfo() { dbColumnName = "sunshadeOpen", ucItem = ucSunshadeOpen, statuType = eStateType.Waiting, station = 2 };
-            gButtonInfosList.Add(info);
-            info = new sButtonInfo() { dbColumnName = "sunshadeClose", ucItem = ucSunshadeClose, statuType = eStateType.Waiting, station = 2 };
-            gButtonInfosList.Add(info);
-            info = new sButtonInfo() { dbColumnName = "onStarButton", ucItem = ucOnStar, statuType = eStateType.Waiting, station = 2 };
-            gButtonInfosList.Add(info);
-            info = new sButtonInfo() { dbColumnName = "sosButton", ucItem = ucSoS, statuType = eStateType.Waiting, station = 2 };
-            gButtonInfosList.Add(info);
-            info = new sButtonInfo() { dbColumnName = "phoneButton", ucItem = ucPhone, statuType = eStateType.Waiting, station = 2 };
-            gButtonInfosList.Add(info);
-        }
+       
 
         private void ButtonControlsState_Show() {
             foreach (sButtonInfo info in gButtonInfosList) {
@@ -267,7 +255,7 @@ namespace DetectCodeAndCurrent {
                 ShowMessage(sMessageType.ERROR, "系统错误");
             }
 
-
+            timerShowState.Enabled = true;
         }
         private void InitModbusState() {
 
@@ -506,7 +494,7 @@ namespace DetectCodeAndCurrent {
                         instance.OpenPIN();
                         btnPartsSwitch.Text = "附件开关关闭";
                         btnPartsSwitch.BackColor = Color.Green;
-                        timer1.Enabled = true;
+                        timeShow.Enabled = true;
                     }
                     break;
                 case "附件开关关闭":
@@ -514,7 +502,7 @@ namespace DetectCodeAndCurrent {
                         instance.ClosePIN();
                         btnPartsSwitch.Text = "附件开关打开";
                         btnPartsSwitch.BackColor = Color.Gray;
-                        timer1.Enabled = false;
+                        timeShow.Enabled = false;
                     }
                     break;
             }
@@ -541,9 +529,18 @@ namespace DetectCodeAndCurrent {
 
         private void DectectMainForm_FormClosing(object sender, FormClosingEventArgs e) {
             WorkProcess instance = WorkProcess.GetInstance();
+            instance.CloseListeningButtonDown();
             instance.ClosePinDevice();
         }
 
+        private void timerShowState_Tick(object sender, EventArgs e) {
+            WorkProcess process = WorkProcess.GetInstance();
+            
+            tsslabDigital.Image= process.DIConnectFlag? Properties.Resources.succeed:Properties.Resources.fail;
+            tsslabLin.Image=process.PINConnectFlag? Properties.Resources.succeed : Properties.Resources.fail;
+            tsslabRegist1.Image = process.AD1ConnectFlag ? Properties.Resources.succeed : Properties.Resources.fail;
+          //  tsslabLin.Image = process.PINConnectFlag ? Properties.Resources.succeed : Properties.Resources.fail;
 
+        }
     }
 }
