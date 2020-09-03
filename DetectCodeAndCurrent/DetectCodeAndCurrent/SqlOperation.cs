@@ -55,19 +55,28 @@ namespace DetectCodeAndCurrent {
             return instance.GetMySqlRead(sql, parameters);
         }
 
-        public static void UpdateButtonState(string currentProductCode,string buttonName,bool Value) {
+        public static void UpdateButtonState(string currentProductCode, string buttonColName, string strValue) {
+            MySqlParameter[] parameters;
+
+            parameters = new MySqlParameter[] { new MySqlParameter() { ParameterName = "value" , Value = strValue },
+                                                new MySqlParameter() {  ParameterName = "currentProductCode" , Value = currentProductCode } };
+            string dbString = "update tbl_resultrecord set " + buttonColName + " = @value where productCode = @currentProductCode";
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            instance.ExecuteNonMySQL(dbString, parameters);
+
+
 
         }
 
-        public static string GetButtonState(string buttonColName,string currentProductCode) {
+        public static string GetButtonState(string buttonColName, string currentProductCode) {
             MySqlParameter[] parameters;
 
             parameters = new MySqlParameter[] { new MySqlParameter() { ParameterName = "buttonColName" , Value = buttonColName },
                                                 new MySqlParameter() {  ParameterName = "currentProductCode" , Value = currentProductCode } };
-            string dbString = "select "+ buttonColName + " from tbl_resultrecord where productCode = @currentProductCode";
+            string dbString = "select " + buttonColName + " from tbl_resultrecord where productCode = @currentProductCode";
             MysqlConnector instance = MysqlConnector.GetInstance();
-            DataTable dt= instance.GetMySqlRead(dbString, parameters);
-            if (dt != null && dt.Rows.Count > 0 && dt.Rows[0][0].ToString()!=string.Empty) {
+            DataTable dt = instance.GetMySqlRead(dbString, parameters);
+            if (dt != null && dt.Rows.Count > 0 && dt.Rows[0][0].ToString() != string.Empty) {
                 return dt.Rows[0][0].ToString();
             }
             return string.Empty;
@@ -79,7 +88,7 @@ namespace DetectCodeAndCurrent {
             return instance.GetMySqlRead(dbString);
         }
 
-        public static DataRow GetButtonInfo(string strName,out string nextTestName) {
+        public static DataRow GetButtonInfo(string strName, out string nextTestName) {
             MySqlParameter[] parameters;
 
             parameters = new MySqlParameter[] {
@@ -106,7 +115,16 @@ namespace DetectCodeAndCurrent {
         }
 
 
-
+        public static void UpdateLightCurrentValue(string productCode,double lightValue) {
+            MySqlParameter[] parameters;
+            parameters = new MySqlParameter[] {
+                new MySqlParameter() { ParameterName ="productCode" ,Value = productCode },
+                new MySqlParameter() { ParameterName ="lightValue" ,Value = lightValue }
+            };
+            string strSql = "update tbl_resultrecord set LigthCurrentResult = @lightValue where productCode = @productCode";
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            instance.ExecuteNonMySQL(strSql, parameters);
+        }
 
         /// <summary>
         /// 获取产品条码对应的零件记录
@@ -122,7 +140,7 @@ namespace DetectCodeAndCurrent {
             paramProductCode.Value = productCodeBar;
             MySqlParameter[] parameters = new MySqlParameter[] { paramProductCode };
             DataTable dt = instance.GetMySqlRead(sql, parameters);
-            if (dt.Rows.Count == 0) { return; }
+            if (dt==null || dt.Rows.Count == 0) { return; }
             for (int i = 0; i < productInfosList.Count(); i++) {
                 sProductInfo tmp = productInfosList[i];
                 string name = tmp.name;
@@ -184,8 +202,8 @@ namespace DetectCodeAndCurrent {
         /// <param name="upper"></param>
         /// <param name="lower"></param>
         /// <param name="upperCurrent"></param>
-        public static void GetProductCurrentRange(string product, out float upper, out float lower, out float upperCurrent) {
-            string sql = "select RangeUpper,RangeLower,UpperCurrent from view_partinfo where ProductInfoCode = @product";
+        public static void GetProductCurrentRange(string product, out float upper, out float lower, out float upperCurrent ) {
+            string sql = "select * from view_partinfo where ProductInfoCode = @product";
             MySqlParameter paramProductCode = new MySqlParameter() { ParameterName = "product", Value = product };
             MysqlConnector instance = MysqlConnector.GetInstance();
             MySqlParameter[] parameters = new MySqlParameter[] { paramProductCode };
@@ -208,9 +226,32 @@ namespace DetectCodeAndCurrent {
                 upperCurrent = 0;
             else
                 upperCurrent = Convert.ToSingle(dt.Rows[0]["UpperCurrent"]);
-
+            
             return;
-        } 
+        }
+        public static void GetProductLightCurrentRange(string product, out float upper, out float lower) {
+            string sql = "select * from view_partinfo where ProductInfoCode = @product";
+            MySqlParameter paramProductCode = new MySqlParameter() { ParameterName = "product", Value = product };
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            MySqlParameter[] parameters = new MySqlParameter[] { paramProductCode };
+            DataTable dt = instance.GetMySqlRead(sql, parameters);
+            if (dt == null || dt.Rows.Count == 0) {
+                upper = 0;
+                lower = 0;
+                return;
+            }
+            if (dt.Rows[0]["LightUpperCurrent"].GetType().Name == "DBNull")
+                upper = 0;
+            else
+                upper = Convert.ToSingle(dt.Rows[0]["LightUpperCurrent"]);
+            if (dt.Rows[0]["LightLowerCurrent"].GetType().Name == "DBNull")
+                lower = 0;
+            else
+                lower = Convert.ToSingle(dt.Rows[0]["LightLowerCurrent"]);
+            return;
+        }
+
+
         /// <summary>
         /// 获取产品信息：产品名
         /// </summary>
@@ -643,22 +684,24 @@ namespace DetectCodeAndCurrent {
         /// <param name="upper"></param>
         /// <param name="lower"></param>
         /// <param name="upperCurrent"></param>
-        public static void SetCurrentValue(string productCode, float upper, float lower,float upperCurrent) {
+        public static void SetCurrentValue(string productCode, float upper, float lower,float upperCurrent,float lightUpper, float lightLower) {
             string sql;
             MysqlConnector instance = MysqlConnector.GetInstance();
             MySqlParameter paraProductCodeId = new MySqlParameter() { ParameterName = "productCode", Value = productCode };
             MySqlParameter paraLower = new MySqlParameter() { ParameterName = "lower", Value = lower };
             MySqlParameter paraUpper = new MySqlParameter() { ParameterName = "upper", Value = upper };
+            MySqlParameter paraLightLower = new MySqlParameter() { ParameterName = "lightLower", Value = lightLower };
+            MySqlParameter paraLightUpper = new MySqlParameter() { ParameterName = "lightUpper", Value = lightUpper };
             MySqlParameter paraUpperCurrent = new MySqlParameter() { ParameterName = "upperCurrent", Value = upperCurrent };
             MySqlParameter[] parameters;
-            parameters = new MySqlParameter[] { paraProductCodeId, paraLower, paraUpper, paraUpperCurrent };
+            parameters = new MySqlParameter[] { paraProductCodeId, paraLower, paraUpper, paraUpperCurrent, paraLightLower , paraLightUpper };
             sql = "select * from tbl_currentrange where Product = @productCode";
             DataTable dt = instance.GetMySqlRead(sql, parameters);
             if (dt.Rows.Count > 0) {
-                sql = "update tbl_currentrange set RangeUpper = @upper , RangeLower =@lower, UpperCurrent = @upperCurrent where Product = @productCode ";
+                sql = "update tbl_currentrange set RangeUpper = @upper , RangeLower =@lower, UpperCurrent = @upperCurrent,LightUpperCurrent =@lightUpper,LightLowerCurrent=@lightLower where Product = @productCode ";
             }
             else {
-                sql = "insert into tbl_currentrange(RangeUpper,RangeLower,UpperCurrent,Product) values(@upper,@lower,@upperCurrent,@productCode)";   //SQL语句
+                sql = "insert into tbl_currentrange(RangeUpper,RangeLower,UpperCurrent,Product,LightUpperCurrent,LightLowerCurrent) values(@upper,@lower,@upperCurrent,@productCode,@lightUpper,@lightLower)";   //SQL语句
             }
             instance.ExecuteNonMySQL(sql, parameters);
         }

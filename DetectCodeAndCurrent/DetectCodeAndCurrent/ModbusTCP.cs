@@ -8,7 +8,7 @@ using HslCommunication;
 
 namespace DetectCodeAndCurrent {
     class MyModbusTCP {
-
+        //private ModbusUdpNet 
         private ModbusTcpNet busTcpClient;   // 实例化
         private bool connectState;
         public bool IsConnect{

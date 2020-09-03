@@ -80,7 +80,11 @@ namespace DetectCodeAndCurrent {
             gIdNumber = idNumber;
 
         }
-
+        public bool ConnectState {
+            get {
+                return deviceOpened;
+            }
+        }
 
         public void ClosePINDevice() {
             this.CloseDevice();

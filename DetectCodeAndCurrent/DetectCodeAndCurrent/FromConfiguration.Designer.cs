@@ -68,6 +68,9 @@
             this.txtProductCode = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.txtUpperCurrent = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -82,9 +85,13 @@
             this.txtPartCode = new System.Windows.Forms.TextBox();
             this.btnPartRevert = new System.Windows.Forms.Button();
             this.txtPartName = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtLightCurrentLow = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txtLightCurrentUp = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
             label11 = new System.Windows.Forms.Label();
@@ -441,9 +448,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(36, 478);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(97, 15);
+            this.label6.Size = new System.Drawing.Size(112, 15);
             this.label6.TabIndex = 12;
-            this.label6.Text = "电流电压范围";
+            this.label6.Text = "麦克风电压范围";
             // 
             // txtLower
             // 
@@ -472,7 +479,7 @@
             // 
             // btnRevert
             // 
-            this.btnRevert.Location = new System.Drawing.Point(334, 519);
+            this.btnRevert.Location = new System.Drawing.Point(655, 549);
             this.btnRevert.Name = "btnRevert";
             this.btnRevert.Size = new System.Drawing.Size(75, 23);
             this.btnRevert.TabIndex = 13;
@@ -520,8 +527,10 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label21);
             this.tabPage1.Controls.Add(this.label15);
             this.tabPage1.Controls.Add(this.label16);
+            this.tabPage1.Controls.Add(this.label20);
             this.tabPage1.Controls.Add(this.label14);
             this.tabPage1.Controls.Add(this.txtUpperCurrent);
             this.tabPage1.Controls.Add(this.label13);
@@ -530,10 +539,15 @@
             this.tabPage1.Controls.Add(this.btnRevert);
             this.tabPage1.Controls.Add(this.cmbProductType);
             this.tabPage1.Controls.Add(this.panel1);
+            this.tabPage1.Controls.Add(this.label19);
             this.tabPage1.Controls.Add(this.label8);
+            this.tabPage1.Controls.Add(this.txtLightCurrentUp);
             this.tabPage1.Controls.Add(this.txtUpper);
+            this.tabPage1.Controls.Add(this.label18);
             this.tabPage1.Controls.Add(this.label7);
+            this.tabPage1.Controls.Add(this.txtLightCurrentLow);
             this.tabPage1.Controls.Add(this.txtLower);
+            this.tabPage1.Controls.Add(this.label17);
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
@@ -543,9 +557,36 @@
             this.tabPage1.Text = "产品信息配置";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(597, 478);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(15, 15);
+            this.label15.TabIndex = 16;
+            this.label15.Text = "V";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(298, 514);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(23, 15);
+            this.label16.TabIndex = 16;
+            this.label16.Text = "mA";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(355, 477);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(15, 15);
+            this.label14.TabIndex = 16;
+            this.label14.Text = "V";
+            // 
             // txtUpperCurrent
             // 
-            this.txtUpperCurrent.Location = new System.Drawing.Point(192, 517);
+            this.txtUpperCurrent.Location = new System.Drawing.Point(192, 508);
             this.txtUpperCurrent.Name = "txtUpperCurrent";
             this.txtUpperCurrent.Size = new System.Drawing.Size(100, 25);
             this.txtUpperCurrent.TabIndex = 15;
@@ -553,11 +594,11 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(36, 524);
+            this.label13.Location = new System.Drawing.Point(36, 515);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(97, 15);
+            this.label13.Size = new System.Drawing.Size(142, 15);
             this.label13.TabIndex = 14;
-            this.label13.Text = "最大工作电流";
+            this.label13.Text = "麦克风最大工作电流";
             // 
             // tabPage2
             // 
@@ -709,32 +750,64 @@
             this.txtPartName.Size = new System.Drawing.Size(190, 25);
             this.txtPartName.TabIndex = 14;
             // 
-            // label14
+            // label17
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(355, 477);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(15, 15);
-            this.label14.TabIndex = 16;
-            this.label14.Text = "V";
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(36, 560);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(82, 15);
+            this.label17.TabIndex = 12;
+            this.label17.Text = "灯电流范围";
             // 
-            // label15
+            // txtLightCurrentLow
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(597, 478);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(15, 15);
-            this.label15.TabIndex = 16;
-            this.label15.Text = "V";
+            this.txtLightCurrentLow.Location = new System.Drawing.Point(229, 550);
+            this.txtLightCurrentLow.Name = "txtLightCurrentLow";
+            this.txtLightCurrentLow.Size = new System.Drawing.Size(119, 25);
+            this.txtLightCurrentLow.TabIndex = 11;
             // 
-            // label16
+            // label18
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(298, 523);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(23, 15);
-            this.label16.TabIndex = 16;
-            this.label16.Text = "mA";
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(410, 560);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(37, 15);
+            this.label18.TabIndex = 12;
+            this.label18.Text = "上限";
+            // 
+            // txtLightCurrentUp
+            // 
+            this.txtLightCurrentUp.Location = new System.Drawing.Point(463, 550);
+            this.txtLightCurrentUp.Name = "txtLightCurrentUp";
+            this.txtLightCurrentUp.Size = new System.Drawing.Size(119, 25);
+            this.txtLightCurrentUp.TabIndex = 11;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(187, 560);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(37, 15);
+            this.label19.TabIndex = 12;
+            this.label19.Text = "下限";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(355, 559);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(15, 15);
+            this.label20.TabIndex = 16;
+            this.label20.Text = "A";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(597, 560);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(15, 15);
+            this.label21.TabIndex = 16;
+            this.label21.Text = "A";
             // 
             // FromConfiguration
             // 
@@ -826,5 +899,12 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox txtLightCurrentUp;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txtLightCurrentLow;
+        private System.Windows.Forms.Label label17;
     }
 }
