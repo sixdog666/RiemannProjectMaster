@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DectectMainForm));
             this.lstMessage = new System.Windows.Forms.ListView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -131,35 +131,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.timeShow = new System.Windows.Forms.Timer(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-<<<<<<< .mine
             this.timerShowState = new System.Windows.Forms.Timer(this.components);
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-            this.timerShowState = new System.Windows.Forms.Timer(this.components);
-            this.ucDome = new DetectCodeAndCurrent.UCDetectItem();
-            this.ucDomeOn = new DetectCodeAndCurrent.UCDetectItem();
-            this.ucIntrusionSensor = new DetectCodeAndCurrent.UCDetectItem();
-            this.ucSROpen = new DetectCodeAndCurrent.UCDetectItem();
-            this.ucSRClose = new DetectCodeAndCurrent.UCDetectItem();
-            this.ucSRVent = new DetectCodeAndCurrent.UCDetectItem();
-            this.ucVentClose = new DetectCodeAndCurrent.UCDetectItem();
-            this.ucSunshadeOpen = new DetectCodeAndCurrent.UCDetectItem();
-            this.ucSunshadeClose = new DetectCodeAndCurrent.UCDetectItem();
-            this.ucOnStar = new DetectCodeAndCurrent.UCDetectItem();
-            this.ucSoS = new DetectCodeAndCurrent.UCDetectItem();
-            this.ucPhone = new DetectCodeAndCurrent.UCDetectItem();
->>>>>>> .theirs
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -367,77 +339,6 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1152, 552);
             this.flowLayoutPanel1.TabIndex = 8;
             // 
-<<<<<<< .mine
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-            // tabDetect
-            // 
-            this.tabDetect.Controls.Add(this.flowLayoutPanel2);
-            this.tabDetect.Location = new System.Drawing.Point(4, 54);
-            this.tabDetect.Name = "tabDetect";
-            this.tabDetect.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDetect.Size = new System.Drawing.Size(1158, 528);
-            this.tabDetect.TabIndex = 1;
-            this.tabDetect.Text = "电检界面";
-            this.tabDetect.UseVisualStyleBackColor = true;
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowLayoutPanel2.AutoScroll = true;
-            this.flowLayoutPanel2.Controls.Add(this.ucDome);
-            this.flowLayoutPanel2.Controls.Add(this.ucDomeOn);
-            this.flowLayoutPanel2.Controls.Add(this.ucIntrusionSensor);
-            this.flowLayoutPanel2.Controls.Add(this.ucSROpen);
-            this.flowLayoutPanel2.Controls.Add(this.ucSRClose);
-            this.flowLayoutPanel2.Controls.Add(this.ucSRVent);
-            this.flowLayoutPanel2.Controls.Add(this.ucVentClose);
-            this.flowLayoutPanel2.Controls.Add(this.ucSunshadeOpen);
-            this.flowLayoutPanel2.Controls.Add(this.ucSunshadeClose);
-            this.flowLayoutPanel2.Controls.Add(this.ucOnStar);
-            this.flowLayoutPanel2.Controls.Add(this.ucSoS);
-            this.flowLayoutPanel2.Controls.Add(this.ucPhone);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(9, 6);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(1146, 450);
-            this.flowLayoutPanel2.TabIndex = 14;
-            // 
->>>>>>> .theirs
             // tabTEGResult
             // 
             this.tabTEGResult.Controls.Add(this.panelCurrent);
@@ -574,14 +475,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvTEGShow.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvTEGShow.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvTEGShow.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvTEGShow.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvTEGShow.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvTEGShow.Location = new System.Drawing.Point(6, 76);
             this.dgvTEGShow.Name = "dgvTEGShow";
@@ -1242,235 +1143,11 @@
             this.pictureBox1.TabIndex = 13;
             this.pictureBox1.TabStop = false;
             // 
-<<<<<<< .mine
             // timerShowState
             // 
             this.timerShowState.Interval = 1000;
             this.timerShowState.Tick += new System.EventHandler(this.timerShowState_Tick);
             // 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-            // timerShowState
-            // 
-            this.timerShowState.Interval = 1000;
-            this.timerShowState.Tick += new System.EventHandler(this.timerShowState_Tick);
-            // 
-            // ucDome
-            // 
-            this.ucDome.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucDome.detectItemName = "车顶灯开门感应关";
-            this.ucDome.Location = new System.Drawing.Point(3, 3);
-            this.ucDome.Name = "ucDome";
-            this.ucDome.Size = new System.Drawing.Size(369, 106);
-            this.ucDome.TabIndex = 0;
-            // 
-            // ucDomeOn
-            // 
-            this.ucDomeOn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucDomeOn.detectItemName = "车顶灯开门感应开";
-            this.ucDomeOn.Location = new System.Drawing.Point(378, 3);
-            this.ucDomeOn.Name = "ucDomeOn";
-            this.ucDomeOn.Size = new System.Drawing.Size(369, 106);
-            this.ucDomeOn.TabIndex = 0;
-            // 
-            // ucIntrusionSensor
-            // 
-            this.ucIntrusionSensor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucIntrusionSensor.detectItemName = "车辆报警器";
-            this.ucIntrusionSensor.Location = new System.Drawing.Point(753, 3);
-            this.ucIntrusionSensor.Name = "ucIntrusionSensor";
-            this.ucIntrusionSensor.Size = new System.Drawing.Size(369, 106);
-            this.ucIntrusionSensor.TabIndex = 0;
-            // 
-            // ucSROpen
-            // 
-            this.ucSROpen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucSROpen.detectItemName = "天窗开";
-            this.ucSROpen.Location = new System.Drawing.Point(3, 115);
-            this.ucSROpen.Name = "ucSROpen";
-            this.ucSROpen.Size = new System.Drawing.Size(369, 106);
-            this.ucSROpen.TabIndex = 0;
-            // 
-            // ucSRClose
-            // 
-            this.ucSRClose.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucSRClose.detectItemName = "天窗关";
-            this.ucSRClose.Location = new System.Drawing.Point(378, 115);
-            this.ucSRClose.Name = "ucSRClose";
-            this.ucSRClose.Size = new System.Drawing.Size(369, 106);
-            this.ucSRClose.TabIndex = 0;
-            // 
-            // ucSRVent
-            // 
-            this.ucSRVent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucSRVent.detectItemName = "天窗通风开";
-            this.ucSRVent.Location = new System.Drawing.Point(753, 115);
-            this.ucSRVent.Name = "ucSRVent";
-            this.ucSRVent.Size = new System.Drawing.Size(369, 106);
-            this.ucSRVent.TabIndex = 0;
-            // 
-            // ucVentClose
-            // 
-            this.ucVentClose.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucVentClose.detectItemName = "天窗通风关";
-            this.ucVentClose.Location = new System.Drawing.Point(3, 227);
-            this.ucVentClose.Name = "ucVentClose";
-            this.ucVentClose.Size = new System.Drawing.Size(369, 106);
-            this.ucVentClose.TabIndex = 0;
-            // 
-            // ucSunshadeOpen
-            // 
-            this.ucSunshadeOpen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucSunshadeOpen.detectItemName = "遮阳帘开";
-            this.ucSunshadeOpen.Location = new System.Drawing.Point(378, 227);
-            this.ucSunshadeOpen.Name = "ucSunshadeOpen";
-            this.ucSunshadeOpen.Size = new System.Drawing.Size(369, 106);
-            this.ucSunshadeOpen.TabIndex = 0;
-            // 
-            // ucSunshadeClose
-            // 
-            this.ucSunshadeClose.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucSunshadeClose.detectItemName = "遮阳帘关";
-            this.ucSunshadeClose.Location = new System.Drawing.Point(753, 227);
-            this.ucSunshadeClose.Name = "ucSunshadeClose";
-            this.ucSunshadeClose.Size = new System.Drawing.Size(369, 106);
-            this.ucSunshadeClose.TabIndex = 0;
-            // 
-            // ucOnStar
-            // 
-            this.ucOnStar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucOnStar.detectItemName = "安吉星按钮";
-            this.ucOnStar.Location = new System.Drawing.Point(3, 339);
-            this.ucOnStar.Name = "ucOnStar";
-            this.ucOnStar.Size = new System.Drawing.Size(369, 106);
-            this.ucOnStar.TabIndex = 0;
-            // 
-            // ucSoS
-            // 
-            this.ucSoS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucSoS.detectItemName = "紧急呼叫按钮";
-            this.ucSoS.Location = new System.Drawing.Point(378, 339);
-            this.ucSoS.Name = "ucSoS";
-            this.ucSoS.Size = new System.Drawing.Size(369, 106);
-            this.ucSoS.TabIndex = 0;
-            // 
-            // ucPhone
-            // 
-            this.ucPhone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucPhone.detectItemName = "车载电话按钮";
-            this.ucPhone.Location = new System.Drawing.Point(753, 339);
-            this.ucPhone.Name = "ucPhone";
-            this.ucPhone.Size = new System.Drawing.Size(369, 106);
-            this.ucPhone.TabIndex = 0;
-            // 
->>>>>>> .theirs
             // DectectMainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;

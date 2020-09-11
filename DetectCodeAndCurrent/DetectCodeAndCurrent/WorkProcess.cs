@@ -335,13 +335,8 @@ namespace DetectCodeAndCurrent {
                     }
                     else {
                         object result = WaitForButtonDown(testButtonName, out testValue);
-<<<<<<< HEAD
-                        // if (result == null) continue;
-                        if (result != null && (bool)result) {
-=======
                        // if (result == null) continue;
                         if (result != null&&(bool)result) {
->>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
                             DataRow dr = SqlOperation.GetButtonInfo(testButtonName, out nextButtonName);
                             SqlOperation.UpdateButtonState(gCurrentCode, dr["tbl_ColumnName"].ToString(), testValue.ToString());
                             isVoltTestEnd = false;
@@ -351,16 +346,10 @@ namespace DetectCodeAndCurrent {
                             ButtonInfoPassBack?.Invoke(gCurrentButtonName, arg);
                         }
                         else {
-<<<<<<< HEAD
                             if (result != null) {
                                 TegAtgs arg = new TegAtgs(testButtonName, testValue.ToString(), false);
                                 ButtonInfoPassBack?.Invoke(testButtonName, arg);
                             }
-=======
-
-                            TegAtgs arg = new TegAtgs(testButtonName, testValue.ToString(), false);
-                            ButtonInfoPassBack?.Invoke(testButtonName, arg);
->>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
                         }
                     }
 
@@ -368,11 +357,7 @@ namespace DetectCodeAndCurrent {
 
                 }
                 catch (Exception ex) {
-<<<<<<< HEAD
-                    Event_Message?.Invoke(ex.Message, null);
-=======
                     Event_Message?.Invoke(ex.Message,null);
->>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
                 }
 
 
@@ -1011,11 +996,7 @@ namespace DetectCodeAndCurrent {
             if (!DeviceAD_2.IsConnect) return 0;
             double max = 20;
             double min = 0;
-<<<<<<< HEAD
             ushort realValue = DeviceAD_2.Read(sInputRegistSignal2.lightCurrent);
-=======
-            ushort realValue = DeviceAD_2.ReadRegist(sInputRegistSignal2.lightCurrent);
->>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             double value = realValue * (max - min) / 65535 + min;
             return value;
         }
@@ -1023,11 +1004,7 @@ namespace DetectCodeAndCurrent {
             if (!DeviceAD_2.IsConnect) return 0;
             double max = 20;
             double min = 0;
-<<<<<<< HEAD
             ushort realValue = DeviceAD_2.Read(sInputRegistSignal2.buttonVolt);
-=======
-            ushort realValue = DeviceAD_2.ReadRegist(sInputRegistSignal2.buttonVolt);
->>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             double value = realValue * (max - min) / 65535 + min;
             return value;
         }
