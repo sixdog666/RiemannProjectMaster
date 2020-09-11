@@ -68,10 +68,15 @@
             this.txtProductCode = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+<<<<<<< HEAD
             this.label21 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
+=======
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+>>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             this.label14 = new System.Windows.Forms.Label();
             this.txtUpperCurrent = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -92,7 +97,17 @@
             this.txtPartCode = new System.Windows.Forms.TextBox();
             this.btnPartRevert = new System.Windows.Forms.Button();
             this.txtPartName = new System.Windows.Forms.TextBox();
+<<<<<<< HEAD
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+=======
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtLightCurrentLow = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txtLightCurrentUp = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+>>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             label9 = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
             label11 = new System.Windows.Forms.Label();
@@ -481,7 +496,11 @@
             // 
             // btnRevert
             // 
+<<<<<<< HEAD
             this.btnRevert.Location = new System.Drawing.Point(635, 99);
+=======
+            this.btnRevert.Location = new System.Drawing.Point(655, 549);
+>>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             this.btnRevert.Name = "btnRevert";
             this.btnRevert.Size = new System.Drawing.Size(75, 23);
             this.btnRevert.TabIndex = 13;
@@ -529,11 +548,34 @@
             // 
             // tabPage1
             // 
+<<<<<<< HEAD
             this.tabPage1.Controls.Add(this.groupBox3);
+=======
+            this.tabPage1.Controls.Add(this.label21);
+            this.tabPage1.Controls.Add(this.label15);
+            this.tabPage1.Controls.Add(this.label16);
+            this.tabPage1.Controls.Add(this.label20);
+            this.tabPage1.Controls.Add(this.label14);
+            this.tabPage1.Controls.Add(this.txtUpperCurrent);
+            this.tabPage1.Controls.Add(this.label13);
+>>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             this.tabPage1.Controls.Add(this.panel2);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.cmbProductType);
             this.tabPage1.Controls.Add(this.panel1);
+<<<<<<< HEAD
+=======
+            this.tabPage1.Controls.Add(this.label19);
+            this.tabPage1.Controls.Add(this.label8);
+            this.tabPage1.Controls.Add(this.txtLightCurrentUp);
+            this.tabPage1.Controls.Add(this.txtUpper);
+            this.tabPage1.Controls.Add(this.label18);
+            this.tabPage1.Controls.Add(this.label7);
+            this.tabPage1.Controls.Add(this.txtLightCurrentLow);
+            this.tabPage1.Controls.Add(this.txtLower);
+            this.tabPage1.Controls.Add(this.label17);
+            this.tabPage1.Controls.Add(this.label6);
+>>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -542,6 +584,7 @@
             this.tabPage1.Text = "产品信息配置";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+<<<<<<< HEAD
             // label21
             // 
             this.label21.AutoSize = true;
@@ -555,6 +598,12 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(577, 28);
+=======
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(597, 478);
+>>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(15, 15);
             this.label15.TabIndex = 16;
@@ -563,12 +612,17 @@
             // label16
             // 
             this.label16.AutoSize = true;
+<<<<<<< HEAD
             this.label16.Location = new System.Drawing.Point(315, 61);
+=======
+            this.label16.Location = new System.Drawing.Point(298, 514);
+>>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(23, 15);
             this.label16.TabIndex = 16;
             this.label16.Text = "mA";
             // 
+<<<<<<< HEAD
             // label20
             // 
             this.label20.AutoSize = true;
@@ -582,6 +636,12 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(335, 27);
+=======
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(355, 477);
+>>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(15, 15);
             this.label14.TabIndex = 16;
@@ -589,7 +649,11 @@
             // 
             // txtUpperCurrent
             // 
+<<<<<<< HEAD
             this.txtUpperCurrent.Location = new System.Drawing.Point(209, 55);
+=======
+            this.txtUpperCurrent.Location = new System.Drawing.Point(192, 508);
+>>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             this.txtUpperCurrent.Name = "txtUpperCurrent";
             this.txtUpperCurrent.Size = new System.Drawing.Size(100, 25);
             this.txtUpperCurrent.TabIndex = 15;
@@ -597,11 +661,16 @@
             // label13
             // 
             this.label13.AutoSize = true;
+<<<<<<< HEAD
             this.label13.Location = new System.Drawing.Point(16, 65);
+=======
+            this.label13.Location = new System.Drawing.Point(36, 515);
+>>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(142, 15);
             this.label13.TabIndex = 14;
             this.label13.Text = "麦克风最大工作电流";
+<<<<<<< HEAD
             // 
             // label19
             // 
@@ -643,6 +712,8 @@
             this.label17.Size = new System.Drawing.Size(82, 15);
             this.label17.TabIndex = 12;
             this.label17.Text = "灯电流范围";
+=======
+>>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             // 
             // tabPage2
             // 
@@ -794,6 +865,7 @@
             this.txtPartName.Size = new System.Drawing.Size(190, 25);
             this.txtPartName.TabIndex = 14;
             // 
+<<<<<<< HEAD
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label15);
@@ -820,6 +892,66 @@
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "电流电压范围";
+=======
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(36, 560);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(82, 15);
+            this.label17.TabIndex = 12;
+            this.label17.Text = "灯电流范围";
+            // 
+            // txtLightCurrentLow
+            // 
+            this.txtLightCurrentLow.Location = new System.Drawing.Point(229, 550);
+            this.txtLightCurrentLow.Name = "txtLightCurrentLow";
+            this.txtLightCurrentLow.Size = new System.Drawing.Size(119, 25);
+            this.txtLightCurrentLow.TabIndex = 11;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(410, 560);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(37, 15);
+            this.label18.TabIndex = 12;
+            this.label18.Text = "上限";
+            // 
+            // txtLightCurrentUp
+            // 
+            this.txtLightCurrentUp.Location = new System.Drawing.Point(463, 550);
+            this.txtLightCurrentUp.Name = "txtLightCurrentUp";
+            this.txtLightCurrentUp.Size = new System.Drawing.Size(119, 25);
+            this.txtLightCurrentUp.TabIndex = 11;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(187, 560);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(37, 15);
+            this.label19.TabIndex = 12;
+            this.label19.Text = "下限";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(355, 559);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(15, 15);
+            this.label20.TabIndex = 16;
+            this.label20.Text = "A";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(597, 560);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(15, 15);
+            this.label21.TabIndex = 16;
+            this.label21.Text = "A";
+>>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
             // 
             // FromConfiguration
             // 
@@ -920,6 +1052,9 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox txtLightCurrentLow;
         private System.Windows.Forms.Label label17;
+<<<<<<< HEAD
         private System.Windows.Forms.GroupBox groupBox3;
+=======
+>>>>>>> c9f000e2af71d7227128b1a685b7541779b86b5c
     }
 }
