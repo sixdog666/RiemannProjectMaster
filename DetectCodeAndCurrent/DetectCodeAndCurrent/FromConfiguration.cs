@@ -17,9 +17,23 @@ namespace DetectCodeAndCurrent {
         private void FromConfiguration_Load(object sender, EventArgs e) {
             UpdateShowProducts();
             UpdateShowPartTypes();
+            UpdateShowButtonVoltRange();
         }
 
-
+        private void UpdateShowButtonVoltRange() {
+            try {
+                sButtonVoltRanges ranges = SqlOperation.GetButtonVoltRange();
+                tbxPhoneMax.Text = ranges.phoneMax.ToString();
+                tbxPhoneMin.Text = ranges.phoneMin.ToString();
+                tbxSosMax.Text = ranges.sosMax.ToString();
+                tbxSosMin.Text = ranges.sosMin.ToString();
+                tbxStarMax.Text = ranges.onStartMax.ToString();
+                tbxStarMin.Text = ranges.onStartMin.ToString();
+            }
+            catch (Exception ex) {
+                MessageBox.Show("修改范围失败" + ex.Message);
+            }
+        }
 
         private void UpdateShowProducts() {
             List<string> productNameList = SqlOperation.GetProductInfosFromSQL();
@@ -267,5 +281,15 @@ namespace DetectCodeAndCurrent {
             UpdateShowParts();
         }
 
+        private void button1_Click(object sender, EventArgs e) {
+            sButtonVoltRanges ranges = new sButtonVoltRanges();
+            ranges.onStartMax =Convert.ToDouble( tbxStarMax.Text);
+            ranges.onStartMin = Convert.ToDouble(tbxStarMin.Text);
+            ranges.phoneMax = Convert.ToDouble(tbxPhoneMax.Text);
+            ranges.phoneMin = Convert.ToDouble(tbxPhoneMin.Text);
+            ranges.sosMax = Convert.ToDouble(tbxSosMax.Text);
+            ranges.sosMin = Convert.ToDouble(tbxSosMin.Text);
+            SqlOperation.UpdateButtonVoltRange(ranges);
+        }
     }
 }

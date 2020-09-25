@@ -48,7 +48,8 @@ namespace DetectCodeAndCurrent {
         }
         private void DectectMainForm_Load(object sender, EventArgs e) {
             WorkProcess instance = WorkProcess.GetInstance();
-            instance.Event_EndCurrentDetect += CurrentDetectEnd;
+            instance.Event_EndMickCurrentDetect += CurrentDetectEnd;
+            instance.Event_EndLightCurrentDetect += LightCurrentDetectEnd;
             instance.Event_NewProduct += NewProduct_Start;
             instance.Event_NewPart += NewPart_Start;
             instance.Event_InitLastInfo += LastRecord_Init;
@@ -59,6 +60,7 @@ namespace DetectCodeAndCurrent {
             sqlInstance.threadExceptionEventHandler = SqlError_Happend;
             InitControls();
             instance.InitialWork();
+            InitMp3();
         }
 
         private void TEGResult_Show(string tipTestName, EventArgs e) {
@@ -78,20 +80,25 @@ namespace DetectCodeAndCurrent {
         }
         private void ShowTEGResult(string tipTestName, EventArgs e) {
             if (tipTestName != string.Empty) {
-                labTipTestButton.Text = tipTestName;
-                int i = FindCell(tipTestName);
-                if (i != -1) 
-                    dgvTEGShow.Rows[i].Selected = true;
+                if (tipTestName != null) {
+                    labTipTestButton.Text = tipTestName;
+                    int i = FindCell(tipTestName);
+                    if (i != -1)      
+                        dgvTEGShow.Rows[i].Selected = true;
                 }
+            }
             else {
-                WorkProcess process =  WorkProcess.GetInstance();
-                process.CloseListeningButtonDown();
+                    WorkProcess process = WorkProcess.GetInstance();
+                    labTipTestButton.Text = "检测未开始";
+                    process.CloseListeningButtonDown();
+
             }
             if (e != null) {
+
                 TegAtgs teginfo = (TegAtgs)e;
                 int index = FindCell(teginfo.buttonName);
                 if (index != -1) {
-                    dgvTEGShow.Rows[index].Cells["测量值"].Value = teginfo.resultValue;
+                    dgvTEGShow.Rows[index].Cells["测量值"].Value= teginfo.resultValue;
                     DataGridViewCell cell = dgvTEGShow.Rows[index].Cells["当前状态"];
                     if (teginfo.resultFlag == true) {
                         cell.Style.BackColor = Color.Green;
@@ -121,7 +128,6 @@ namespace DetectCodeAndCurrent {
         }
         private void InitTEGShow() {
             DataTable dt = SqlOperation.GetButtonConfigInfo();
-
             dgvTEGShow.DataSource = dt;
             //DataGridViewCellStyle dgvCellStyle = new DataGridViewCellStyle();
             //dgvCellStyle.BackColor = Color.Red;
@@ -130,7 +136,40 @@ namespace DetectCodeAndCurrent {
             // dgvTEGShow.DataSource
 
         }
+        private void LightCurrentDetectEnd(object sender,EventArgs e) {
+            sLightCurrentResult result = (sLightCurrentResult)sender;
+            Show_LightCurrentResult( result.currentValue,result.resultFlag);
 
+        }
+        private void Show_LightCurrentResult(string value,bool result) {
+            if (this.InvokeRequired) {
+                Invoke(new MethodInvoker(delegate () {
+                 
+                    if (value == string.Empty) {
+                        tbxLightCurrentValue.BackColor = Color.White;
+                        
+                    }
+                    else if (result) {
+                        tbxLightCurrentValue.BackColor = Color.Blue;
+                    }
+                    else
+                        tbxLightCurrentValue.BackColor = Color.Red;
+                    tbxLightCurrentValue.Text = value;
+                }));
+            }
+            else {
+                if (value == string.Empty) {
+                    tbxLightCurrentValue.BackColor = Color.White;
+                  
+                }else
+                if (result) {
+                    tbxLightCurrentValue.BackColor = Color.Green;
+                }
+                else
+                    tbxLightCurrentValue.BackColor = Color.Red;
+                tbxLightCurrentValue.Text = value;
+            }
+        }
         private void SqlError_Happend(Exception ex) {
            
             ShowMessage(sMessageType.ERROR, ex.Message);
@@ -147,6 +186,7 @@ namespace DetectCodeAndCurrent {
             sCurrentResultImage result = (sCurrentResultImage)sender;
             if (this.InvokeRequired) {
                 Invoke(new MethodInvoker(delegate () {
+                    panelMikeCurrent.BackColor = Color.Transparent;
                     pbxMick1.Image = result.mick1;
                     pbxMick2.Image = result.mick2;
                     pbxMick3.Image = result.mick3;
@@ -154,6 +194,7 @@ namespace DetectCodeAndCurrent {
                 }));
             }
             else {
+                panelMikeCurrent.BackColor = Color.Transparent;
                 pbxMick1.Image = result.mick1;
                 pbxMick2.Image = result.mick2;
                 pbxMick3.Image = result.mick3;
@@ -197,15 +238,21 @@ namespace DetectCodeAndCurrent {
                     cmbProduct.Enabled = true;
                     ShowMessage(sMessageType.TIP, "当前产品" + (string)sender + "检测完成");
                     flowLayoutPanel1.Controls.Clear();
+                    panelMikeCurrent.BackColor = Color.Transparent;
+                    txtProductCode.Text = string.Empty;
                     InitalTSSBtn();
+                    Show_LightCurrentResult("",true);
                 }));
 
             }
             else
             {
+                txtProductCode.Text = string.Empty;
                 cmbProduct.Enabled = true;
                 ShowMessage(sMessageType.TIP, "当前产品" + (string)sender + "检测完成");
                 flowLayoutPanel1.Controls.Clear();
+                panelMikeCurrent.BackColor = Color.Transparent;
+                Show_LightCurrentResult("", true);
                 InitalTSSBtn();
             }
            
@@ -218,10 +265,12 @@ namespace DetectCodeAndCurrent {
                 txtProductCode.Text = (string)dt.Rows[0]["productCode"];
                 Show_CurrentProductCodeDisplayInfo();
                 ShowMessage(sMessageType.TIP,"当前总装条形码为："+ txtProductCode.Text);
+                
             }
 
         }
        
+
 
         private void ButtonControlsState_Show() {
             foreach (sButtonInfo info in gButtonInfosList) {
@@ -248,7 +297,8 @@ namespace DetectCodeAndCurrent {
                 foreach (string productName in productNames) {
                     cmbProduct.Items.Add(productName);
                 }
-                instance.InitialLastRunningInfo();
+                if (cmbProduct.Items.Count > 0) cmbProduct.SelectedIndex = 0;
+                //instance.InitialLastRunningInfo();
                 ShowMessage(sMessageType.TIP, "系统初始化完成");
             }
             else {
@@ -294,6 +344,12 @@ namespace DetectCodeAndCurrent {
                 Invoke(new MethodInvoker(delegate () {
                     cmbProduct.Enabled = false;
                     WorkProcess instance = WorkProcess.GetInstance();
+                    string tegValue;
+                    string mikeValue;
+                    instance.InitLastTEGResult(instance.strCurrentCode, out tegValue,out mikeValue);
+                    if (mikeValue != string.Empty&&mikeValue.ToString()!=1.ToString()) panelMikeCurrent.BackColor = Color.Red;
+                    tbxLightCurrentValue.Text = tegValue.ToString();
+                    txtProductCode.Text = instance.strCurrentCode;
                     gProductInfosList = SqlOperation.GetProductAssembleFromSQL(instance.strCurrentProd);
                     SqlOperation.GetCurrentPartRecordFromSQL(instance.strCurrentCode, instance.strCurrentProd, ref gProductInfosList);
                     InitCurrentControlList();
@@ -303,6 +359,12 @@ namespace DetectCodeAndCurrent {
             else {
                 cmbProduct.Enabled = false;
                 WorkProcess instance = WorkProcess.GetInstance();
+                string tegValue;
+                string mikeValue;
+                instance.InitLastTEGResult(instance.strCurrentCode, out tegValue, out mikeValue);
+                if (mikeValue != string.Empty && mikeValue.ToString() != 1.ToString()) panelMikeCurrent.BackColor = Color.Red;
+                tbxLightCurrentValue.Text = tegValue.ToString();
+                txtProductCode.Text = instance.strCurrentCode;
                 gProductInfosList = SqlOperation.GetProductAssembleFromSQL(instance.strCurrentProd);
                 SqlOperation.GetCurrentPartRecordFromSQL(instance.strCurrentCode, instance.strCurrentProd, ref gProductInfosList);
                 InitCurrentControlList();
@@ -411,11 +473,14 @@ namespace DetectCodeAndCurrent {
         private void ChangePermission(bool value) {
             if (value == true) {
                 tsbDelete.Enabled = true;
+                tsbDeleteTEGResult.Enabled = true;
                 tsbComfrim.Enabled = true;
             }
             else {
                 tsbDelete.Enabled = false;
                 tsbComfrim.Enabled = false;
+                tsbDeleteTEGResult.Enabled = false;
+
             }
 
         }
@@ -490,16 +555,21 @@ namespace DetectCodeAndCurrent {
             WorkProcess instance = WorkProcess.GetInstance();
             switch (btnPartsSwitch.Text) {
                 case "附件开关打开":
+                    if (instance.LinThreadFlag == false) {
+                        instance.OpenReceiveLin(true);
+                    }
                     if (instance.OpenPartSwitch()) {
-                        instance.OpenPIN();
+                        
                         btnPartsSwitch.Text = "附件开关关闭";
                         btnPartsSwitch.BackColor = Color.Green;
                         timeShow.Enabled = true;
                     }
                     break;
                 case "附件开关关闭":
-                    if (instance.ClosePartSwitch()) {
-                        instance.ClosePIN();
+                    if (instance.LinThreadFlag == true) {
+                        instance.CloseReceivePIN();
+                    }
+                    if (instance.ClosePartSwitch()) {                       
                         btnPartsSwitch.Text = "附件开关打开";
                         btnPartsSwitch.BackColor = Color.Gray;
                         timeShow.Enabled = false;
@@ -521,6 +591,8 @@ namespace DetectCodeAndCurrent {
             tbxMick2Volt.Text = mick2;
             tbxMick3Volt.Text = mick3;
             tbxMick4Volt.Text = mick4;
+            tbxLightCurrent.Text =string.Format("{0:0.0000}",instance.GetLightCurrent());
+            tbxButtonVolt.Text = string.Format("{0:0.0000}",instance.GetButtonVolt());
         }
 
         private void pictureBox2_Click(object sender, EventArgs e) {
@@ -531,6 +603,7 @@ namespace DetectCodeAndCurrent {
             WorkProcess instance = WorkProcess.GetInstance();
             instance.CloseListeningButtonDown();
             instance.ClosePinDevice();
+            instance.ClosePartSwitch();
         }
 
         private void timerShowState_Tick(object sender, EventArgs e) {
@@ -539,8 +612,49 @@ namespace DetectCodeAndCurrent {
             tsslabDigital.Image= process.DIConnectFlag? Properties.Resources.succeed:Properties.Resources.fail;
             tsslabLin.Image=process.PINConnectFlag? Properties.Resources.succeed : Properties.Resources.fail;
             tsslabRegist1.Image = process.AD1ConnectFlag ? Properties.Resources.succeed : Properties.Resources.fail;
-          //  tsslabLin.Image = process.PINConnectFlag ? Properties.Resources.succeed : Properties.Resources.fail;
+            tsslabRegist2.Image = process.AD2ConnectFlag ? Properties.Resources.succeed : Properties.Resources.fail;
+            if (process.LinReceiveFlag) {
+                tsslLinRevice.Image = Properties.Resources.succeed;
+                process.LinReceiveFlag = false;
+            }
+            else {
+                tsslLinRevice.Image = Properties.Resources.fail;
+            }
+          
+            //  tsslabLin.Image = process.PINConnectFlag ? Properties.Resources.succeed : Properties.Resources.fail;
 
+        }
+
+        private void button2_Click_1(object sender, EventArgs e) {
+            WorkProcess process = WorkProcess.GetInstance();
+            process.RestoreLin();
+        }
+
+        private void toolStripButton1_Click_1(object sender, EventArgs e) {
+            if (dgvRecords.CurrentRow != null) {
+                if (MessageBox.Show("确认删除选中行电检记录？", "提示", MessageBoxButtons.OKCancel) == DialogResult.OK) {
+                    string strProductCode = (string)dgvRecords.CurrentRow.Cells["总装条形码"].Value;
+                    SqlOperation.ClearTegResult(strProductCode);
+                    UpdateDateGridView();
+                }
+            }
+           
+        }
+        private void InitMp3() {
+            Mp3Player mp3Play = new Mp3Player();
+            mp3Play.FileName = System.IO.Directory.GetCurrentDirectory() + @"\VoiceRes\3CLabel.mp3";
+        }
+        private void button3_Click(object sender, EventArgs e) {
+            //Mp3Player mp3Play = new Mp3Player() {
+            //    FileName = @"E:\MyCode\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\bin\Debug\VoiceRes\3CLabel.mp3"
+            //};
+
+            // mp3Play.play();
+        }
+
+        private void button4_Click(object sender, EventArgs e) {
+            WorkProcess p = WorkProcess.GetInstance();
+            p.PlayVoice("3CLabel");
         }
     }
 }

@@ -25,6 +25,54 @@ namespace DetectCodeAndCurrent {
             DataTable dt = instance.GetMySqlRead(sql, parameters);
             return dt;
         }
+
+        
+
+        public static sButtonVoltRanges GetButtonVoltRange() {
+         double onStartMin=0;
+         double onStartMax=0;
+         double phoneMin=0;
+         double phoneMax=0;
+         double sosMin=0;
+         double sosMax=0;
+            string dbString = "select * from tbl_infoteg where tbl_ColumnName = 'sosButton'";
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            DataTable dt = instance.GetMySqlRead(dbString);
+            if (dt != null && dt.Rows.Count > 0) {
+                sosMax =(double)(dt.Rows[0]["tbl_MaxValue"]);
+                sosMin = (double)(dt.Rows[0]["tbl_MinValue"]);
+            }
+             dbString = "select * from tbl_infoteg where tbl_ColumnName = 'phoneButton'";
+             dt = instance.GetMySqlRead(dbString);
+            if (dt != null && dt.Rows.Count > 0) {
+                phoneMax = (double)(dt.Rows[0]["tbl_MaxValue"]);
+                phoneMin = (double)(dt.Rows[0]["tbl_MinValue"]);
+            }
+            dbString = "select * from tbl_infoteg where tbl_ColumnName = 'onStarButton'";
+            dt = instance.GetMySqlRead(dbString);
+            if (dt != null && dt.Rows.Count > 0) {
+                onStartMax = (double)(dt.Rows[0]["tbl_MaxValue"]);
+                onStartMin = (double)(dt.Rows[0]["tbl_MinValue"]);
+            }
+            return new sButtonVoltRanges() { sosMax=sosMax,sosMin=sosMin,phoneMax=phoneMax,phoneMin=phoneMin,onStartMax=onStartMax,onStartMin=onStartMin};
+        }
+
+        public static void UpdateButtonVoltRange(sButtonVoltRanges result) {
+            MySqlParameter[] parameters;
+            parameters = new MySqlParameter[] { new MySqlParameter() { ParameterName = "onStartMax" , Value = result.onStartMax },
+                                                new MySqlParameter() {  ParameterName = "onStartMin" , Value = result.onStartMin },
+                                                new MySqlParameter() {  ParameterName = "phoneMax" , Value = result.phoneMax },
+                                                new MySqlParameter() {  ParameterName = "phoneMin" , Value = result.phoneMin },
+                                                new MySqlParameter() {  ParameterName = "sosMax" , Value = result.sosMax },
+                                                new MySqlParameter() {  ParameterName = "sosMin" , Value = result.sosMin }
+            };
+            string dbString = "update tbl_infoteg set tbl_MinValue = @onStartMin,tbl_MaxValue = @onStartMax where tbl_ColumnName = 'onStarButton' ;";
+            dbString= dbString+ "update tbl_infoteg set tbl_MinValue = @phoneMin,tbl_MaxValue = @phoneMax where tbl_ColumnName = 'phoneButton' ;";
+            dbString = dbString + "update tbl_infoteg set tbl_MinValue = @sosMin,tbl_MaxValue = @sosMax where tbl_ColumnName = 'sosButton' ;";
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            instance.ExecuteNonMySQL(dbString, parameters);
+
+        }
         /// <summary>
         /// 获取记录信息
         /// </summary>
@@ -67,6 +115,25 @@ namespace DetectCodeAndCurrent {
 
 
         }
+        public static void ClearTegResult(string productCode) {
+            MySqlParameter[] parameters;
+            parameters = new MySqlParameter[] { new MySqlParameter() { ParameterName = "productCode", Value = productCode } };
+            string str = "UPDATE `tbl_resultrecord` SET `currentResult` = NULL, `voltResult` = NULL, `domeOff` = NULL, `domeOn` = NULL, `SRClose` = NULL, `SROpen` = NULL, `SRVent` = NULL, `sunshadeClose` = NULL, `sunshadeOpen` = NULL, `ventClose` = NULL, `onStarButton` = NULL, `phoneButton` = NULL, `sosButton` = NULL, `LigthCurrentResult` = NULL, `mikeTegResult` = '0', `buttonTegResult` = '0', `lightTegResult` = '0' WHERE (`productCode` = @productCode);";
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            instance.ExecuteNonMySQL(str, parameters);
+        }
+        public static DataRow GetTEGResult(string productCode) {
+            MySqlParameter[] parameters;
+
+            parameters = new MySqlParameter[] {  new MySqlParameter() {  ParameterName = "currentProductCode" , Value = productCode } };
+            string dbString = "select * from tbl_resultrecord where productCode = @currentProductCode";
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            DataTable dt = instance.GetMySqlRead(dbString, parameters);
+            if (dt != null && dt.Rows.Count > 0) {
+                return dt.Rows[0];
+            }
+            else return null;
+            }
 
         public static string GetButtonState(string buttonColName, string currentProductCode) {
             MySqlParameter[] parameters;
@@ -119,7 +186,7 @@ namespace DetectCodeAndCurrent {
             MySqlParameter[] parameters;
             parameters = new MySqlParameter[] {
                 new MySqlParameter() { ParameterName ="productCode" ,Value = productCode },
-                new MySqlParameter() { ParameterName ="lightValue" ,Value = lightValue }
+                new MySqlParameter() { ParameterName ="lightValue" ,Value =string.Format("{0:0.0000}",lightValue) }
             };
             string strSql = "update tbl_resultrecord set LigthCurrentResult = @lightValue where productCode = @productCode";
             MysqlConnector instance = MysqlConnector.GetInstance();

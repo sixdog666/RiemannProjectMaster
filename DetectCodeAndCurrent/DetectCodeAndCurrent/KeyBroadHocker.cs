@@ -101,7 +101,9 @@ namespace DetectCodeAndCurrent {
             //}
             //Tab键9 回车msg.message == 13
             if (ScanerEvent != null && msg.paramH > 0 && msg.message == 13 && codes.Result.Length >= 8 && !string.IsNullOrEmpty(codes.Result)) {
-                ScanerEvent(codes);
+              //  [)>06Y400303980DPD0XP263424X012V42J2787I2TJ09A2007080021
+            ScanerEvent(codes);
+                codes= new ScanerCodes();
                 startFlag = false;
             }
             return CallNextHookEx(hKeyboardHook, nCode, wParam, lParam);

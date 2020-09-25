@@ -68,8 +68,9 @@
             this.txtProductCode = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label21 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label15 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -92,7 +93,21 @@
             this.txtPartCode = new System.Windows.Forms.TextBox();
             this.btnPartRevert = new System.Windows.Forms.Button();
             this.txtPartName = new System.Windows.Forms.TextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.tbxStarMax = new System.Windows.Forms.TextBox();
+            this.tbxStarMin = new System.Windows.Forms.TextBox();
+            this.tbxPhoneMin = new System.Windows.Forms.TextBox();
+            this.tbxPhoneMax = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.tbxSosMin = new System.Windows.Forms.TextBox();
+            this.tbxSosMax = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             label9 = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
             label11 = new System.Windows.Forms.Label();
@@ -104,6 +119,7 @@
             this.bdnAssembleConfig.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -111,7 +127,7 @@
             this.splitContainer1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // label9
@@ -481,7 +497,7 @@
             // 
             // btnRevert
             // 
-            this.btnRevert.Location = new System.Drawing.Point(635, 99);
+            this.btnRevert.Location = new System.Drawing.Point(613, 125);
             this.btnRevert.Name = "btnRevert";
             this.btnRevert.Size = new System.Drawing.Size(75, 23);
             this.btnRevert.TabIndex = 13;
@@ -524,11 +540,12 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1125, 633);
+            this.tabControl1.Size = new System.Drawing.Size(1125, 678);
             this.tabControl1.TabIndex = 16;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.panel2);
             this.tabPage1.Controls.Add(this.label1);
@@ -537,19 +554,37 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1117, 604);
+            this.tabPage1.Size = new System.Drawing.Size(1117, 649);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "产品信息配置";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // label21
+            // groupBox3
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(577, 106);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(15, 15);
-            this.label21.TabIndex = 16;
-            this.label21.Text = "A";
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.label21);
+            this.groupBox3.Controls.Add(this.label16);
+            this.groupBox3.Controls.Add(this.label20);
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Controls.Add(this.txtUpperCurrent);
+            this.groupBox3.Controls.Add(this.label13);
+            this.groupBox3.Controls.Add(this.btnRevert);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.label19);
+            this.groupBox3.Controls.Add(this.txtUpper);
+            this.groupBox3.Controls.Add(this.txtLightCurrentUp);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.label18);
+            this.groupBox3.Controls.Add(this.txtLightCurrentLow);
+            this.groupBox3.Controls.Add(this.txtLower);
+            this.groupBox3.Controls.Add(this.label17);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Location = new System.Drawing.Point(20, 450);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(713, 165);
+            this.groupBox3.TabIndex = 17;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "电流电压范围";
             // 
             // label15
             // 
@@ -559,6 +594,15 @@
             this.label15.Size = new System.Drawing.Size(15, 15);
             this.label15.TabIndex = 16;
             this.label15.Text = "V";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(577, 106);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(15, 15);
+            this.label21.TabIndex = 16;
+            this.label21.Text = "A";
             // 
             // label16
             // 
@@ -794,37 +838,148 @@
             this.txtPartName.Size = new System.Drawing.Size(190, 25);
             this.txtPartName.TabIndex = 14;
             // 
-            // groupBox3
+            // groupBox4
             // 
-            this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Controls.Add(this.label21);
-            this.groupBox3.Controls.Add(this.label16);
-            this.groupBox3.Controls.Add(this.label20);
-            this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Controls.Add(this.txtUpperCurrent);
-            this.groupBox3.Controls.Add(this.label13);
-            this.groupBox3.Controls.Add(this.btnRevert);
-            this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Controls.Add(this.label19);
-            this.groupBox3.Controls.Add(this.txtUpper);
-            this.groupBox3.Controls.Add(this.txtLightCurrentUp);
-            this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Controls.Add(this.label18);
-            this.groupBox3.Controls.Add(this.txtLightCurrentLow);
-            this.groupBox3.Controls.Add(this.txtLower);
-            this.groupBox3.Controls.Add(this.label17);
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Location = new System.Drawing.Point(20, 450);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(731, 132);
-            this.groupBox3.TabIndex = 17;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "电流电压范围";
+            this.groupBox4.Controls.Add(this.button1);
+            this.groupBox4.Controls.Add(this.label25);
+            this.groupBox4.Controls.Add(this.label28);
+            this.groupBox4.Controls.Add(this.label27);
+            this.groupBox4.Controls.Add(this.label26);
+            this.groupBox4.Controls.Add(this.tbxSosMax);
+            this.groupBox4.Controls.Add(this.tbxSosMin);
+            this.groupBox4.Controls.Add(this.tbxPhoneMax);
+            this.groupBox4.Controls.Add(this.tbxPhoneMin);
+            this.groupBox4.Controls.Add(this.tbxStarMax);
+            this.groupBox4.Controls.Add(this.tbxStarMin);
+            this.groupBox4.Controls.Add(this.label24);
+            this.groupBox4.Controls.Add(this.label23);
+            this.groupBox4.Controls.Add(this.label22);
+            this.groupBox4.Location = new System.Drawing.Point(749, 457);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(351, 158);
+            this.groupBox4.TabIndex = 18;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "按键电压范围";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(19, 30);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(52, 15);
+            this.label22.TabIndex = 0;
+            this.label22.Text = "安吉星";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(17, 61);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(67, 15);
+            this.label23.TabIndex = 0;
+            this.label23.Text = "车载电话";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(17, 97);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(67, 15);
+            this.label24.TabIndex = 0;
+            this.label24.Text = "紧急呼叫";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(457, 30);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(15, 15);
+            this.label25.TabIndex = 21;
+            this.label25.Text = "V";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(214, 25);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(23, 15);
+            this.label26.TabIndex = 22;
+            this.label26.Text = "To";
+            // 
+            // tbxStarMax
+            // 
+            this.tbxStarMax.Location = new System.Drawing.Point(243, 19);
+            this.tbxStarMax.Name = "tbxStarMax";
+            this.tbxStarMax.Size = new System.Drawing.Size(97, 25);
+            this.tbxStarMax.TabIndex = 17;
+            // 
+            // tbxStarMin
+            // 
+            this.tbxStarMin.Location = new System.Drawing.Point(95, 19);
+            this.tbxStarMin.Name = "tbxStarMin";
+            this.tbxStarMin.Size = new System.Drawing.Size(104, 25);
+            this.tbxStarMin.TabIndex = 18;
+            // 
+            // tbxPhoneMin
+            // 
+            this.tbxPhoneMin.Location = new System.Drawing.Point(95, 58);
+            this.tbxPhoneMin.Name = "tbxPhoneMin";
+            this.tbxPhoneMin.Size = new System.Drawing.Size(104, 25);
+            this.tbxPhoneMin.TabIndex = 18;
+            // 
+            // tbxPhoneMax
+            // 
+            this.tbxPhoneMax.Location = new System.Drawing.Point(243, 58);
+            this.tbxPhoneMax.Name = "tbxPhoneMax";
+            this.tbxPhoneMax.Size = new System.Drawing.Size(97, 25);
+            this.tbxPhoneMax.TabIndex = 17;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(214, 64);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(23, 15);
+            this.label27.TabIndex = 22;
+            this.label27.Text = "To";
+            // 
+            // tbxSosMin
+            // 
+            this.tbxSosMin.Location = new System.Drawing.Point(95, 91);
+            this.tbxSosMin.Name = "tbxSosMin";
+            this.tbxSosMin.Size = new System.Drawing.Size(104, 25);
+            this.tbxSosMin.TabIndex = 18;
+            // 
+            // tbxSosMax
+            // 
+            this.tbxSosMax.Location = new System.Drawing.Point(243, 91);
+            this.tbxSosMax.Name = "tbxSosMax";
+            this.tbxSosMax.Size = new System.Drawing.Size(97, 25);
+            this.tbxSosMax.TabIndex = 17;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(214, 97);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(23, 15);
+            this.label28.TabIndex = 22;
+            this.label28.Text = "To";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(270, 129);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 23;
+            this.button1.Text = "修改";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // FromConfiguration
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1125, 633);
+            this.ClientSize = new System.Drawing.Size(1125, 678);
             this.Controls.Add(this.tabControl1);
             this.Name = "FromConfiguration";
             this.Text = "配置";
@@ -840,6 +995,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -849,8 +1006,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -921,5 +1078,20 @@
         private System.Windows.Forms.TextBox txtLightCurrentLow;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox tbxSosMax;
+        private System.Windows.Forms.TextBox tbxSosMin;
+        private System.Windows.Forms.TextBox tbxPhoneMax;
+        private System.Windows.Forms.TextBox tbxPhoneMin;
+        private System.Windows.Forms.TextBox tbxStarMax;
+        private System.Windows.Forms.TextBox tbxStarMin;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label22;
     }
 }

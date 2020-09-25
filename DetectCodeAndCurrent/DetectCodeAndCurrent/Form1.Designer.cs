@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DectectMainForm));
             this.lstMessage = new System.Windows.Forms.ListView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -46,13 +46,16 @@
             this.tsslabRegist1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslabRegist2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslabDigital = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsslLinRevice = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabGroup = new System.Windows.Forms.TabControl();
             this.tabScanCodePage = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabTEGResult = new System.Windows.Forms.TabPage();
-            this.panelCurrent = new System.Windows.Forms.Panel();
+            this.tbxLightCurrentValue = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.panelMikeCurrent = new System.Windows.Forms.Panel();
             this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -90,6 +93,7 @@
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.tscmb = new System.Windows.Forms.ToolStripComboBox();
             this.tsbComfrim = new System.Windows.Forms.ToolStripButton();
+            this.tsbDeleteTEGResult = new System.Windows.Forms.ToolStripButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -102,9 +106,12 @@
             this.txtAssembleCode = new System.Windows.Forms.TextBox();
             this.dgvRecords = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
@@ -119,13 +126,16 @@
             this.label13 = new System.Windows.Forms.Label();
             this.tbxMick4Volt = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.tbxButtonVolt = new System.Windows.Forms.TextBox();
             this.tbxMick3Volt = new System.Windows.Forms.TextBox();
+            this.tbxLightCurrent = new System.Windows.Forms.TextBox();
             this.tbxMick4Current = new System.Windows.Forms.TextBox();
             this.tbxMick2Volt = new System.Windows.Forms.TextBox();
             this.tbxMick3Current = new System.Windows.Forms.TextBox();
             this.tbxMick1Volt = new System.Windows.Forms.TextBox();
             this.tbxMick2Current = new System.Windows.Forms.TextBox();
             this.tbxMick1Current = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.btnPartsSwitch = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label8 = new System.Windows.Forms.Label();
@@ -138,7 +148,7 @@
             this.tabGroup.SuspendLayout();
             this.tabScanCodePage.SuspendLayout();
             this.tabTEGResult.SuspendLayout();
-            this.panelCurrent.SuspendLayout();
+            this.panelMikeCurrent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick2)).BeginInit();
@@ -182,7 +192,8 @@
             this.tsslabLin,
             this.tsslabRegist1,
             this.tsslabRegist2,
-            this.tsslabDigital});
+            this.tsslabDigital,
+            this.tsslLinRevice});
             this.statusStrip1.Location = new System.Drawing.Point(0, 893);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1461, 25);
@@ -240,7 +251,7 @@
             // toolStripStatusLabel5
             // 
             this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
-            this.toolStripStatusLabel5.Size = new System.Drawing.Size(466, 20);
+            this.toolStripStatusLabel5.Size = new System.Drawing.Size(353, 20);
             this.toolStripStatusLabel5.Spring = true;
             // 
             // tsslabLin
@@ -270,6 +281,13 @@
             this.tsslabDigital.Name = "tsslabDigital";
             this.tsslabDigital.Size = new System.Drawing.Size(104, 20);
             this.tsslabDigital.Text = "数字量模块";
+            // 
+            // tsslLinRevice
+            // 
+            this.tsslLinRevice.Image = global::DetectCodeAndCurrent.Properties.Resources.fail;
+            this.tsslLinRevice.Name = "tsslLinRevice";
+            this.tsslLinRevice.Size = new System.Drawing.Size(113, 20);
+            this.tsslLinRevice.Text = "LIN接收信号";
             // 
             // tabControl1
             // 
@@ -341,34 +359,58 @@
             // 
             // tabTEGResult
             // 
-            this.tabTEGResult.Controls.Add(this.panelCurrent);
+            this.tabTEGResult.Controls.Add(this.tbxLightCurrentValue);
+            this.tabTEGResult.Controls.Add(this.label31);
+            this.tabTEGResult.Controls.Add(this.panelMikeCurrent);
             this.tabTEGResult.Controls.Add(this.labTipTestButton);
             this.tabTEGResult.Controls.Add(this.label29);
             this.tabTEGResult.Controls.Add(this.dgvTEGShow);
-            this.tabTEGResult.Location = new System.Drawing.Point(4, 54);
+            this.tabTEGResult.Location = new System.Drawing.Point(4, 24);
             this.tabTEGResult.Name = "tabTEGResult";
             this.tabTEGResult.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTEGResult.Size = new System.Drawing.Size(1158, 528);
+            this.tabTEGResult.Size = new System.Drawing.Size(1158, 558);
             this.tabTEGResult.TabIndex = 2;
             this.tabTEGResult.Text = "电检结果";
             this.tabTEGResult.UseVisualStyleBackColor = true;
             // 
-            // panelCurrent
+            // tbxLightCurrentValue
             // 
-            this.panelCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tbxLightCurrentValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelCurrent.Controls.Add(this.label20);
-            this.panelCurrent.Controls.Add(this.label19);
-            this.panelCurrent.Controls.Add(this.label18);
-            this.panelCurrent.Controls.Add(this.label17);
-            this.panelCurrent.Controls.Add(this.pbxMick4);
-            this.panelCurrent.Controls.Add(this.pbxMick3);
-            this.panelCurrent.Controls.Add(this.pbxMick2);
-            this.panelCurrent.Controls.Add(this.pbxMick1);
-            this.panelCurrent.Location = new System.Drawing.Point(919, 28);
-            this.panelCurrent.Name = "panelCurrent";
-            this.panelCurrent.Size = new System.Drawing.Size(219, 480);
-            this.panelCurrent.TabIndex = 16;
+            this.tbxLightCurrentValue.Font = new System.Drawing.Font("宋体", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tbxLightCurrentValue.Location = new System.Drawing.Point(919, 112);
+            this.tbxLightCurrentValue.Name = "tbxLightCurrentValue";
+            this.tbxLightCurrentValue.Size = new System.Drawing.Size(148, 38);
+            this.tbxLightCurrentValue.TabIndex = 19;
+            // 
+            // label31
+            // 
+            this.label31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("宋体", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label31.Location = new System.Drawing.Point(914, 66);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(124, 28);
+            this.label31.TabIndex = 18;
+            this.label31.Text = "总电流值";
+            // 
+            // panelMikeCurrent
+            // 
+            this.panelMikeCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelMikeCurrent.Controls.Add(this.label20);
+            this.panelMikeCurrent.Controls.Add(this.label19);
+            this.panelMikeCurrent.Controls.Add(this.label18);
+            this.panelMikeCurrent.Controls.Add(this.label17);
+            this.panelMikeCurrent.Controls.Add(this.pbxMick4);
+            this.panelMikeCurrent.Controls.Add(this.pbxMick3);
+            this.panelMikeCurrent.Controls.Add(this.pbxMick2);
+            this.panelMikeCurrent.Controls.Add(this.pbxMick1);
+            this.panelMikeCurrent.Location = new System.Drawing.Point(919, 162);
+            this.panelMikeCurrent.Name = "panelMikeCurrent";
+            this.panelMikeCurrent.Size = new System.Drawing.Size(219, 376);
+            this.panelMikeCurrent.TabIndex = 16;
             // 
             // label20
             // 
@@ -449,20 +491,22 @@
             // labTipTestButton
             // 
             this.labTipTestButton.AutoSize = true;
-            this.labTipTestButton.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labTipTestButton.Location = new System.Drawing.Point(216, 21);
+            this.labTipTestButton.Font = new System.Drawing.Font("宋体", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labTipTestButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.labTipTestButton.Location = new System.Drawing.Point(258, 24);
             this.labTipTestButton.Name = "labTipTestButton";
-            this.labTipTestButton.Size = new System.Drawing.Size(253, 30);
+            this.labTipTestButton.Size = new System.Drawing.Size(234, 43);
             this.labTipTestButton.TabIndex = 1;
-            this.labTipTestButton.Text = "当前需要测试按键";
+            this.labTipTestButton.Text = "测试未开始";
             // 
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label29.Location = new System.Drawing.Point(17, 21);
+            this.label29.Font = new System.Drawing.Font("宋体", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label29.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label29.Location = new System.Drawing.Point(6, 24);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(193, 30);
+            this.label29.Size = new System.Drawing.Size(277, 43);
             this.label29.TabIndex = 1;
             this.label29.Text = "请按下按键：";
             // 
@@ -475,19 +519,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvTEGShow.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvTEGShow.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvTEGShow.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvTEGShow.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgvTEGShow.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvTEGShow.Location = new System.Drawing.Point(6, 76);
+            this.dgvTEGShow.Enabled = false;
+            this.dgvTEGShow.Location = new System.Drawing.Point(6, 92);
+            this.dgvTEGShow.MultiSelect = false;
             this.dgvTEGShow.Name = "dgvTEGShow";
             this.dgvTEGShow.RowTemplate.Height = 27;
-            this.dgvTEGShow.Size = new System.Drawing.Size(864, 446);
+            this.dgvTEGShow.Size = new System.Drawing.Size(864, 460);
             this.dgvTEGShow.TabIndex = 0;
             // 
             // labPostion
@@ -616,7 +662,8 @@
             this.tsbDelete,
             this.toolStripLabel2,
             this.tscmb,
-            this.tsbComfrim});
+            this.tsbComfrim,
+            this.tsbDeleteTEGResult});
             this.bdgSearch.Location = new System.Drawing.Point(3, 3);
             this.bdgSearch.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bdgSearch.MoveLastItem = this.bindingNavigatorMoveLastItem;
@@ -722,12 +769,12 @@
             // 
             this.tscmb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.tscmb.Items.AddRange(new object[] {
-            "开始工位1检测",
-            "结束工位1检测",
-            "开始工位2检测",
-            "结束工位2检测"});
+            "工位1总装条形码扫码完成",
+            "工位1结束放行",
+            "工位2总装条形码扫码完成",
+            "工位2结束放行"});
             this.tscmb.Name = "tscmb";
-            this.tscmb.Size = new System.Drawing.Size(121, 30);
+            this.tscmb.Size = new System.Drawing.Size(150, 30);
             // 
             // tsbComfrim
             // 
@@ -739,6 +786,17 @@
             this.tsbComfrim.Size = new System.Drawing.Size(43, 27);
             this.tsbComfrim.Text = "确定";
             this.tsbComfrim.Click += new System.EventHandler(this.toolStripButton2_Click);
+            // 
+            // tsbDeleteTEGResult
+            // 
+            this.tsbDeleteTEGResult.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbDeleteTEGResult.Enabled = false;
+            this.tsbDeleteTEGResult.Image = ((System.Drawing.Image)(resources.GetObject("tsbDeleteTEGResult.Image")));
+            this.tsbDeleteTEGResult.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDeleteTEGResult.Name = "tsbDeleteTEGResult";
+            this.tsbDeleteTEGResult.Size = new System.Drawing.Size(103, 27);
+            this.tsbDeleteTEGResult.Text = "删除电检记录";
+            this.tsbDeleteTEGResult.Click += new System.EventHandler(this.toolStripButton1_Click_1);
             // 
             // groupBox1
             // 
@@ -854,9 +912,12 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label33);
+            this.tabPage3.Controls.Add(this.label30);
             this.tabPage3.Controls.Add(this.label28);
             this.tabPage3.Controls.Add(this.label27);
             this.tabPage3.Controls.Add(this.label26);
+            this.tabPage3.Controls.Add(this.label32);
             this.tabPage3.Controls.Add(this.label25);
             this.tabPage3.Controls.Add(this.label24);
             this.tabPage3.Controls.Add(this.label23);
@@ -871,13 +932,16 @@
             this.tabPage3.Controls.Add(this.label13);
             this.tabPage3.Controls.Add(this.tbxMick4Volt);
             this.tabPage3.Controls.Add(this.label9);
+            this.tabPage3.Controls.Add(this.tbxButtonVolt);
             this.tabPage3.Controls.Add(this.tbxMick3Volt);
+            this.tabPage3.Controls.Add(this.tbxLightCurrent);
             this.tabPage3.Controls.Add(this.tbxMick4Current);
             this.tabPage3.Controls.Add(this.tbxMick2Volt);
             this.tabPage3.Controls.Add(this.tbxMick3Current);
             this.tabPage3.Controls.Add(this.tbxMick1Volt);
             this.tabPage3.Controls.Add(this.tbxMick2Current);
             this.tabPage3.Controls.Add(this.tbxMick1Current);
+            this.tabPage3.Controls.Add(this.button2);
             this.tabPage3.Controls.Add(this.btnPartsSwitch);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
@@ -886,6 +950,24 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "手动IO";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(668, 231);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(67, 15);
+            this.label33.TabIndex = 19;
+            this.label33.Text = "按钮电压";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(323, 231);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(67, 15);
+            this.label30.TabIndex = 19;
+            this.label30.Text = "当前电流";
             // 
             // label28
             // 
@@ -913,6 +995,15 @@
             this.label26.Size = new System.Drawing.Size(15, 15);
             this.label26.TabIndex = 6;
             this.label26.Text = "V";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(925, 231);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(15, 15);
+            this.label32.TabIndex = 6;
+            this.label32.Text = "V";
             // 
             // label25
             // 
@@ -1038,6 +1129,13 @@
             this.label9.TabIndex = 5;
             this.label9.Text = "麦克风1电流";
             // 
+            // tbxButtonVolt
+            // 
+            this.tbxButtonVolt.Location = new System.Drawing.Point(751, 221);
+            this.tbxButtonVolt.Name = "tbxButtonVolt";
+            this.tbxButtonVolt.Size = new System.Drawing.Size(154, 25);
+            this.tbxButtonVolt.TabIndex = 4;
+            // 
             // tbxMick3Volt
             // 
             this.tbxMick3Volt.Location = new System.Drawing.Point(751, 119);
@@ -1045,9 +1143,16 @@
             this.tbxMick3Volt.Size = new System.Drawing.Size(154, 25);
             this.tbxMick3Volt.TabIndex = 3;
             // 
+            // tbxLightCurrent
+            // 
+            this.tbxLightCurrent.Location = new System.Drawing.Point(417, 221);
+            this.tbxLightCurrent.Name = "tbxLightCurrent";
+            this.tbxLightCurrent.Size = new System.Drawing.Size(154, 25);
+            this.tbxLightCurrent.TabIndex = 4;
+            // 
             // tbxMick4Current
             // 
-            this.tbxMick4Current.Location = new System.Drawing.Point(416, 170);
+            this.tbxMick4Current.Location = new System.Drawing.Point(418, 172);
             this.tbxMick4Current.Name = "tbxMick4Current";
             this.tbxMick4Current.Size = new System.Drawing.Size(154, 25);
             this.tbxMick4Current.TabIndex = 4;
@@ -1086,6 +1191,16 @@
             this.tbxMick1Current.Name = "tbxMick1Current";
             this.tbxMick1Current.Size = new System.Drawing.Size(154, 25);
             this.tbxMick1Current.TabIndex = 1;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(28, 82);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(158, 35);
+            this.button2.TabIndex = 0;
+            this.button2.Text = "复位Lin卡";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // btnPartsSwitch
             // 
@@ -1173,8 +1288,8 @@
             this.tabScanCodePage.ResumeLayout(false);
             this.tabTEGResult.ResumeLayout(false);
             this.tabTEGResult.PerformLayout();
-            this.panelCurrent.ResumeLayout(false);
-            this.panelCurrent.PerformLayout();
+            this.panelMikeCurrent.ResumeLayout(false);
+            this.panelMikeCurrent.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMick2)).EndInit();
@@ -1287,7 +1402,7 @@
         private System.Windows.Forms.Label labTipTestButton;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.DataGridView dgvTEGShow;
-        private System.Windows.Forms.Panel panelCurrent;
+        private System.Windows.Forms.Panel panelMikeCurrent;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label18;
@@ -1302,6 +1417,16 @@
         private System.Windows.Forms.ToolStripStatusLabel tsslabDigital;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
         private System.Windows.Forms.Timer timerShowState;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.TextBox tbxLightCurrent;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.TextBox tbxButtonVolt;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox tbxLightCurrentValue;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.ToolStripStatusLabel tsslLinRevice;
+        private System.Windows.Forms.ToolStripButton tsbDeleteTEGResult;
     }
 }
 
