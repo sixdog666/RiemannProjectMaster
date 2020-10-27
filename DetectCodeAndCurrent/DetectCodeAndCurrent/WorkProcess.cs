@@ -448,7 +448,7 @@ namespace DetectCodeAndCurrent {
             else {
                 object result = WaitForButtonDown(testButtonName, out testValue);
                 if (result != null && (bool)result) {
-                    DataRow dr = SqlOperation.GetButtonInfo(testButtonName, out nextButtonName);
+                    DataRow dr = SqlOperation.GetButtonInfo(testButtonName,gCurrentProdNum, out nextButtonName);
                     SqlOperation.UpdateButtonState(gCurrentCode, dr["tbl_ColumnName"].ToString(), testValue.ToString());
                     isVoltTestEnd = false;
                     TegAtgs arg = new TegAtgs(testButtonName, string.Format("{0:0.0000}", testValue), true);
@@ -464,7 +464,7 @@ namespace DetectCodeAndCurrent {
             string testButtonName = gCurrentButtonName;
                 object result = WaitForButtonDown(testButtonName, out testValue);
             if (result != null && (bool)result) {
-                DataRow dr = SqlOperation.GetButtonInfo(testButtonName, out nextButtonName);
+                DataRow dr = SqlOperation.GetButtonInfo(testButtonName,gCurrentProdNum, out nextButtonName);
                 SqlOperation.UpdateButtonState(gCurrentCode, dr["tbl_ColumnName"].ToString(), testValue.ToString());
                 isVoltTestEnd = false;
                 TegAtgs arg = new TegAtgs(testButtonName, string.Format("{0:0.0000}", testValue), true);
@@ -476,16 +476,14 @@ namespace DetectCodeAndCurrent {
         }
         
         private object IfVoltButton(string itemName) {
-            string nextButtonName;
-            DataRow row = SqlOperation.GetButtonInfo(itemName, out nextButtonName);
+            DataRow row = SqlOperation.GetCheckVoltButton(itemName, gCurrentProdNum);
             if (row != null && Convert.ToBoolean(row["tbl_VCFlag"])) return true;
             if(row != null) return false;
             return null;
             }
         private object WaitForButtonDown(string itemName, out double testValue) {
-            string nextButtonName;
             testValue = 0;
-            DataRow row = SqlOperation.GetButtonInfo(itemName, out nextButtonName);
+            DataRow row = SqlOperation.GetCheckVoltButton(itemName,gCurrentProdNum);
             if (row != null && Convert.ToBoolean(row["tbl_VCFlag"])) {
                 double maxValue = (double)row["tbl_MaxValue"];
                 double minValue = (double)row["tbl_MinValue"];
@@ -565,7 +563,7 @@ namespace DetectCodeAndCurrent {
 
         }
         public void InitTEG(string currentCode) {
-            DataTable dt = SqlOperation.GetButtonConfigInfo();
+            DataTable dt = SqlOperation.GetButtonConfigInfo(gCurrentProdNum);
             bool needTestFlag = false;
             gCurrentButtonName = string.Empty;
             //   DataRow dr = SqlOperation.GetTEGResult(gCurrentCode);
@@ -604,7 +602,7 @@ namespace DetectCodeAndCurrent {
                     if (gPinDataFlag == false)
                         gPinDataFlag = true;
                     string nextButtonName;
-                    DataRow button = SqlOperation.GetButtonInfo(gCurrentButtonName, out nextButtonName);
+                    DataRow button = SqlOperation.GetButtonInfo(gCurrentButtonName, gCurrentProdNum, out nextButtonName);
                     if (button != null) {
                         string buffer;
                         ExchangePinData(e.reportBuff, out buffer);

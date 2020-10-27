@@ -28,28 +28,30 @@ namespace DetectCodeAndCurrent {
 
         
 
-        public static sButtonVoltRanges GetButtonVoltRange() {
+        public static sButtonVoltRanges GetButtonVoltRange(string productNum) {
          double onStartMin=0;
          double onStartMax=0;
          double phoneMin=0;
          double phoneMax=0;
          double sosMin=0;
          double sosMax=0;
-            string dbString = "select * from tbl_infoteg where tbl_ColumnName = 'sosButton'";
+            MySqlParameter[] parameters;
+            parameters = new MySqlParameter[] { new MySqlParameter() { ParameterName = "productNum", Value = productNum } };
+            string dbString = "select * from tbl_infoteg where tbl_ColumnName = 'sosButton' and tbl_ProductNum = @productNum";
             MysqlConnector instance = MysqlConnector.GetInstance();
-            DataTable dt = instance.GetMySqlRead(dbString);
+            DataTable dt = instance.GetMySqlRead(dbString, parameters);
             if (dt != null && dt.Rows.Count > 0) {
                 sosMax =(double)(dt.Rows[0]["tbl_MaxValue"]);
                 sosMin = (double)(dt.Rows[0]["tbl_MinValue"]);
             }
-             dbString = "select * from tbl_infoteg where tbl_ColumnName = 'phoneButton'";
-             dt = instance.GetMySqlRead(dbString);
+             dbString = "select * from tbl_infoteg where tbl_ColumnName = 'phoneButton' and tbl_ProductNum = @productNum";
+             dt = instance.GetMySqlRead(dbString, parameters);
             if (dt != null && dt.Rows.Count > 0) {
                 phoneMax = (double)(dt.Rows[0]["tbl_MaxValue"]);
                 phoneMin = (double)(dt.Rows[0]["tbl_MinValue"]);
             }
-            dbString = "select * from tbl_infoteg where tbl_ColumnName = 'onStarButton'";
-            dt = instance.GetMySqlRead(dbString);
+            dbString = "select * from tbl_infoteg where tbl_ColumnName = 'onStarButton' and tbl_ProductNum = @productNum";
+            dt = instance.GetMySqlRead(dbString, parameters);
             if (dt != null && dt.Rows.Count > 0) {
                 onStartMax = (double)(dt.Rows[0]["tbl_MaxValue"]);
                 onStartMin = (double)(dt.Rows[0]["tbl_MinValue"]);
@@ -57,18 +59,19 @@ namespace DetectCodeAndCurrent {
             return new sButtonVoltRanges() { sosMax=sosMax,sosMin=sosMin,phoneMax=phoneMax,phoneMin=phoneMin,onStartMax=onStartMax,onStartMin=onStartMin};
         }
 
-        public static void UpdateButtonVoltRange(sButtonVoltRanges result) {
+        public static void UpdateButtonVoltRange(sButtonVoltRanges result, string productNum) {
             MySqlParameter[] parameters;
-            parameters = new MySqlParameter[] { new MySqlParameter() { ParameterName = "onStartMax" , Value = result.onStartMax },
+            parameters = new MySqlParameter[] {new MySqlParameter() { ParameterName = "productNum" , Value = productNum },
+                                                new MySqlParameter() { ParameterName = "onStartMax" , Value = result.onStartMax },
                                                 new MySqlParameter() {  ParameterName = "onStartMin" , Value = result.onStartMin },
                                                 new MySqlParameter() {  ParameterName = "phoneMax" , Value = result.phoneMax },
                                                 new MySqlParameter() {  ParameterName = "phoneMin" , Value = result.phoneMin },
                                                 new MySqlParameter() {  ParameterName = "sosMax" , Value = result.sosMax },
                                                 new MySqlParameter() {  ParameterName = "sosMin" , Value = result.sosMin }
             };
-            string dbString = "update tbl_infoteg set tbl_MinValue = @onStartMin,tbl_MaxValue = @onStartMax where tbl_ColumnName = 'onStarButton' ;";
-            dbString= dbString+ "update tbl_infoteg set tbl_MinValue = @phoneMin,tbl_MaxValue = @phoneMax where tbl_ColumnName = 'phoneButton' ;";
-            dbString = dbString + "update tbl_infoteg set tbl_MinValue = @sosMin,tbl_MaxValue = @sosMax where tbl_ColumnName = 'sosButton' ;";
+            string dbString = "update tbl_infoteg set tbl_MinValue = @onStartMin,tbl_MaxValue = @onStartMax where tbl_ColumnName = 'onStarButton' and tbl_ProductNum = @productNum;";
+            dbString= dbString+ "update tbl_infoteg set tbl_MinValue = @phoneMin,tbl_MaxValue = @phoneMax where tbl_ColumnName = 'phoneButton' and tbl_ProductNum = @productNum;";
+            dbString = dbString + "update tbl_infoteg set tbl_MinValue = @sosMin,tbl_MaxValue = @sosMax where tbl_ColumnName = 'sosButton' and tbl_ProductNum = @productNum;";
             MysqlConnector instance = MysqlConnector.GetInstance();
             instance.ExecuteNonMySQL(dbString, parameters);
 
@@ -149,26 +152,53 @@ namespace DetectCodeAndCurrent {
             return string.Empty;
         }
 
-        public static DataTable GetButtonConfigInfo() {
-            string dbString = "SELECT tbl_ButtonName as 检测项,tbl_MaxValue as 最大值, tbl_MinValue as 最小值, tbl_TestValue as 测量值, tbl_State as 当前状态 ,tbl_ColumnName as ID FROM jixing_db.tbl_infoteg ORDER BY idx";
+        public static DataTable GetButtonConfigInfo(string productNum) {
+            MySqlParameter[] parameters;
+            parameters = new MySqlParameter[] { new MySqlParameter() { ParameterName = "productNum", Value = productNum } };
+            string dbString = "SELECT tbl_ButtonName as 检测项,tbl_MaxValue as 最大值, tbl_MinValue as 最小值, tbl_TestValue as 测量值, tbl_ColumnName as ID FROM jixing_db.tbl_infoteg where tbl_ProductNum = @productNum and tbl_State = 1 ORDER BY idx ";
             MysqlConnector instance = MysqlConnector.GetInstance();
-            return instance.GetMySqlRead(dbString);
+            return instance.GetMySqlRead(dbString, parameters);
         }
-
-        public static DataRow GetButtonInfo(string strName, out string nextTestName) {
+        public static DataTable GetProductButtonConfigInfo(string productNum) {
+            MySqlParameter[] parameters;
+            parameters = new MySqlParameter[] { new MySqlParameter() { ParameterName = "productNum", Value = productNum } };
+            string dbString = "SELECT tbl_ButtonName as 检测项,tbl_MaxValue as 最大值, tbl_MinValue as 最小值, tbl_State as 状态 ,tbl_ColumnName as ID FROM jixing_db.tbl_infoteg where tbl_ProductNum = @productNum ORDER BY idx ";
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            return instance.GetMySqlRead(dbString, parameters);
+        }
+        public static DataRow GetCheckVoltButton(string strName, string productNum) {
+            MySqlParameter[] parameters;
+            parameters = new MySqlParameter[] {
+                new MySqlParameter { ParameterName ="strName",Value = strName},
+                new MySqlParameter { ParameterName ="productNum",Value = productNum},
+            };
+            string dbString = "select * from tbl_infoteg where tbl_ButtonName = @strName and tbl_ProductNum = @productNum and tbl_State = 1";
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            DataTable dt = instance.GetMySqlRead(dbString, parameters);
+            if (dt != null && dt.Rows.Count > 0) {
+                return dt.Rows[0];
+            }
+            else {
+                return null;
+            }
+        }
+        public static DataRow GetButtonInfo(string strName ,string productNum, out string nextTestName) {
             MySqlParameter[] parameters;
 
             parameters = new MySqlParameter[] {
-                new MySqlParameter { ParameterName ="strName",Value = strName}};
-            string dbString = "select * from tbl_infoteg where tbl_ButtonName = @strName";
+                new MySqlParameter { ParameterName ="strName",Value = strName},
+                new MySqlParameter { ParameterName ="productNum",Value = productNum},
+            };
+            string dbString = "select * from tbl_infoteg where tbl_ButtonName = @strName and tbl_ProductNum = @productNum and tbl_State = 1";
             MysqlConnector instance = MysqlConnector.GetInstance();
             DataTable dt = instance.GetMySqlRead(dbString, parameters);
             if (dt != null && dt.Rows.Count > 0) {
                 DataRow dr = dt.Rows[0];
                 parameters = new MySqlParameter[] {
-                    new MySqlParameter {ParameterName ="index",Value = (int)dr["idx"]+1 }
+                    new MySqlParameter {ParameterName ="index",Value = (int)dr["idx"] },
+                    new MySqlParameter { ParameterName ="productNum",Value = productNum},
                 };
-                dbString = "select tbl_ButtonName from tbl_infoteg where idx = @index";
+                dbString = "select tbl_ButtonName from tbl_infoteg where idx > @index and tbl_ProductNum = @productNum ORDER BY idx limit 1";
                 DataTable next = instance.GetMySqlRead(dbString, parameters);
                 if (next != null && next.Rows.Count > 0)
                     nextTestName = next.Rows[0][0].ToString();
@@ -482,7 +512,25 @@ namespace DetectCodeAndCurrent {
                 sql = "insert into tbl_productconfig(Product, ProductCode) values(@strName, @strProductNum)";
             }
             int result = instance.ExecuteNonMySQL(sql, parameters);
+            if (result > 0) InsertNewTEGTestInfo(strProductNum);
         }
+        private static void InsertNewTEGTestInfo(string strProductNum) {
+            string sql;
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            MySqlParameter[] parameters = new MySqlParameter[] { new MySqlParameter { ParameterName = "strProductNum", Value = strProductNum } };
+            sql = @"update tbl_teg set tbl_ProductNum = @strProductNum;
+                   INSERT INTO tbl_infoteg(idx, tbl_ColumnName, tbl_ButtonName, tbl_MaxValue, tbl_MinValue, tbl_ByteString, tbl_TestValue, tbl_State, tbl_VCFlag, tbl_ProductNum) SELECT* FROM tbl_teg where tbl_State = '1'";
+            int result = instance.ExecuteNonMySQL(sql, parameters);
+        }
+
+        private static void DeleteTEGTestInfo(string strProductNum) {
+            string sql;
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            MySqlParameter[] parameters = new MySqlParameter[] { new MySqlParameter { ParameterName = "strProductNum", Value = strProductNum } };
+            sql = @"delete from tbl_infoteg where tbl_ProductNum = @strProductNum";
+            int result = instance.ExecuteNonMySQL(sql, parameters);
+        }
+
         /// <summary>
         /// 删除产品信息
         /// </summary>
@@ -498,6 +546,7 @@ namespace DetectCodeAndCurrent {
             if (dt.Rows.Count > 0) {
                 sql = "delete from tbl_productconfig where ProductCode = @strProductNum; ";
                 int result = instance.ExecuteNonMySQL(sql, parameters);
+                if (result > 0) DeleteTEGTestInfo(strProductNum);
             }
         }
         /// <summary>
@@ -845,6 +894,18 @@ namespace DetectCodeAndCurrent {
             MysqlConnector instance = MysqlConnector.GetInstance();
             MySqlParameter paramProductName = new MySqlParameter() { ParameterName = "productCodeId", Value = strProductCodeId };
             MySqlParameter[] parameters = new MySqlParameter[] { paramProductName };
+            int result = instance.ExecuteNonMySQL(sql, parameters);
+
+        }
+
+        public static void SetProductButtonState(string productNum,string buttonColName,bool value) {
+            string sql;
+            sql = string.Format("Update tbl_infoteg set tbl_State = @value where tbl_ProductNum = @productNum and tbl_ColumnName =@buttonColName");
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            MySqlParameter[] parameters = new MySqlParameter[] { new MySqlParameter() { ParameterName = "productNum", Value = productNum },
+                                                                 new MySqlParameter() { ParameterName = "value", Value = value },
+                                                                 new MySqlParameter() { ParameterName = "buttonColName", Value = buttonColName }
+            };
             int result = instance.ExecuteNonMySQL(sql, parameters);
 
         }

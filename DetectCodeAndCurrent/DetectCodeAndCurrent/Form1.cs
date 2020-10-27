@@ -127,12 +127,14 @@ namespace DetectCodeAndCurrent {
             return -1;
         }
         private void InitTEGShow() {
-            DataTable dt = SqlOperation.GetButtonConfigInfo();
+            WorkProcess instance = WorkProcess.GetInstance();
+            DataTable dt = SqlOperation.GetButtonConfigInfo(instance.strCurrentProd);
             dgvTEGShow.DataSource = dt;
             //DataGridViewCellStyle dgvCellStyle = new DataGridViewCellStyle();
             //dgvCellStyle.BackColor = Color.Red;
             if(dgvTEGShow.ColumnCount!=0)
             dgvTEGShow.Columns["ID"].Visible = false;
+
             // dgvTEGShow.DataSource
 
         }
@@ -210,7 +212,7 @@ namespace DetectCodeAndCurrent {
             }
             else {
                 tabGroup.SelectedTab = tabTEGResult;
-                InitTEGShow();
+              //  InitTEGShow();
             }
             if (this.InvokeRequired) {
                 Invoke(new MethodInvoker(delegate () {
@@ -229,6 +231,7 @@ namespace DetectCodeAndCurrent {
         }
         private void NewProduct_Start(object sender, EventArgs e) {
             LoadPartsShow();
+            InitTEGShow();
         }
         private void Product_End(object sender, EventArgs e)
         {
@@ -264,6 +267,7 @@ namespace DetectCodeAndCurrent {
                 cmbProduct.SelectedItem = (string)dt.Rows[0]["product"];
                 txtProductCode.Text = (string)dt.Rows[0]["productCode"];
                 Show_CurrentProductCodeDisplayInfo();
+                InitTEGShow();
                 ShowMessage(sMessageType.TIP,"当前总装条形码为："+ txtProductCode.Text);
                 
             }

@@ -10,6 +10,8 @@ using System.Windows.Forms;
 
 namespace DetectCodeAndCurrent {
     public partial class FromConfiguration : Form {
+
+        string gCurrentProductNum;
         public FromConfiguration() {
             InitializeComponent();
         }
@@ -17,12 +19,12 @@ namespace DetectCodeAndCurrent {
         private void FromConfiguration_Load(object sender, EventArgs e) {
             UpdateShowProducts();
             UpdateShowPartTypes();
-            UpdateShowButtonVoltRange();
+           
         }
 
-        private void UpdateShowButtonVoltRange() {
+        private void UpdateShowButtonVoltRange(string prodNum) {
             try {
-                sButtonVoltRanges ranges = SqlOperation.GetButtonVoltRange();
+                sButtonVoltRanges ranges = SqlOperation.GetButtonVoltRange(prodNum);
                 tbxPhoneMax.Text = ranges.phoneMax.ToString();
                 tbxPhoneMin.Text = ranges.phoneMin.ToString();
                 tbxSosMax.Text = ranges.sosMax.ToString();
@@ -71,11 +73,32 @@ namespace DetectCodeAndCurrent {
         }
 
         private void cmbProductType_SelectedValueChanged(object sender, EventArgs e) {
-            if (cmbProductType.SelectedItem != null)
+            if (cmbProductType.SelectedItem != null) {
                 UpdateDataControl(cmbProductType.SelectedItem.ToString());
+               
+            }
+                
+        }
+        private void UpdateButtonInfo(string productNum) {
+            dgvButtonInfo.CellValueChanged -= new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvButtonInfo_CellValueChanged);
+            BindingSource bs = new BindingSource();
+            bs.DataSource = SqlOperation.GetProductButtonConfigInfo(productNum);
+            dgvButtonInfo.DataSource = bs.DataSource;
+            foreach (DataGridViewRow dr in dgvButtonInfo.Rows) {
+                if (dr.Cells["状态"].Value.ToString() == "1") {
+                    dr.Cells[0].Value = true;
+                }
+                else {
+                    dr.Cells[0].Value = false;
+                }
+
+            }
+            dgvButtonInfo.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvButtonInfo_CellValueChanged);
+            UpdateShowButtonVoltRange(productNum);
         }
 
         private void UpdateDataControl(string ProductType) {
+            gCurrentProductNum = "";
             float upper = 0;
             float lower = 0;
             float lightUpper = 0;
@@ -87,6 +110,8 @@ namespace DetectCodeAndCurrent {
             dgvAssembleConfig.DataSource = bs.DataSource;
             bdnAssembleConfig.BindingSource = bs;
             SqlOperation.GetProductConfigCodeFromSQL(ProductType, out productCodeId);
+            gCurrentProductNum = productCodeId;
+            UpdateButtonInfo(productCodeId);
             SqlOperation.GetProductCurrentRange(productCodeId, out upper, out lower ,out upperCurrent);
             SqlOperation.GetProductLightCurrentRange(productCodeId, out lightUpper, out lightLower);
             txtLower.Text = lower.ToString();
@@ -149,6 +174,7 @@ namespace DetectCodeAndCurrent {
                 if (cmbProductType.SelectedItem != null) {
                     SqlOperation.GetProductConfigCodeFromSQL(cmbProductType.SelectedItem.ToString(), out productCodeId);
                     SqlOperation.SetCurrentValue(productCodeId, upper, lower, upperCurrent, lightUpper, lightLower);
+                    UpdateButtonVolt(productCodeId);
                 }
             }
             catch (Exception ex) {
@@ -282,14 +308,36 @@ namespace DetectCodeAndCurrent {
         }
 
         private void button1_Click(object sender, EventArgs e) {
+
+        }
+        private void UpdateButtonVolt(string productNum) {
             sButtonVoltRanges ranges = new sButtonVoltRanges();
-            ranges.onStartMax =Convert.ToDouble( tbxStarMax.Text);
+            ranges.onStartMax = Convert.ToDouble(tbxStarMax.Text);
             ranges.onStartMin = Convert.ToDouble(tbxStarMin.Text);
             ranges.phoneMax = Convert.ToDouble(tbxPhoneMax.Text);
             ranges.phoneMin = Convert.ToDouble(tbxPhoneMin.Text);
             ranges.sosMax = Convert.ToDouble(tbxSosMax.Text);
             ranges.sosMin = Convert.ToDouble(tbxSosMin.Text);
-            SqlOperation.UpdateButtonVoltRange(ranges);
+            SqlOperation.UpdateButtonVoltRange(ranges,productNum);
+        }
+
+
+        private void panel4_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void dgvButtonInfo_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+            if (e.ColumnIndex == 0 && dgvButtonInfo.Rows.Count > 0) {
+                string colName = (string)dgvButtonInfo.Rows[e.RowIndex].Cells["ID"].Value;
+                bool value = Convert.ToBoolean(dgvButtonInfo.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+                SqlOperation.SetProductButtonState(gCurrentProductNum, colName, value);
+            }
+        }
+
+        private void dgvButtonInfo_CurrentCellDirtyStateChanged(object sender, EventArgs e) {
+            if (dgvButtonInfo.IsCurrentCellDirty) {
+                dgvButtonInfo.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
         }
     }
 }
