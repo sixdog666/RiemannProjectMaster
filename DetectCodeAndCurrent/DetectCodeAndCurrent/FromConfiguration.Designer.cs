@@ -45,7 +45,6 @@
             this.bdnAssembleConfig = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
-            this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
@@ -87,16 +86,6 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.txtUpperCurrent = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.txtLightCurrentUp = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.txtLightCurrentLow = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label25 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
@@ -111,6 +100,16 @@
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtUpperCurrent = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txtLightCurrentUp = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txtLightCurrentLow = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -123,6 +122,7 @@
             this.txtPartCode = new System.Windows.Forms.TextBox();
             this.btnPartRevert = new System.Windows.Forms.Button();
             this.txtPartName = new System.Windows.Forms.TextBox();
+            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             label9 = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
             label11 = new System.Windows.Forms.Label();
@@ -333,7 +333,7 @@
             // 
             this.bdnAssembleConfig.AddNewItem = this.bindingNavigatorAddNewItem;
             this.bdnAssembleConfig.CountItem = this.bindingNavigatorCountItem;
-            this.bdnAssembleConfig.DeleteItem = this.bindingNavigatorDeleteItem;
+            this.bdnAssembleConfig.DeleteItem = null;
             this.bdnAssembleConfig.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.bdnAssembleConfig.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem,
@@ -346,7 +346,7 @@
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2,
             this.bindingNavigatorAddNewItem,
-            this.bindingNavigatorDeleteItem});
+            this.toolStripButton7});
             this.bdnAssembleConfig.Location = new System.Drawing.Point(0, 0);
             this.bdnAssembleConfig.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bdnAssembleConfig.MoveLastItem = this.bindingNavigatorMoveLastItem;
@@ -360,12 +360,12 @@
             // 
             // bindingNavigatorAddNewItem
             // 
-            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
             this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
             this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(24, 24);
+            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(63, 24);
             this.bindingNavigatorAddNewItem.Text = "新添";
+           
             // 
             // bindingNavigatorCountItem
             // 
@@ -373,16 +373,6 @@
             this.bindingNavigatorCountItem.Size = new System.Drawing.Size(38, 24);
             this.bindingNavigatorCountItem.Text = "/ {0}";
             this.bindingNavigatorCountItem.ToolTipText = "总项数";
-            // 
-            // bindingNavigatorDeleteItem
-            // 
-            this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
-            this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
-            this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(24, 24);
-            this.bindingNavigatorDeleteItem.Text = "删除";
-            this.bindingNavigatorDeleteItem.Click += new System.EventHandler(this.bindingNavigatorDeleteItem_Click);
             // 
             // bindingNavigatorMoveFirstItem
             // 
@@ -782,90 +772,6 @@
             this.label21.TabIndex = 16;
             this.label21.Text = "A";
             // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(302, 92);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(23, 15);
-            this.label16.TabIndex = 16;
-            this.label16.Text = "mA";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(329, 59);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(15, 15);
-            this.label20.TabIndex = 16;
-            this.label20.Text = "A";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(329, 29);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(15, 15);
-            this.label14.TabIndex = 16;
-            this.label14.Text = "V";
-            // 
-            // txtUpperCurrent
-            // 
-            this.txtUpperCurrent.Location = new System.Drawing.Point(200, 86);
-            this.txtUpperCurrent.Name = "txtUpperCurrent";
-            this.txtUpperCurrent.Size = new System.Drawing.Size(96, 25);
-            this.txtUpperCurrent.TabIndex = 15;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(9, 92);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(142, 15);
-            this.label13.TabIndex = 14;
-            this.label13.Text = "麦克风最大工作电流";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(158, 59);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(37, 15);
-            this.label19.TabIndex = 12;
-            this.label19.Text = "下限";
-            // 
-            // txtLightCurrentUp
-            // 
-            this.txtLightCurrentUp.Location = new System.Drawing.Point(412, 57);
-            this.txtLightCurrentUp.Name = "txtLightCurrentUp";
-            this.txtLightCurrentUp.Size = new System.Drawing.Size(119, 25);
-            this.txtLightCurrentUp.TabIndex = 11;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(365, 59);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(37, 15);
-            this.label18.TabIndex = 12;
-            this.label18.Text = "上限";
-            // 
-            // txtLightCurrentLow
-            // 
-            this.txtLightCurrentLow.Location = new System.Drawing.Point(202, 49);
-            this.txtLightCurrentLow.Name = "txtLightCurrentLow";
-            this.txtLightCurrentLow.Size = new System.Drawing.Size(119, 25);
-            this.txtLightCurrentLow.TabIndex = 11;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(7, 59);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(82, 15);
-            this.label17.TabIndex = 12;
-            this.label17.Text = "灯电流范围";
-            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.label25);
@@ -992,6 +898,90 @@
             this.label22.Size = new System.Drawing.Size(52, 15);
             this.label22.TabIndex = 0;
             this.label22.Text = "安吉星";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(302, 92);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(23, 15);
+            this.label16.TabIndex = 16;
+            this.label16.Text = "mA";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(329, 59);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(15, 15);
+            this.label20.TabIndex = 16;
+            this.label20.Text = "A";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(329, 29);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(15, 15);
+            this.label14.TabIndex = 16;
+            this.label14.Text = "V";
+            // 
+            // txtUpperCurrent
+            // 
+            this.txtUpperCurrent.Location = new System.Drawing.Point(200, 86);
+            this.txtUpperCurrent.Name = "txtUpperCurrent";
+            this.txtUpperCurrent.Size = new System.Drawing.Size(96, 25);
+            this.txtUpperCurrent.TabIndex = 15;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(9, 92);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(142, 15);
+            this.label13.TabIndex = 14;
+            this.label13.Text = "麦克风最大工作电流";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(158, 59);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(37, 15);
+            this.label19.TabIndex = 12;
+            this.label19.Text = "下限";
+            // 
+            // txtLightCurrentUp
+            // 
+            this.txtLightCurrentUp.Location = new System.Drawing.Point(412, 57);
+            this.txtLightCurrentUp.Name = "txtLightCurrentUp";
+            this.txtLightCurrentUp.Size = new System.Drawing.Size(119, 25);
+            this.txtLightCurrentUp.TabIndex = 11;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(365, 59);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(37, 15);
+            this.label18.TabIndex = 12;
+            this.label18.Text = "上限";
+            // 
+            // txtLightCurrentLow
+            // 
+            this.txtLightCurrentLow.Location = new System.Drawing.Point(202, 49);
+            this.txtLightCurrentLow.Name = "txtLightCurrentLow";
+            this.txtLightCurrentLow.Size = new System.Drawing.Size(119, 25);
+            this.txtLightCurrentLow.TabIndex = 11;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(7, 59);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(82, 15);
+            this.label17.TabIndex = 12;
+            this.label17.Text = "灯电流范围";
             // 
             // tabPage2
             // 
@@ -1143,6 +1133,15 @@
             this.txtPartName.Size = new System.Drawing.Size(190, 25);
             this.txtPartName.TabIndex = 14;
             // 
+            // toolStripButton7
+            // 
+            this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
+            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton7.Name = "toolStripButton7";
+            this.toolStripButton7.Size = new System.Drawing.Size(63, 24);
+            this.toolStripButton7.Text = "删除";
+            this.toolStripButton7.Click += new System.EventHandler(this.toolStripButton7_Click);
+            // 
             // FromConfiguration
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1202,7 +1201,6 @@
         private System.Windows.Forms.BindingNavigator bdnAssembleConfig;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator;
@@ -1282,5 +1280,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.DataGridView dgvButtonInfo;
         private System.Windows.Forms.DataGridViewCheckBoxColumn enable;
+        private System.Windows.Forms.ToolStripButton toolStripButton7;
     }
 }

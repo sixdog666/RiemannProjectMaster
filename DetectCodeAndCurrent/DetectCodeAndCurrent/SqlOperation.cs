@@ -198,7 +198,7 @@ namespace DetectCodeAndCurrent {
                     new MySqlParameter {ParameterName ="index",Value = (int)dr["idx"] },
                     new MySqlParameter { ParameterName ="productNum",Value = productNum},
                 };
-                dbString = "select tbl_ButtonName from tbl_infoteg where idx > @index and tbl_ProductNum = @productNum ORDER BY idx limit 1";
+                dbString = "select tbl_ButtonName from tbl_infoteg where idx > @index and tbl_ProductNum = @productNum and tbl_State = 1 ORDER BY idx limit 1";
                 DataTable next = instance.GetMySqlRead(dbString, parameters);
                 if (next != null && next.Rows.Count > 0)
                     nextTestName = next.Rows[0][0].ToString();
@@ -722,7 +722,7 @@ namespace DetectCodeAndCurrent {
                 MySqlParameter[] parameters = new MySqlParameter[] { paramPartName, paramCount, paramProductName };
                 int result = instance.ExecuteNonMySQL(sql, parameters);
                 if (result == -1) return false;
-               
+
             }
             return true;
         }

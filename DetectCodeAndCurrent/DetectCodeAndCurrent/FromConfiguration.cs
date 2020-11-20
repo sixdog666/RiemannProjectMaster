@@ -339,5 +339,21 @@ namespace DetectCodeAndCurrent {
                 dgvButtonInfo.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
+
+
+
+        private void toolStripButton7_Click(object sender, EventArgs e) {
+            if (cmbPartName.SelectedItem != null && cmbProductType.SelectedItem != null) {
+                //    if (MessageBox.Show("确认删除选中行？") == DialogResult.OK) {
+                string productID = "";
+                string productName = cmbProductType.SelectedItem.ToString();
+                string partName = cmbPartName.SelectedItem.ToString();
+                SqlOperation.GetProductConfigCodeFromSQL(productName, out productID);
+                SqlOperation.DeleteAssemble(productID, partName);
+                UpdateDataControl(cmbProductType.SelectedItem.ToString());
+                //   }
+
+            }
+        }
     }
 }

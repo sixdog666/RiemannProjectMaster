@@ -99,15 +99,15 @@ namespace DetectCodeAndCurrent {
                 int index = FindCell(teginfo.buttonName);
                 if (index != -1) {
                     dgvTEGShow.Rows[index].Cells["测量值"].Value= teginfo.resultValue;
-                    DataGridViewCell cell = dgvTEGShow.Rows[index].Cells["当前状态"];
+                    DataGridViewCell cell = dgvTEGShow.Rows[index].Cells["测量值"];
                     if (teginfo.resultFlag == true) {
                         cell.Style.BackColor = Color.Green;
-                        cell.Value = "已完成";
+                        //cell.Value = "已完成";
                         
                     }
                     else {
                         cell.Style.BackColor = Color.Red;
-                        cell.Value = "未通过";
+                       // cell.Value = "未通过";
                         
                     }
                      

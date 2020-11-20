@@ -932,6 +932,7 @@ namespace DetectCodeAndCurrent {
             try {
                 string code = gCurrentCode;
                 double testvalue;
+                SqlOperation.UpdateProductCodeRecord(code, "lightTegResult", "0");
                 if (DetectLightCurrentValue(out testvalue)) {
                     SqlOperation.UpdateLightCurrentValue(code, testvalue);
                     SqlOperation.UpdateProductCodeRecord(code, "lightTegResult", "1");
@@ -1153,10 +1154,14 @@ namespace DetectCodeAndCurrent {
                             break;
                     }
                 }
-                PlayVoice(fieldName);
                 if (SqlOperation.UpdateProductCodeRecord(gCurrentCode, fieldName, partSerialCode)) {
                     Event_NewPart?.Invoke(fieldName, null);
+                    PlayVoice(fieldName);
                 }
+                else {
+                    OutAlarm("产品添加失败", sPlayVoiceAdress.Fail_ScanCode);
+                }
+              
             }
             else {
                 OutAlarm("当前检测总成条形码状态错误", sPlayVoiceAdress.Fail_ScanCode);
@@ -1212,10 +1217,12 @@ namespace DetectCodeAndCurrent {
         }
         private bool MeasureValue() {
             try {
+
                 string MesureCode = gCurrentCode;
                 //启动电源开关
                 //  OpenPartSwitch();
                 // OpenReceiveLin();
+                SqlOperation.UpdateProductCodeRecord(MesureCode, "mikeTegResult", "0");
                 Thread.Sleep(2500);
                 double mick1_currentValue, mick1_voltValue;
                 double mick2_currentValue, mick2_voltValue;
@@ -1470,7 +1477,14 @@ namespace DetectCodeAndCurrent {
                 if (strCode[0] >= '0' && strCode[0] <= '9') {
                     partNum = strCode.Substring(0, 8);
                 }
+                String[] strs = strCode.Split(':');
+                if ( strs.Length >= 4 && strs[0] == "SUPPLIER") {
+                    partNum = strs[1].Trim(' ').Substring(0, 8);
+                    strCode = strs[3].Trim(' ');
+                }
             }
+            //SUPPLIER: 84861905VPPS: 443.2DUNS: 52812235920200929HR00000233080
+            
             if (strCode.Length == 8) partNum = strCode;
             partSerialNum = strCode;
         }
