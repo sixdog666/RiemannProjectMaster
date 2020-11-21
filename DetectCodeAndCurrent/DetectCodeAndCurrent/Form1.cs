@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Threading;
+using System.Configuration;
 
 namespace DetectCodeAndCurrent {
     public enum eUCStatuType {
@@ -301,7 +302,7 @@ namespace DetectCodeAndCurrent {
                 foreach (string productName in productNames) {
                     cmbProduct.Items.Add(productName);
                 }
-                if (cmbProduct.Items.Count > 0) cmbProduct.SelectedIndex = 0;
+                if (cmbProduct.Items.Count > 0) cmbProduct.SelectedItem = System.Configuration.ConfigurationManager.AppSettings["ProductTypeName"];
                 //instance.InitialLastRunningInfo();
                 ShowMessage(sMessageType.TIP, "系统初始化完成");
             }
@@ -311,10 +312,16 @@ namespace DetectCodeAndCurrent {
 
             timerShowState.Enabled = true;
         }
-        private void InitModbusState() {
-
-
-
+        private void SaveLastProductType(string selectName) {
+            try {
+                Configuration cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                cfa.AppSettings.Settings["ProductTypeName"].Value = selectName;
+                cfa.Save();
+                ConfigurationManager.RefreshSection("appSettings");
+            }
+            catch (Exception) {
+          
+            }
         }
 
         private void ShowMessage(string messageType, string message) {
@@ -404,6 +411,7 @@ namespace DetectCodeAndCurrent {
         private void cmbProduct_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbProduct.SelectedItem == null) return;
+            SaveLastProductType( cmbProduct.SelectedItem.ToString());
             float upper = 0, lower= 0, upperCurrent = 0;
             string currentProduct = "";
             WorkProcess instance = WorkProcess.GetInstance();

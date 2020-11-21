@@ -543,7 +543,7 @@
             this.labPostion.Name = "labPostion";
             this.labPostion.Size = new System.Drawing.Size(15, 15);
             this.labPostion.TabIndex = 9;
-            this.labPostion.Text = "2";
+            this.labPostion.Text = "1";
             // 
             // button1
             // 
