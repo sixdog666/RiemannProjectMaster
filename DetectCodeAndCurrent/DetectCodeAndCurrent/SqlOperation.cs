@@ -98,7 +98,7 @@ namespace DetectCodeAndCurrent {
             MysqlConnector instance = MysqlConnector.GetInstance();
             parameters = new MySqlParameter[] { paramProductCode, paramStartTime, paramEndTime };
             if (productCode != "") {
-                sql = "SELECT * FROM jixing_db.record_view Where 总装条形码=@productCode and 日期 > @startTime and 日期 < @endTime order by 日期 desc;"; //sql语句
+                sql = "SELECT top 500 * FROM jixing_db.record_view Where 总装条形码=@productCode and 日期 > @startTime and 日期 < @endTime order by 日期 desc;"; //sql语句
             }
             else {
                 sql = "SELECT * FROM jixing_db.record_view Where  日期 > @startTime and 日期 < @endTime order by 日期 desc;";

@@ -210,6 +210,8 @@ namespace DetectCodeAndCurrent {
                 //tabGroup.TabPages.Remove(tabDetect);
                 tabGroup.SelectedTab = tabScanCodePage;
                 tabControl1.TabPages.Remove(tabPage3);
+                tsslabLin.Visible = false;
+                tsslLinRevice.Visible = false;
             }
             else {
                 tabGroup.SelectedTab = tabTEGResult;
@@ -581,7 +583,7 @@ namespace DetectCodeAndCurrent {
                     if (instance.LinThreadFlag == true) {
                         instance.CloseReceivePIN();
                     }
-                    if (instance.ClosePartSwitch()) {                       
+                    if (instance.ClosePartSwitch(false)) {                       
                         btnPartsSwitch.Text = "附件开关打开";
                         btnPartsSwitch.BackColor = Color.Gray;
                         timeShow.Enabled = false;
@@ -612,10 +614,15 @@ namespace DetectCodeAndCurrent {
         }
 
         private void DectectMainForm_FormClosing(object sender, FormClosingEventArgs e) {
-            WorkProcess instance = WorkProcess.GetInstance();
-            instance.CloseListeningButtonDown();
-            instance.ClosePinDevice();
-            instance.ClosePartSwitch();
+            if (labPostion.Text == "2")
+            {
+                WorkProcess instance = WorkProcess.GetInstance();
+                instance.CloseListeningButtonDown();
+                instance.ClosePinDevice();
+                instance.ClosePartSwitch(false);
+
+            }
+             
         }
 
         private void timerShowState_Tick(object sender, EventArgs e) {
@@ -627,7 +634,7 @@ namespace DetectCodeAndCurrent {
             tsslabRegist2.Image = process.AD2ConnectFlag ? Properties.Resources.succeed : Properties.Resources.fail;
             if (process.LinReceiveFlag) {
                 tsslLinRevice.Image = Properties.Resources.succeed;
-                process.LinReceiveFlag = false;
+                //process.LinReceiveFlag = false;
             }
             else {
                 tsslLinRevice.Image = Properties.Resources.fail;
@@ -639,7 +646,7 @@ namespace DetectCodeAndCurrent {
 
         private void button2_Click_1(object sender, EventArgs e) {
             WorkProcess process = WorkProcess.GetInstance();
-            process.RestoreLin();
+           // process.RestoreLin();
         }
 
         private void toolStripButton1_Click_1(object sender, EventArgs e) {
@@ -667,6 +674,11 @@ namespace DetectCodeAndCurrent {
         private void button4_Click(object sender, EventArgs e) {
             WorkProcess p = WorkProcess.GetInstance();
             p.PlayVoice("3CLabel");
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

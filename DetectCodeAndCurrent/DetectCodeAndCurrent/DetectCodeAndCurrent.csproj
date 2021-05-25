@@ -86,6 +86,9 @@
     <Compile Include="UCDetectItem.Designer.cs">
       <DependentUpon>UCDetectItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="UsbLin\USBLin.cs" />
+    <Compile Include="UsbLin\usb2lin_ex.cs" />
+    <Compile Include="UsbLin\usb_device.cs" />
     <Compile Include="UserConfrimFrom.cs">
       <SubType>Form</SubType>
     </Compile>

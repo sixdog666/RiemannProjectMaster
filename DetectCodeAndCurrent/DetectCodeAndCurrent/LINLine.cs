@@ -71,8 +71,10 @@ namespace DetectCodeAndCurrent {
         int gBaudRate ;
         byte gCheckMode;
         byte gIdNumber;
-        internal const ushort VENDOR_ID = 0x1993;
-        internal const ushort PRODUCT_ID = 0x2021;
+        internal const ushort VENDOR_ID =0x1993;
+        internal const ushort PRODUCT_ID =0x2021;
+
+
         internal const string SERIAL_NUMBER = "SN.730014009075147533039302";
         public LINLine(eCommType commType = eCommType.Master, int baudRate = 10417, byte checkMode = (byte)CHECKMODE.ENHANCE, byte idNumber = 0) { 
             // hid = new Hid();
