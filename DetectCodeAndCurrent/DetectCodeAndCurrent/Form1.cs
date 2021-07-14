@@ -80,19 +80,21 @@ namespace DetectCodeAndCurrent {
             }
         }
         private void ShowTEGResult(string tipTestName, EventArgs e) {
-            if (tipTestName != string.Empty) {
-                if (tipTestName != null) {
+            if (tipTestName != string.Empty)
+            {
+                if (tipTestName != null)
+                {
                     labTipTestButton.Text = tipTestName;
                     int i = FindCell(tipTestName);
-                    if (i != -1)      
+                    if (i != -1)
                         dgvTEGShow.Rows[i].Selected = true;
                 }
             }
-            else {
-                    WorkProcess process = WorkProcess.GetInstance();
-                    labTipTestButton.Text = "检测未开始";
-                    process.CloseListeningButtonDown();
-
+            else
+            {
+                WorkProcess process = WorkProcess.GetInstance();
+                process.CloseListeningButtonDown();
+                labTipTestButton.Text = "检测未开始";
             }
             if (e != null) {
 
