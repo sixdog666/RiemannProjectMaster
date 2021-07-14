@@ -1372,6 +1372,7 @@ namespace DetectCodeAndCurrent {
             gIsPINConnected = false;
             
         }
+        float MINCURRENT = Convert.ToSingle(System.Configuration.ConfigurationManager.AppSettings["MinMickCurrentValue"]);
         /// <summary>
         /// 获取当前电流电压值并判断是否是范围内
         /// </summary>
@@ -1380,6 +1381,7 @@ namespace DetectCodeAndCurrent {
         /// <param name="currentValue"></param>
         /// <param name="voltValue"></param>
         /// <returns>true 表示在范围内</returns>
+        /// 
         private bool CurrentAndVoltValue(string currentAdress, string voltAdress, out double currentValue, out double voltValue) {
             ushort currentAnalog = DeviceAD_1.Read(currentAdress);
             currentValue = CalculateCurrentRealValue(currentAnalog);
@@ -1388,8 +1390,9 @@ namespace DetectCodeAndCurrent {
             float maxCurrent;
             float maxVolt;
             float minVolt;
+        
             SqlOperation.GetProductCurrentRange(gCurrentProdNum, out maxVolt, out minVolt, out maxCurrent);
-            if (currentValue > maxCurrent || voltValue > maxVolt || voltValue < minVolt) { return false; };
+            if (currentValue > maxCurrent || voltValue > maxVolt || currentValue < MINCURRENT || voltValue < minVolt) { return false; };
             return true;
         }
         private bool DetectLightCurrentValue(out double value) {
