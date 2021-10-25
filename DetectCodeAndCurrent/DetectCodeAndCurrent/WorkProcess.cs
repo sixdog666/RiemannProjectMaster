@@ -475,7 +475,7 @@ namespace DetectCodeAndCurrent {
             for (int i = 0; i < teg.Length; i++) {
                 tegResult = tegResult & teg[i];
             }
-            if (tegResult && gRunningStatu != (int)eStation2_WorkProcess.EndAssembly) {
+            if (tegResult && gRunningStatu != (int)eStation2_WorkProcess.EndAssembly && IsFinshScan()) {
                 gRunningStatu = (int)eStation2_WorkProcess.EndAssembly;
                 ProductEnd(gCurrentProdNum);
                 PlayVoice(sPlayVoiceAdress.FinishSation2);
@@ -597,7 +597,7 @@ namespace DetectCodeAndCurrent {
                 return true;
             return false;
         }
-        private bool TestLightCurrentForTimes(double min, double max, out double value) {
+        private bool TestLightCurrentForTimes_1(double min, double max, out double value) {
          
             double testValue;
             value = 0;
@@ -616,6 +616,22 @@ namespace DetectCodeAndCurrent {
                 return false;
 
 
+        }
+        private bool TestLightCurrentForTimes(double min, double max, out double value)
+        {
+
+            double testValue;
+            value = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                testValue = GetLightCurrent();
+                value = testValue;
+                if (testValue >= min && testValue <= max)
+                    return true;
+                Thread.Sleep(200);
+                Event_Message?.Invoke("当前电压"+ testValue ,null);
+            }
+            return false;
         }
         public void InitTEG(string currentCode)
         {
@@ -825,7 +841,15 @@ namespace DetectCodeAndCurrent {
             switch ((eStation2_WorkProcess)gRunningStatu) {
                 case eStation2_WorkProcess.EndAssembly://结束状态(初始状态)，允许产品条码
                     if (SqlOperation.GetProductCodeStatu(strCode) == (int)eStation1_WorkProcess.EndAssembly)
+                    {
                         InInitialOrEndStatu_Station2(strCode);
+                    }
+                    else if (SqlOperation.GetProductCodeStatu(strCode) == (int)eStation2_WorkProcess.EndAssembly)
+                    {
+                        SqlOperation.ClearTegResult(strCode);
+                        InInitialOrEndStatu_Station2(strCode);
+                        
+                    }
                     else
                         OutAlarm("当前产品状态异常", sPlayVoiceAdress.Fail_ScanCode);
                     break;
@@ -901,7 +925,6 @@ namespace DetectCodeAndCurrent {
                     break;
                 case eCodeType.Finish1:
                     if (IsFinshScan()) {
-                        
                         gRunningStatu = (int)eStation1_WorkProcess.EndAssembly;
                         ProductEnd(strCode);
                         PlayVoice(sPlayVoiceAdress.FinishSation1);
@@ -937,6 +960,13 @@ namespace DetectCodeAndCurrent {
         {
             switch (CheckInputCodeType(strCode))
             {
+                case eCodeType.Part:
+                    PartCodeScan(strCode);
+                    StartTegMikeAndLight(strCode);
+                    gRunningStatu = (int)eStation2_WorkProcess.Detecting;
+                    SqlOperation.UpdateProductCodeStatuRecord(gCurrentCode, gRunningStatu);
+                    gIsNotAlarmFlag = gIsNotAlarmFlag & true;
+                    break;
                 case eCodeType.StartCurrent:
                     //  gTEGResult = new bool[3];
                     StartTegMikeAndLight(strCode);
@@ -1030,6 +1060,13 @@ namespace DetectCodeAndCurrent {
             eCodeType type = CheckInputCodeType(strCode);
             switch (type)
             {
+                case eCodeType.Part:
+                    PartCodeScan(strCode);
+                    gRunningStatu = (int)eStation2_WorkProcess.Detecting;
+                    SqlOperation.UpdateProductCodeStatuRecord(gCurrentCode, gRunningStatu);
+                    StartTegMikeAndLight(strCode);
+                    gIsNotAlarmFlag = gIsNotAlarmFlag & true;
+                    break;
                 case eCodeType.StartCurrent:
                     //  gTEGResult = new bool[3];
                     gRunningStatu = (int)eStation2_WorkProcess.Detecting;
@@ -1180,7 +1217,7 @@ namespace DetectCodeAndCurrent {
             string productCode;
             AnalysisPartCode(code,out productNum,out productCode) ;//实际条码规则
 
-            if (gCurrentProdNum == productNum) {
+            if (gCurrentProdNum == productNum && code.Length>20) {
                 return true;
              
             }
@@ -1293,6 +1330,9 @@ namespace DetectCodeAndCurrent {
                 double mick3_currentValue, mick3_voltValue;
                 double mick4_currentValue, mick4_voltValue;
                 bool mick1Result = CurrentAndVoltValue(sInputRegistSignal.mick1_current, sInputRegistSignal.mick1_volt, out mick1_currentValue, out mick1_voltValue);
+                if (!mick1Result) {
+                    mick1Result = CurrentAndVoltValue(sInputRegistSignal.mick1_current, sInputRegistSignal.mick1_volt, out mick1_currentValue, out mick1_voltValue);
+                }
                 bool mick2Result = CurrentAndVoltValue(sInputRegistSignal.mick2_current, sInputRegistSignal.mick2_volt, out mick2_currentValue, out mick2_voltValue);
                 bool mick3Result = CurrentAndVoltValue(sInputRegistSignal.mick3_current, sInputRegistSignal.mick3_volt, out mick3_currentValue, out mick3_voltValue);
                 bool mick4Result = CurrentAndVoltValue(sInputRegistSignal.mick4_current, sInputRegistSignal.mick4_volt, out mick4_currentValue, out mick4_voltValue);

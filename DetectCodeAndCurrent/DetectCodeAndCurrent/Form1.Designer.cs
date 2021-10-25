@@ -53,6 +53,7 @@
             this.tabScanCodePage = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabTEGResult = new System.Windows.Forms.TabPage();
+            this.button3 = new System.Windows.Forms.Button();
             this.tbxLightCurrentValue = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.panelMikeCurrent = new System.Windows.Forms.Panel();
@@ -361,6 +362,7 @@
             // 
             // tabTEGResult
             // 
+            this.tabTEGResult.Controls.Add(this.button3);
             this.tabTEGResult.Controls.Add(this.tbxLightCurrentValue);
             this.tabTEGResult.Controls.Add(this.label31);
             this.tabTEGResult.Controls.Add(this.panelMikeCurrent);
@@ -374,6 +376,18 @@
             this.tabTEGResult.TabIndex = 2;
             this.tabTEGResult.Text = "电检结果";
             this.tabTEGResult.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.Location = new System.Drawing.Point(1042, 13);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(88, 39);
+            this.button3.TabIndex = 20;
+            this.button3.TabStop = false;
+            this.button3.Text = "强制放行";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // tbxLightCurrentValue
             // 
@@ -547,7 +561,7 @@
             this.labPostion.Name = "labPostion";
             this.labPostion.Size = new System.Drawing.Size(15, 15);
             this.labPostion.TabIndex = 9;
-            this.labPostion.Text = "1";
+            this.labPostion.Text = "2";
             // 
             // button1
             // 
@@ -1433,6 +1447,7 @@
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.ToolStripStatusLabel tsslLinRevice;
         private System.Windows.Forms.ToolStripButton tsbDeleteTEGResult;
+        private System.Windows.Forms.Button button3;
     }
 }
 

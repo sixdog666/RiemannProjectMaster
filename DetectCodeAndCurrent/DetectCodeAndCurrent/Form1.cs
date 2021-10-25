@@ -682,5 +682,39 @@ namespace DetectCodeAndCurrent {
         {
 
         }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show("确认强制放行当前工件？", "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
+                    SqlOperation.UpdateProductCodeStatuRecord(WorkProcess.GetInstance().strCurrentCode, (int)eStation2_WorkProcess.EndAssembly);
+                    InitTEGShow();
+                }
+            }
+            catch (Exception) {
+                MessageBox.Show("强制放行失败");
+            }
+            
+
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+           
+            try
+            {
+                if (MessageBox.Show("确认删除当前工件电检记录？", "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
+                    SqlOperation.ClearTegResult(txtProductCode.Text);
+                    InitTEGShow();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("删除当前工件电检记录失败");
+            }
+        }
     }
 }
