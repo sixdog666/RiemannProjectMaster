@@ -962,10 +962,18 @@ namespace DetectCodeAndCurrent {
             {
                 case eCodeType.Part:
                     PartCodeScan(strCode);
-                    StartTegMikeAndLight(strCode);
-                    gRunningStatu = (int)eStation2_WorkProcess.Detecting;
-                    SqlOperation.UpdateProductCodeStatuRecord(gCurrentCode, gRunningStatu);
-                    gIsNotAlarmFlag = gIsNotAlarmFlag & true;
+                    string partConfigCode = "";
+                    string partSerialCode = "";
+                    AnalysisPartCode(strCode, out partConfigCode, out partSerialCode);
+                    DataTable dt = SqlOperation.GetPartConfigType(gCurrentProdNum, partConfigCode);
+                    string typestr =Convert.ToString(dt.Rows[0]["Type"]);
+                    if (typestr == "wire") {
+                        StartTegMikeAndLight(strCode);
+                        gRunningStatu = (int)eStation2_WorkProcess.Detecting;
+                        SqlOperation.UpdateProductCodeStatuRecord(gCurrentCode, gRunningStatu);
+                        gIsNotAlarmFlag = gIsNotAlarmFlag & true;
+                    }
+
                     break;
                 case eCodeType.StartCurrent:
                     //  gTEGResult = new bool[3];
@@ -1216,8 +1224,9 @@ namespace DetectCodeAndCurrent {
             string productNum;
             string productCode;
             AnalysisPartCode(code,out productNum,out productCode) ;//实际条码规则
-
-            if (gCurrentProdNum == productNum && code.Length>20) {
+            if (gCurrentProdNum == productNum)
+            {
+              //  if (gCurrentProdNum == productNum && code.Length>20) {
                 return true;
              
             }
@@ -1577,10 +1586,13 @@ namespace DetectCodeAndCurrent {
         private void AnalysisPartCode(string strCode ,out string partNum , out string partSerialNum) {
             char[] mark = {'X', 'N', 'P' };
             partNum = "";
+          //  partSerialNum = strCode;
             if (strCode.Length > 8) {
-                if (strCode.Split(mark).Length > 2&& strCode.Split(mark)[2].Length>=8) {
-                    partNum = strCode.Split(mark)[2].Substring(0, 8);
-                }
+                //if (strCode.Split(mark).Length > 2 && strCode.Split(mark)[2].Length >= 8)
+                //{
+                  
+                //    partNum = strCode.Split(mark)[2].Substring(0, 8);
+                //}
                 if (strCode[0] >= '0' && strCode[0] <= '9') {
                     partNum = strCode.Substring(0, 8);
                 }
@@ -1589,6 +1601,7 @@ namespace DetectCodeAndCurrent {
                     partNum = strs[1].Trim(' ').Substring(0, 8);
                     strCode = strs[3].Trim(' ');
                 }
+                //if(strCode)
             }
             //SUPPLIER: 84861905VPPS: 443.2DUNS: 52812235920200929HR00000233080
             
