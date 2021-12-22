@@ -102,7 +102,7 @@ namespace DetectCodeAndCurrent
             ret = USB2LIN_EX.LIN_EX_MasterSync(DevHandle, LINIndex, LINMsg, pt, MsgIndex);
             if (ret < USB2LIN_EX.LIN_EX_SUCCESS)
             {
-                Console.WriteLine("MasterSync LIN failed!");
+                //Console.WriteLine("MasterSync LIN failed!");
                 //释放内存
                 Marshal.FreeHGlobal(pt);
                 return;
@@ -139,7 +139,7 @@ namespace DetectCodeAndCurrent
             ret = USB2LIN_EX.LIN_EX_MasterSync(DevHandle, LINIndex, LINMsg, pt, MsgIndex);
             if (ret < USB2LIN_EX.LIN_EX_SUCCESS)
             {
-                Console.WriteLine("MasterSync LIN failed!");
+                //Console.WriteLine("MasterSync LIN failed!");
                 //释放内存
                 Marshal.FreeHGlobal(pt);
                 return;
@@ -151,12 +151,12 @@ namespace DetectCodeAndCurrent
                 for (int i = 0; i < ret; i++)
                 {
                     LINOutMsg[i] = (USB2LIN_EX.LIN_EX_MSG)Marshal.PtrToStructure((IntPtr)((UInt32)pt + i * Marshal.SizeOf(typeof(USB2LIN_EX.LIN_EX_MSG))), typeof(USB2LIN_EX.LIN_EX_MSG));
-                    Console.Write("{0} SYNC[{1:X2}] PID[{2:X2}] ", MSGTypeStr[LINOutMsg[i].MsgType], LINOutMsg[i].Sync, LINOutMsg[i].PID);
+                    //Console.Write("{0} SYNC[{1:X2}] PID[{2:X2}] ", MSGTypeStr[LINOutMsg[i].MsgType], LINOutMsg[i].Sync, LINOutMsg[i].PID);
                     for (int j = 0; j < LINOutMsg[i].DataLen; j++)
                     {
-                        Console.Write("{0:X2} ", LINOutMsg[i].Data[j]);
+                      //  Console.Write("{0:X2} ", LINOutMsg[i].Data[j]);
                     }
-                    Console.WriteLine("[{0}][{1:X2}] [{2}:{3}:{4}.{5}]", CKTypeStr[LINOutMsg[i].CheckType], LINOutMsg[i].Check, (LINOutMsg[i].Timestamp / 36000000) % 60, (LINOutMsg[i].Timestamp / 600000) % 60, (LINOutMsg[i].Timestamp / 10000) % 60, (LINOutMsg[i].Timestamp / 10) % 1000);
+                   // Console.WriteLine("[{0}][{1:X2}] [{2}:{3}:{4}.{5}]", CKTypeStr[LINOutMsg[i].CheckType], LINOutMsg[i].Check, (LINOutMsg[i].Timestamp / 36000000) % 60, (LINOutMsg[i].Timestamp / 600000) % 60, (LINOutMsg[i].Timestamp / 10000) % 60, (LINOutMsg[i].Timestamp / 10) % 1000);
                 }
 
             }
@@ -180,43 +180,55 @@ namespace DetectCodeAndCurrent
             /********************需要发送更多帧数据，请按照前面的方式继续添加********************/
             //将数组转换成指针
             IntPtr pt = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(USB2LIN_EX.LIN_EX_MSG)) * MsgIndex);
-         
-            ret = USB2LIN_EX.LIN_EX_MasterSync(DevHandle, LINIndex, LINMsg, pt, MsgIndex);
-            if (ret < USB2LIN_EX.LIN_EX_SUCCESS)
+            try
             {
-                Console.WriteLine("MasterSync LIN failed!");
+                ret = USB2LIN_EX.LIN_EX_MasterSync(DevHandle, LINIndex, LINMsg, pt, MsgIndex);
+                if (ret < USB2LIN_EX.LIN_EX_SUCCESS)
+                {
+                   // Console.WriteLine("MasterSync LIN failed!");
+                    //释放内存
+                    Marshal.FreeHGlobal(pt);
+                    return null;
+                }
+                else
+                {
+                    //主机发送数据成功后，也会接收到发送出去的数据，通过接收回来的数据跟发送出去的数据对比，可以判断发送数据的时候，数据是否被冲突
+                    Console.WriteLine("MsgLen = {0}", ret);
+                    for (int i = 0; i < ret; i++)
+                    {
+                        LINOutMsg[i] = (USB2LIN_EX.LIN_EX_MSG)Marshal.PtrToStructure((IntPtr)((UInt32)pt + i * Marshal.SizeOf(typeof(USB2LIN_EX.LIN_EX_MSG))), typeof(USB2LIN_EX.LIN_EX_MSG));
+                      //  Console.Write("{0} SYNC[{1:X2}] PID[{2:X2}] ", MSGTypeStr[LINOutMsg[i].MsgType], LINOutMsg[i].Sync, LINOutMsg[i].PID);
+                        DataBuffer = new byte[LINOutMsg[i].DataLen];
+                        for (int j = 0; j < LINOutMsg[i].DataLen; j++)//实际读取到的字节数据是LINOutMsg[i].DataLen的值
+                        {
+                           // Console.Write("{0:X2} ", LINOutMsg[i].Data[j]);
+                            DataBuffer[j] = LINOutMsg[i].Data[j];
+                        }
+                        Marshal.FreeHGlobal(pt);
+                        return DataBuffer;
+                    }
+                    //Marshal.FreeHGlobal(pt);
+                    //return null;
+
+                }
                 //释放内存
                 Marshal.FreeHGlobal(pt);
                 return null;
             }
-            else
-            {
-                //主机发送数据成功后，也会接收到发送出去的数据，通过接收回来的数据跟发送出去的数据对比，可以判断发送数据的时候，数据是否被冲突
-                Console.WriteLine("MsgLen = {0}", ret);
-                for (int i = 0; i < ret; i++)
-                {
-                    LINOutMsg[i] = (USB2LIN_EX.LIN_EX_MSG)Marshal.PtrToStructure((IntPtr)((UInt32)pt + i * Marshal.SizeOf(typeof(USB2LIN_EX.LIN_EX_MSG))), typeof(USB2LIN_EX.LIN_EX_MSG));
-                    Console.Write("{0} SYNC[{1:X2}] PID[{2:X2}] ", MSGTypeStr[LINOutMsg[i].MsgType], LINOutMsg[i].Sync, LINOutMsg[i].PID);
-                    DataBuffer = new byte[LINOutMsg[i].DataLen];
-                    for (int j = 0; j < LINOutMsg[i].DataLen; j++)//实际读取到的字节数据是LINOutMsg[i].DataLen的值
-                    {
-                        Console.Write("{0:X2} ", LINOutMsg[i].Data[j]);
-                        DataBuffer[j] = LINOutMsg[i].Data[j];
-                    }
-                    Marshal.FreeHGlobal(pt);
-                    return DataBuffer;
-                }
+            catch (Exception) {
                
-                
+                Marshal.FreeHGlobal(pt);
+                return null;
             }
-            //释放内存
-            Marshal.FreeHGlobal(pt);
-            return null;
+            
         }
         public void CloseDevice() {
             Console.WriteLine("Close Device!");
-            //关闭设备
-            usb_device.USB_CloseDevice(DevHandle);
+            if (ConnectState == true) {
+                //关闭设备
+                usb_device.USB_CloseDevice(DevHandle);
+            }
+           
         }
     }
 

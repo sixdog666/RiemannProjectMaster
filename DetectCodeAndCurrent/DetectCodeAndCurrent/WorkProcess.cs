@@ -407,7 +407,7 @@ namespace DetectCodeAndCurrent {
                         
                         WaitForVoltButton(ref isVoltTestEnd);
                     }
-                    else
+                    else 
                     {
 
                       isFinsh = WaitForLinButtonDown(receivedata);
@@ -478,6 +478,7 @@ namespace DetectCodeAndCurrent {
             if (tegResult && gRunningStatu != (int)eStation2_WorkProcess.EndAssembly && IsFinshScan()) {
                 gRunningStatu = (int)eStation2_WorkProcess.EndAssembly;
                 ProductEnd(gCurrentProdNum);
+                SqlOperation.UpdateTegFinishTime(gCurrentCode);
                 PlayVoice(sPlayVoiceAdress.FinishSation2);
             }
             return tegResult;
@@ -728,22 +729,33 @@ namespace DetectCodeAndCurrent {
             gSwitchLin = false;
         }
         private void Thread_ReviceLIN() {
-            try {
+            try
+            {
                 DateTime time = System.DateTime.Now;
+                // usbLin.ConnectState
+                usbLin.CloseDevice();
+                usbLin.OpenDevcie();
+                if (!usbLin.InitDevice()) {
+                    Event_Message?.Invoke("设备连接失败！",null);
+                }
                 usbLin.MasterBreak();
-                while (gSwitchLin) {
+                while (gSwitchLin)
+                {
                     try
                     {
-                         receivedata = usbLin.MasterRead();
-                        if ((receivedata != null) && receivedata.Length >= 4)
+                        lock (this)
                         {
-                            if (gPinDataFlag == false)
-                                gPinDataFlag = true;
-                        }
-                        else
-                        {
-                            if (gPinDataFlag == true)
-                                gPinDataFlag = false;
+                            receivedata = usbLin.MasterRead();
+                            if ((receivedata != null) && receivedata.Length >= 4)
+                            {
+                                if (gPinDataFlag == false)
+                                    gPinDataFlag = true;
+                            }
+                            else
+                            {
+                                if (gPinDataFlag == true)
+                                    gPinDataFlag = false;
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -753,8 +765,10 @@ namespace DetectCodeAndCurrent {
                     Thread.Sleep(300);
 
                 }
+                gPinDataFlag = false;
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 Event_Message?.Invoke(ex.Message, null);
             }
         }
@@ -1588,11 +1602,12 @@ namespace DetectCodeAndCurrent {
             partNum = "";
           //  partSerialNum = strCode;
             if (strCode.Length > 8) {
-                //if (strCode.Split(mark).Length > 2 && strCode.Split(mark)[2].Length >= 8)
-                //{
-                  
-                //    partNum = strCode.Split(mark)[2].Substring(0, 8);
-                //}
+                
+                if (strCode.Split(mark).Length > 2 && strCode.Split(mark)[2].Length >= 8 && strCode.Length!=56)//总成码
+                {
+
+                    partNum = strCode.Split(mark)[2].Substring(0, 8);
+                }
                 if (strCode[0] >= '0' && strCode[0] <= '9') {
                     partNum = strCode.Substring(0, 8);
                 }

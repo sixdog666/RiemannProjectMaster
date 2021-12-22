@@ -26,7 +26,7 @@ namespace DetectCodeAndCurrent {
             return dt;
         }
 
-        
+
 
         public static sButtonVoltRanges GetButtonVoltRange(string productNum) {
          double onStartMin=0;
@@ -57,6 +57,17 @@ namespace DetectCodeAndCurrent {
                 onStartMin = (double)(dt.Rows[0]["tbl_MinValue"]);
             }
             return new sButtonVoltRanges() { sosMax=sosMax,sosMin=sosMin,phoneMax=phoneMax,phoneMin=phoneMin,onStartMax=onStartMax,onStartMin=onStartMin};
+        }
+
+        public static void UpdateTegFinishTime(string productNum)
+        {
+            MySqlParameter[] parameters;
+            parameters = new MySqlParameter[] {new MySqlParameter() { ParameterName = "productNum" , Value = productNum },
+                                                new MySqlParameter() { ParameterName = "finishtime" , Value = DateTime.Now }
+            };
+            string dbString = "update tbl_resultrecord set finishTegTime = @finishtime where productCode = @productNum;";
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            instance.ExecuteNonMySQL(dbString, parameters);
         }
 
         public static void UpdateButtonVoltRange(sButtonVoltRanges result, string productNum) {
