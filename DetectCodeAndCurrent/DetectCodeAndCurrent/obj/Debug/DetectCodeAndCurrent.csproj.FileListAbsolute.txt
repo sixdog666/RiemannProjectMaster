@@ -157,7 +157,6 @@ E:\MyProject\已验收\RM2007吉兴电检测\RiemannProjectMaster\DetectCodeAndC
 E:\MyProject\已验收\RM2007吉兴电检测\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\bin\Debug\Newtonsoft.Json.xml
 E:\MyProject\已验收\RM2007吉兴电检测\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\bin\Debug\Interop.WMPLib.dll
 E:\MyProject\已验收\RM2007吉兴电检测\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\bin\Debug\AxInterop.WMPLib.dll
-E:\MyProject\已验收\RM2007吉兴电检测\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\obj\Debug\DetectCodeAndCurrent.csprojAssemblyReference.cache
 E:\MyProject\已验收\RM2007吉兴电检测\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\obj\Debug\DetectCodeAndCurrent.exe.config
 E:\MyProject\已验收\RM2007吉兴电检测\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\obj\Debug\Interop.WMPLib.dll
 E:\MyProject\已验收\RM2007吉兴电检测\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\obj\Debug\AxInterop.WMPLib.dll

@@ -95,6 +95,7 @@
             this.tscmb = new System.Windows.Forms.ToolStripComboBox();
             this.tsbComfrim = new System.Windows.Forms.ToolStripButton();
             this.tsbDeleteTEGResult = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -561,7 +562,7 @@
             this.labPostion.Name = "labPostion";
             this.labPostion.Size = new System.Drawing.Size(15, 15);
             this.labPostion.TabIndex = 9;
-            this.labPostion.Text = "2";
+            this.labPostion.Text = "1";
             // 
             // button1
             // 
@@ -681,7 +682,8 @@
             this.toolStripLabel2,
             this.tscmb,
             this.tsbComfrim,
-            this.tsbDeleteTEGResult});
+            this.tsbDeleteTEGResult,
+            this.toolStripButton1});
             this.bdgSearch.Location = new System.Drawing.Point(3, 3);
             this.bdgSearch.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bdgSearch.MoveLastItem = this.bindingNavigatorMoveLastItem;
@@ -816,6 +818,17 @@
             this.tsbDeleteTEGResult.Size = new System.Drawing.Size(103, 27);
             this.tsbDeleteTEGResult.Text = "删除电检记录";
             this.tsbDeleteTEGResult.Click += new System.EventHandler(this.toolStripButton1_Click_1);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(43, 27);
+            this.toolStripButton1.Text = "导出";
+            this.toolStripButton1.ToolTipText = "导出";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_2);
             // 
             // groupBox1
             // 
@@ -1448,6 +1461,7 @@
         private System.Windows.Forms.ToolStripStatusLabel tsslLinRevice;
         private System.Windows.Forms.ToolStripButton tsbDeleteTEGResult;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
 

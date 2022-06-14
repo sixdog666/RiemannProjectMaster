@@ -1620,7 +1620,8 @@ namespace DetectCodeAndCurrent {
             }
             //SUPPLIER: 84861905VPPS: 443.2DUNS: 52812235920200929HR00000233080
             
-            if (strCode.Length == 8) partNum = strCode;
+            if (strCode.Length == 8||strCode.Length ==10 )
+            partNum = strCode;
             partSerialNum = strCode;
         }
     }

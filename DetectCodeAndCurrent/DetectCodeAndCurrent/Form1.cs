@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Threading;
 using System.Configuration;
+using System.IO;
 
 namespace DetectCodeAndCurrent {
     public enum eUCStatuType {
@@ -716,5 +717,62 @@ namespace DetectCodeAndCurrent {
                 MessageBox.Show("删除当前工件电检记录失败");
             }
         }
+
+        private void toolStripButton1_Click_2(object sender, EventArgs e)
+        {
+            try {
+                Export((DataTable)dgvRecords.DataSource, $"{System.DateTime.Now:yyyyMMddHHmmss}");
+            }
+            catch (Exception ex) { 
+            
+            }
+          
+        }
+
+        private void Export(System.Data.DataTable excelTable, string fileName)
+        {
+            try
+            {
+                StreamWriter sw;
+                //DateTime time = System.DateTime.Now;
+                string filePath = AppDomain.CurrentDomain.BaseDirectory + "导出\\" + fileName + ".xls";
+
+                if (excelTable != null && !File.Exists(filePath))
+                {
+                    File.Create(filePath).Close();
+                    StringBuilder sb = new StringBuilder();
+
+                    for (int i = 0; i <= excelTable.Columns.Count - 1; i++)
+                    {
+                        sb.Append(excelTable.Columns[i].ColumnName.ToString() + '\t');
+                    }
+                    sb.Append(Environment.NewLine);
+
+                    // 添加行数据  
+                    for (int i = 0; i < excelTable.Rows.Count; i++)
+                    {
+                        DataRow row = excelTable.Rows[i];
+                        for (int j = 0; j < excelTable.Columns.Count; j++)
+                        {
+                            // 根据列数追加行数据  
+                            sb.Append(row[j].ToString() + "\t");
+                        }
+                        sb.Append(Environment.NewLine);
+                    }
+
+
+                    sw = new StreamWriter(filePath, true, Encoding.GetEncoding("gb2312"));
+                    sw.Write(sb.ToString());
+                    sw.Flush();
+                    sw.Close();
+                    MessageBox.Show("已成功保存到：" + filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowMessage("文件保存失败：",ex.Message);
+            }
+        }
+
     }
 }
