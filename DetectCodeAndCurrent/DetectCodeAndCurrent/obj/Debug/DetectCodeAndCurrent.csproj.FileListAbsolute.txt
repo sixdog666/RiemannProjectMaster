@@ -171,3 +171,4 @@ E:\MyProject\已验收\RM2007吉兴电检测\RiemannProjectMaster\DetectCodeAndC
 E:\MyProject\已验收\RM2007吉兴电检测\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\obj\Debug\DetectCodeAndCurrent.csproj.CopyComplete
 E:\MyProject\已验收\RM2007吉兴电检测\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\obj\Debug\DetectCodeAndCurrent.exe
 E:\MyProject\已验收\RM2007吉兴电检测\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\obj\Debug\DetectCodeAndCurrent.pdb
+E:\MyProject\已验收\RM2007吉兴电检测\RiemannProjectMaster\DetectCodeAndCurrent\DetectCodeAndCurrent\obj\Debug\DetectCodeAndCurrent.csprojAssemblyReference.cache

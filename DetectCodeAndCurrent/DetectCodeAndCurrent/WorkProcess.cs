@@ -215,6 +215,7 @@ namespace DetectCodeAndCurrent {
         private static bool gSwitchMike = false;
         private static bool gSwitchLightCurrent = false;
         private static bool gPinDataFlag=false;
+        public  bool gTestRunning { get; set; } =false;
         public DelegatePassBackButtonInfo ButtonInfoPassBack;
 
         public bool LinThreadFlag {
@@ -275,6 +276,10 @@ namespace DetectCodeAndCurrent {
         }
         private static WorkProcess instance;
 
+        public static double AverageCurrent { get; set; } = 0;
+
+    
+
 
         public WorkProcess() {
             //gTEGResult = new bool[3];
@@ -287,7 +292,35 @@ namespace DetectCodeAndCurrent {
             DeviceAD_2 = new MyModbusTCP("172.20.16.66");
             usbLin = new USBLin();
         }
-        public bool OpenPartSwitch() {
+
+
+        public  void RunAverageCurrent() {
+            double[] value =new double [10] ;
+            int idx = 0;
+            while (gTestRunning) {
+                try
+                {
+                    value[idx] = GetLightCurrent();
+
+                    double tem = 0;
+                    for (int i = 0; i < 10; i++)
+                    {
+                        tem += value[i];
+                    }
+                    AverageCurrent = tem / 10.0;
+                    idx = idx == 9 ? 0:idx + 1;
+                    Thread.Sleep(150);
+                }
+                catch (Exception ex) {
+                    Event_Message?.Invoke(ex.Message,null);
+                    Thread.Sleep(1000);
+                }
+               
+            }
+        
+        }
+
+    public bool OpenPartSwitch() {
             if (DeviceDIO_1.IsConnect) {
                 DeviceDIO_1.WriteCoil(sOutputDigitalSignal.finish2, false);
                 if (DeviceDIO_1.WriteCoil(sOutputDigitalSignal.on_off, true)) return true;
@@ -373,6 +406,11 @@ namespace DetectCodeAndCurrent {
             if (!DeviceAD_2.Connect()) {
                 Event_Message?.Invoke("模拟量模块2未成功连接", null);
             }
+            Task task = Task.Run(()=> {
+                gTestRunning = true;
+                RunAverageCurrent();
+            });
+        
 
             InitialLastRunningInfo();
         }
@@ -430,6 +468,47 @@ namespace DetectCodeAndCurrent {
                 Event_Message?.Invoke(ex.Message, null);
             }
         }
+        private bool WaitForLinButtonDown_ey2b(byte[] data)
+        {
+            if ((data != null) && data.Length >= 4)
+            {
+                string nextButtonName;
+                DataRow button = SqlOperation.GetButtonInfo(gCurrentButtonName, gCurrentProdNum, out nextButtonName);
+                if (button != null)
+                {
+                    //string buffer;
+                    //ExchangePinData(data, out buffer);
+                    //Event_Message?.Invoke("收到数据:" + buffer, null);
+                    byte[] dataBytes;
+                    bool resultFlag = true;
+                    ExchangePinDataStringToByte(button["tbl_ByteString"].ToString(), out dataBytes);
+                    for (int i = 1; i < 3; i++)
+                    {
+                        if (dataBytes[i] != data[i])
+                        {
+                            resultFlag = false;
+                            break;
+                        }
+                    }
+                    if (resultFlag == true)
+                    {
+                        SqlOperation.UpdateButtonState(gCurrentCode, button["tbl_ColumnName"].ToString(), "已检测完成");
+                        TegAtgs arg = new TegAtgs(gCurrentButtonName, "已检测完成", true);
+                        ButtonInfoPassBack?.Invoke(nextButtonName, arg);
+                        gCurrentButtonName = nextButtonName;
+                        PlayVoice(sPlayVoiceAdress.Finish);
+
+                    }
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private bool WaitForLinButtonDown(byte[] data) {
             if ((data != null) && data.Length >= 4)
             {
@@ -451,6 +530,12 @@ namespace DetectCodeAndCurrent {
                             break;
                         }
                     }
+#if !DEBUG /////////////天窗通风和天窗专用
+                    if (dataBytes[1] == 0x10 && data[1] == 0x30)
+                    {
+                        resultFlag = true;
+                    }
+#endif
                     if (resultFlag == true)
                     {
                         SqlOperation.UpdateButtonState(gCurrentCode, button["tbl_ColumnName"].ToString(), "已检测完成");
@@ -606,7 +691,7 @@ namespace DetectCodeAndCurrent {
                 testValue = GetLightCurrent();
                 value = value + testValue;
 
-                Thread.Sleep(100);
+                Thread.Sleep(200);
             }
             value = value / 6;
 
@@ -621,16 +706,16 @@ namespace DetectCodeAndCurrent {
         private bool TestLightCurrentForTimes(double min, double max, out double value)
         {
 
-            double testValue;
+          
             value = 0;
             for (int i = 0; i < 8; i++)
             {
-                testValue = GetLightCurrent();
-                value = testValue;
-                if (testValue >= min && testValue <= max)
+               // testValue = GetLightCurrent();
+                value = AverageCurrent;
+                if (value >= min && value <= max)
                     return true;
                 Thread.Sleep(200);
-                Event_Message?.Invoke("当前电压"+ testValue ,null);
+                Event_Message?.Invoke("当前电压"+ value, null);
             }
             return false;
         }
@@ -861,6 +946,7 @@ namespace DetectCodeAndCurrent {
                     else if (SqlOperation.GetProductCodeStatu(strCode) == (int)eStation2_WorkProcess.EndAssembly)
                     {
                         SqlOperation.ClearTegResult(strCode);
+                        SqlOperation.ClearCodeResult(strCode);
                         InInitialOrEndStatu_Station2(strCode);
                         
                     }
@@ -1598,15 +1684,29 @@ namespace DetectCodeAndCurrent {
 
         }
         private void AnalysisPartCode(string strCode ,out string partNum , out string partSerialNum) {
-            char[] mark = {'X', 'N', 'P' };
+            //char[] mark = {'X', 'N', 'P' };
+          
+           
+            
+            partSerialNum = strCode;
             partNum = "";
-          //  partSerialNum = strCode;
             if (strCode.Length > 8) {
-                
-                if (strCode.Split(mark).Length > 2 && strCode.Split(mark)[2].Length >= 8 && strCode.Length!=56)//总成码
+                if (strCode.Length > 30 && strCode.Length != 56&& strCode.ElementAt(20) == 'P')
                 {
+                        partNum = strCode.Substring(21, 8);
+                }
+                //if (strCode.Split(mark).Length > 2 && strCode.Split(mark)[2].Length >= 8 && strCode.Length != 56)//总成码
+                //{
 
-                    partNum = strCode.Split(mark)[2].Substring(0, 8);
+                //    partNum = strCode.Split(mark)[2].Substring(0, 8);
+                //}
+                else {
+                    if (strCode.Contains("TGB")) {
+                        partNum ="8677"+ strCode.Substring(5,4); 
+                        partSerialNum = strCode;
+                        return;
+                    }
+                   
                 }
                 if (strCode[0] >= '0' && strCode[0] <= '9') {
                     partNum = strCode.Substring(0, 8);

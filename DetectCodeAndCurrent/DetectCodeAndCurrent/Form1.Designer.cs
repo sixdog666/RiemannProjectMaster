@@ -78,6 +78,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnDeleteRecord = new System.Windows.Forms.Button();
             this.btnConfig = new System.Windows.Forms.Button();
             this.bdgSearch = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
@@ -140,7 +141,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.btnPartsSwitch = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.label8 = new System.Windows.Forms.Label();
+            this.labTitle = new System.Windows.Forms.Label();
             this.timeShow = new System.Windows.Forms.Timer(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timerShowState = new System.Windows.Forms.Timer(this.components);
@@ -175,7 +176,7 @@
             this.lstMessage.HideSelection = false;
             this.lstMessage.Location = new System.Drawing.Point(0, 0);
             this.lstMessage.Name = "lstMessage";
-            this.lstMessage.Size = new System.Drawing.Size(1449, 168);
+            this.lstMessage.Size = new System.Drawing.Size(1449, 153);
             this.lstMessage.TabIndex = 5;
             this.lstMessage.UseCompatibleStateImageBehavior = false;
             // 
@@ -197,7 +198,7 @@
             this.tsslabRegist2,
             this.tsslabDigital,
             this.tsslLinRevice});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 892);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 819);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1461, 26);
             this.statusStrip1.TabIndex = 9;
@@ -301,7 +302,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1449, 621);
+            this.tabControl1.Size = new System.Drawing.Size(1449, 563);
             this.tabControl1.TabIndex = 10;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -321,7 +322,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1441, 592);
+            this.tabPage1.Size = new System.Drawing.Size(1441, 534);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "当前生产产品信息";
             // 
@@ -336,7 +337,7 @@
             this.tabGroup.Location = new System.Drawing.Point(269, 6);
             this.tabGroup.Name = "tabGroup";
             this.tabGroup.SelectedIndex = 0;
-            this.tabGroup.Size = new System.Drawing.Size(1166, 586);
+            this.tabGroup.Size = new System.Drawing.Size(1166, 528);
             this.tabGroup.TabIndex = 14;
             // 
             // tabScanCodePage
@@ -345,7 +346,7 @@
             this.tabScanCodePage.Location = new System.Drawing.Point(4, 24);
             this.tabScanCodePage.Name = "tabScanCodePage";
             this.tabScanCodePage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabScanCodePage.Size = new System.Drawing.Size(1158, 558);
+            this.tabScanCodePage.Size = new System.Drawing.Size(1158, 500);
             this.tabScanCodePage.TabIndex = 0;
             this.tabScanCodePage.Text = "扫码界面";
             this.tabScanCodePage.UseVisualStyleBackColor = true;
@@ -358,7 +359,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1152, 552);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1152, 494);
             this.flowLayoutPanel1.TabIndex = 8;
             // 
             // tabTEGResult
@@ -373,7 +374,7 @@
             this.tabTEGResult.Location = new System.Drawing.Point(4, 24);
             this.tabTEGResult.Name = "tabTEGResult";
             this.tabTEGResult.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTEGResult.Size = new System.Drawing.Size(1158, 558);
+            this.tabTEGResult.Size = new System.Drawing.Size(1158, 500);
             this.tabTEGResult.TabIndex = 2;
             this.tabTEGResult.Text = "电检结果";
             this.tabTEGResult.UseVisualStyleBackColor = true;
@@ -427,7 +428,7 @@
             this.panelMikeCurrent.Controls.Add(this.pbxMick1);
             this.panelMikeCurrent.Location = new System.Drawing.Point(919, 162);
             this.panelMikeCurrent.Name = "panelMikeCurrent";
-            this.panelMikeCurrent.Size = new System.Drawing.Size(219, 376);
+            this.panelMikeCurrent.Size = new System.Drawing.Size(219, 318);
             this.panelMikeCurrent.TabIndex = 16;
             // 
             // label20
@@ -552,7 +553,7 @@
             this.dgvTEGShow.Name = "dgvTEGShow";
             this.dgvTEGShow.RowHeadersWidth = 51;
             this.dgvTEGShow.RowTemplate.Height = 27;
-            this.dgvTEGShow.Size = new System.Drawing.Size(864, 460);
+            this.dgvTEGShow.Size = new System.Drawing.Size(864, 402);
             this.dgvTEGShow.TabIndex = 0;
             // 
             // labPostion
@@ -562,7 +563,7 @@
             this.labPostion.Name = "labPostion";
             this.labPostion.Size = new System.Drawing.Size(15, 15);
             this.labPostion.TabIndex = 9;
-            this.labPostion.Text = "1";
+            this.labPostion.Text = "2";
             // 
             // button1
             // 
@@ -639,6 +640,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnDeleteRecord);
             this.tabPage2.Controls.Add(this.btnConfig);
             this.tabPage2.Controls.Add(this.bdgSearch);
             this.tabPage2.Controls.Add(this.groupBox1);
@@ -646,10 +648,22 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1441, 592);
+            this.tabPage2.Size = new System.Drawing.Size(1441, 534);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "记录信息";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnDeleteRecord
+            // 
+            this.btnDeleteRecord.Enabled = false;
+            this.btnDeleteRecord.Location = new System.Drawing.Point(286, 334);
+            this.btnDeleteRecord.Name = "btnDeleteRecord";
+            this.btnDeleteRecord.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteRecord.TabIndex = 15;
+            this.btnDeleteRecord.Text = "删除记录";
+            this.btnDeleteRecord.UseVisualStyleBackColor = true;
+            this.btnDeleteRecord.Visible = false;
+            this.btnDeleteRecord.Click += new System.EventHandler(this.btnDeleteRecord_Click);
             // 
             // btnConfig
             // 
@@ -939,7 +953,7 @@
             this.dgvRecords.Name = "dgvRecords";
             this.dgvRecords.RowHeadersWidth = 51;
             this.dgvRecords.RowTemplate.Height = 27;
-            this.dgvRecords.Size = new System.Drawing.Size(1041, 528);
+            this.dgvRecords.Size = new System.Drawing.Size(1041, 470);
             this.dgvRecords.TabIndex = 0;
             this.dgvRecords.CurrentCellChanged += new System.EventHandler(this.dgvRecords_CurrentCellChanged);
             // 
@@ -979,7 +993,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1441, 592);
+            this.tabPage3.Size = new System.Drawing.Size(1441, 534);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "手动IO";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1261,20 +1275,20 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.lstMessage);
-            this.splitContainer1.Size = new System.Drawing.Size(1449, 793);
-            this.splitContainer1.SplitterDistance = 621;
+            this.splitContainer1.Size = new System.Drawing.Size(1449, 720);
+            this.splitContainer1.SplitterDistance = 563;
             this.splitContainer1.TabIndex = 11;
             // 
-            // label8
+            // labTitle
             // 
-            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("微软雅黑", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(576, 25);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(326, 57);
-            this.label8.TabIndex = 12;
-            this.label8.Text = "扫码电检测系统";
+            this.labTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.labTitle.AutoSize = true;
+            this.labTitle.Font = new System.Drawing.Font("微软雅黑", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labTitle.Location = new System.Drawing.Point(576, 25);
+            this.labTitle.Name = "labTitle";
+            this.labTitle.Size = new System.Drawing.Size(326, 57);
+            this.labTitle.TabIndex = 12;
+            this.labTitle.Text = "扫码电检测系统";
             // 
             // timeShow
             // 
@@ -1300,9 +1314,9 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(1461, 918);
+            this.ClientSize = new System.Drawing.Size(1461, 845);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label8);
+            this.Controls.Add(this.labTitle);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1390,7 +1404,7 @@
         private System.Windows.Forms.Button btnConfig;
         private System.Windows.Forms.Label labPostion;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label labTitle;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.ToolStripStatusLabel tsslCurrentLower;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
@@ -1462,6 +1476,7 @@
         private System.Windows.Forms.ToolStripButton tsbDeleteTEGResult;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.Button btnDeleteRecord;
     }
 }
 

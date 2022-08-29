@@ -301,7 +301,10 @@ namespace DetectCodeAndCurrent {
             lstMessage.Columns.Add("类型", 150, HorizontalAlignment.Left);
             lstMessage.Columns.Add("消息内容", lstMessage.Width - 310, HorizontalAlignment.Left);
             WorkProcess instance = WorkProcess.GetInstance();
-            int station = Convert.ToInt32(labPostion.Text);
+            int station = Convert.ToInt16(System.Configuration.ConfigurationManager.AppSettings["Station"]);
+            labTitle.Text = System.Configuration.ConfigurationManager.AppSettings["TitleName"];
+            labPostion.Text = station.ToString();
+          
             if (instance.InitialStationInfo(station)) {
                 List<string> productNames = SqlOperation.GetProductInfosFromSQL();
                 foreach (string productName in productNames) {
@@ -490,6 +493,7 @@ namespace DetectCodeAndCurrent {
         private void ChangePermission(bool value) {
             if (value == true) {
                 tsbDelete.Enabled = true;
+                btnDeleteRecord.Enabled = true;
                 tsbDeleteTEGResult.Enabled = true;
                 tsbComfrim.Enabled = true;
             }
@@ -497,6 +501,7 @@ namespace DetectCodeAndCurrent {
                 tsbDelete.Enabled = false;
                 tsbComfrim.Enabled = false;
                 tsbDeleteTEGResult.Enabled = false;
+                btnDeleteRecord.Enabled = true;
 
             }
 
@@ -608,7 +613,8 @@ namespace DetectCodeAndCurrent {
             tbxMick2Volt.Text = mick2;
             tbxMick3Volt.Text = mick3;
             tbxMick4Volt.Text = mick4;
-            tbxLightCurrent.Text =string.Format("{0:0.0000}",instance.GetLightCurrent());
+            tbxLightCurrent.Text = string.Format("{0:0.0000}", WorkProcess.AverageCurrent);
+            //  tbxLightCurrent.Text =string.Format("{0:0.0000}",instance.GetLightCurrent());
             tbxButtonVolt.Text = string.Format("{0:0.0000}",instance.GetButtonVolt());
         }
 
@@ -623,6 +629,7 @@ namespace DetectCodeAndCurrent {
                 instance.CloseListeningButtonDown();
                 instance.ClosePinDevice();
                 instance.ClosePartSwitch(false);
+                instance.gTestRunning = false;
 
             }
              
@@ -774,5 +781,32 @@ namespace DetectCodeAndCurrent {
             }
         }
 
+        private void btnDeleteRecord_Click(object sender, EventArgs e)
+        {
+            DateTime startTime = new DateTime(2000, 1, 1);
+            DateTime endTime = DateTime.Now;
+            string code = txtAssembleCode.Text.Trim(' ');
+            if (chkStartDate.Checked)
+            {
+                startTime = dtpStartDate.Value;
+            }
+            else {
+                MessageBox.Show("未设置起始时间！");
+                return;
+            }
+            if (chkEndDate.Checked)
+            {
+                endTime = dtpEndDate.Value;
+            }
+            else
+            {
+                MessageBox.Show("未设置结束时间！");
+                return;
+            }
+            if (MessageBox.Show( $"确认删除{startTime}到{endTime}之间的记录吗？","警告！",MessageBoxButtons.YesNoCancel) ==DialogResult.Yes) {
+                SqlOperation.DeleteRecordFormSQL( startTime, endTime);
+            }
+
+        }
     }
 }

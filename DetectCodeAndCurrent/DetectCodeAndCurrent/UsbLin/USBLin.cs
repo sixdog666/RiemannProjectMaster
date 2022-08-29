@@ -14,7 +14,12 @@ namespace DetectCodeAndCurrent
         usb_device.DEVICE_INFO DevInfo = new usb_device.DEVICE_INFO();
         Int32[] DevHandles = new Int32[20];
         Int32 DevHandle = 0;
+#if DEBUG
         Byte LINIndex = 0;
+#else
+        Byte LINIndex = 1;
+#endif
+
         bool state;
         Int32 DevNum, ret = 0;
         String[] MSGTypeStr = new String[10] { "UN", "MW", "MR", "SW", "SR", "BK", "SY", "ID", "DT", "CK" };
@@ -127,7 +132,11 @@ namespace DetectCodeAndCurrent
             LINMsg[MsgIndex].CheckType = USB2LIN_EX.LIN_EX_CHECK_EXT;//增强校验
             LINMsg[MsgIndex].PID = 0x20;//可以只传入ID，校验位底层会自动计算
             LINMsg[MsgIndex].Data = new Byte[8];//必须分配8字节空间
-            DataBuffer = new Byte[7] { 0x64, 0x80, 0xE4, 0xE4, 0xE4, 0xD0, 0xC0 };//根据自己实际情况修改数据
+#if DEBUG
+            DataBuffer = new Byte[7] { 0x64, 0x80, 0xE4, 0xE4, 0xE4, 0xD0, 0xC0 };
+#else
+           DataBuffer = new Byte[7] { 0x00, 0x00, 0x00, 0x80, 0x80, 0x10, 0x09 };
+#endif
             for (int i = 0; i < LINMsg[MsgIndex].DataLen; i++)//循环填充8字节数据
             {
                 LINMsg[MsgIndex].Data[i] = DataBuffer[i];

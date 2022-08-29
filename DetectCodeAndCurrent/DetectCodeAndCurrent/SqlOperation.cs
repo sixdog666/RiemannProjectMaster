@@ -65,9 +65,33 @@ namespace DetectCodeAndCurrent {
             parameters = new MySqlParameter[] {new MySqlParameter() { ParameterName = "productNum" , Value = productNum },
                                                 new MySqlParameter() { ParameterName = "finishtime" , Value = DateTime.Now }
             };
-            string dbString = "update tbl_resultrecord set finishTegTime = @finishtime where productCode = @productNum;";
             MysqlConnector instance = MysqlConnector.GetInstance();
+            string sqlsel = $"SELECT * FROM jixing_db.tbl_resultrecord where  productCode =@productNum ";
+            string dbString;
+
+            dbString = "update tbl_resultrecord set finishTegTime = @finishtime where productCode = @productNum;";
             instance.ExecuteNonMySQL(dbString, parameters);
+
+            DataTable dt = instance.GetMySqlRead(sqlsel, parameters);
+            if (dt.Rows.Count > 0) {
+                if (dt.Rows[0]["finishTegTime1"].GetType() == typeof(DBNull))
+                {
+                    dbString = "update tbl_resultrecord set finishTegTime1 = @finishtime where productCode = @productNum;";
+                }
+                else if (dt.Rows[0]["finishTegTime2"].GetType() == typeof(DBNull))
+                {
+                    dbString = "update tbl_resultrecord set finishTegTime2 = @finishtime where productCode = @productNum;";
+                }
+                else {
+                    dbString = "update tbl_resultrecord set finishTegTime3 = @finishtime where productCode = @productNum;";
+                    
+                }
+
+                instance.ExecuteNonMySQL(dbString, parameters);
+            }
+           
+  
+          
         }
 
         public static void UpdateButtonVoltRange(sButtonVoltRanges result, string productNum) {
@@ -117,6 +141,27 @@ namespace DetectCodeAndCurrent {
             return instance.GetMySqlRead(sql, parameters);
         }
 
+        public static void DeleteRecordFormSQL(DateTime startTime, DateTime endTime)
+        {
+            string sql;
+            MySqlParameter[] parameters;
+            MySqlParameter paramProductCode = new MySqlParameter();
+            MySqlParameter paramStartTime = new MySqlParameter();
+            MySqlParameter paramEndTime = new MySqlParameter();
+
+            paramStartTime.ParameterName = "startTime";
+            paramStartTime.Value = startTime;
+            paramEndTime.ParameterName = "endTime";
+            paramEndTime.Value = endTime;
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            parameters = new MySqlParameter[] { paramProductCode, paramStartTime, paramEndTime };
+
+                sql = "delete from jixing_db.record_view Where  日期 > @startTime and 日期 < @endTime;";
+            instance.ExecuteNonMySQL(sql);
+          
+        }
+
+
         public static void UpdateButtonState(string currentProductCode, string buttonColName, string strValue) {
             MySqlParameter[] parameters;
 
@@ -133,6 +178,14 @@ namespace DetectCodeAndCurrent {
             MySqlParameter[] parameters;
             parameters = new MySqlParameter[] { new MySqlParameter() { ParameterName = "productCode", Value = productCode } };
             string str = "UPDATE `tbl_resultrecord` SET `currentResult` = NULL, `voltResult` = NULL, `domeOff` = NULL, `domeOn` = NULL, `SRClose` = NULL, `SROpen` = NULL, `SRVent` = NULL, `sunshadeClose` = NULL, `sunshadeOpen` = NULL, `ventClose` = NULL, `onStarButton` = NULL, `phoneButton` = NULL, `sosButton` = NULL, `LigthCurrentResult` = NULL, `mikeTegResult` = '0', `buttonTegResult` = '0', `lightTegResult` = '0' WHERE (`productCode` = @productCode);";
+            MysqlConnector instance = MysqlConnector.GetInstance();
+            instance.ExecuteNonMySQL(str, parameters);
+        }
+        public static void ClearCodeResult(string productCode)
+        {
+            MySqlParameter[] parameters;
+            parameters = new MySqlParameter[] { new MySqlParameter() { ParameterName = "productCode", Value = productCode } };
+            string str = "UPDATE `tbl_resultrecord` SET `mick1` = NULL, `mick2` = NULL, `mick3` = NULL, `mick4` = NULL, `antiCode` = NULL WHERE (`productCode` = @productCode);";
             MysqlConnector instance = MysqlConnector.GetInstance();
             instance.ExecuteNonMySQL(str, parameters);
         }
